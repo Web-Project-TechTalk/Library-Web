@@ -1,0 +1,448 @@
+/* --- Google Fonts --- */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;900&display=swap');
+
+/* --- CSS Variables for Light & Dark Themes --- */
+:root, [data-bs-theme="light"] {
+    --primary-color: #000000;
+    --primary-hover-color: #333333;
+    --secondary-color: #ffffff;
+    --text-color: #212529;
+    --body-bg: #ffffff;
+    --component-bg: #ffffff;
+    --border-color: #dee2e6;
+}
+
+[data-bs-theme="dark"] {
+    --primary-color: #ffffff;
+    --primary-hover-color: #cccccc;
+    --secondary-color: #000000;
+    --text-color: #dee2e6;
+    --body-bg: #000000;
+    --component-bg: #1a1a1a;
+    --border-color: #444444;
+}
+
+/* --- Không cho phép bôi đậm chữ --- */
+body {
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+}
+
+/* --- Ngăn chặn kéo ảnh mặc định --- */
+.book-carousel img {
+    pointer-events: none;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--body-bg);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* --- Header Cố định --- */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100; /* Luôn nằm trên các section */
+}
+
+/* --- Section Styling --- */
+.section {
+    text-align: center;
+}
+#section2 { background-color: #f2e6d8; }
+#section3 { background-color: #d8e6f2; }
+#section4 { background-color: #e6d8f2; }
+
+
+.saying {
+    font-style: italic;
+    text-align: center;
+    margin-top: 1rem;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+h1, h2 {
+    font-weight: 900;
+}
+
+.navbar-nav .nav-link {
+    font-weight: 700;
+}
+
+/* --- Tùy chỉnh các thành phần Bootstrap --- */
+.btn {
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
+    font-weight: 500;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    border-color: var(--primary-color);
+}
+.btn-primary:hover {
+    background-color: var(--primary-hover-color);
+    border-color: var(--primary-hover-color);
+}
+.btn-primary:active {
+    background-color: var(--secondary-color) !important;
+    color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    transform: scale(0.98);
+}
+.btn-outline-primary {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+    --bs-btn-focus-box-shadow: none;
+}
+.btn-outline-primary:hover {
+    background-color: #6c757d;
+    color: var(--secondary-color);
+    border-color: var(--primary-color);
+}
+.btn-outline-primary:active {
+    background-color: var(--secondary-color) !important;
+    color: var(--primary-color) !important;
+    transform: scale(0.98);
+    box-shadow: none !important;
+}
+.btn-outline-secondary.lang-btn {
+    border-color: var(--border-color);
+    color: var(--text-color);
+}
+.btn-outline-secondary.lang-btn.active {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    border-color: var(--primary-color);
+}
+
+.card {
+    background-color: var(--component-bg);
+    border-color: var(--border-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+.card .card-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--text-color);
+    font-weight: 700;
+}
+
+/* --- Hero Section Background Styling (ĐÃ CẬP NHẬT HOÀN TOÀN) --- */
+
+/* Áp dụng ảnh nền và lớp phủ cho section toàn màn hình */
+.hero-section {
+    position: relative;
+    z-index: 1;
+    background-image: url('/Library/assets/images/hero_image.png'); 
+    background-size: cover;
+    background-position: center;
+    transition: filter 0.3s ease;
+    max-height: 270px;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: -1;
+    transition: background-color 0.3s ease;
+}
+
+
+/* Tùy chỉnh lớp phủ cho GIAO DIỆN SÁNG */
+[data-bs-theme="light"] .hero-section::before {
+    background-color: rgba(255, 255, 255, 0.6); 
+}
+[data-bs-theme="light"] .hero-section h1,
+[data-bs-theme="light"] .hero-section .lead {
+    color: #000;
+}
+[data-bs-theme="light"] .hero-section .btn-outline-primary {
+    color: #000;
+    border-color: #000;
+}
+
+
+/* Tùy chỉnh lớp phủ cho GIAO DIỆN TỐI */
+[data-bs-theme="dark"] .hero-section::before {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+[data-bs-theme="dark"] .hero-section h1,
+[data-bs-theme="dark"] .hero-section .lead {
+    color: #fff;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+}
+[data-bs-theme="dark"] .hero-section .btn-outline-primary {
+    color: #fff;
+    border-color: #fff;
+}
+
+/* Tùy chỉnh ô tìm kiếm (giữ nguyên) */
+.hero-section .input-group {
+    position: relative;
+    z-index: 2;
+}
+
+/* --- Tùy chỉnh hover cho nút Xem Tất Cả Sách --- */
+
+/* Hiệu ứng đảo màu khi di chuột vào nút */
+#all-books-hero-btn:hover {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+}
+
+/* Ghi đè cho theme tối để đảm bảo nút có chữ trắng */
+[data-bs-theme="dark"] #all-books-hero-btn {
+    color: #fff;
+    border-color: #fff;
+}
+
+[data-bs-theme="dark"] #all-books-hero-btn:hover {
+    color: #000000;
+    border-color: #fff;
+}
+
+/* --- Book Carousel Styling --- */
+.book-carousel-wrapper {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, transparent, white 10%, white 90%, transparent);
+    mask-image: linear-gradient(to right, transparent, white 10%, white 90%, transparent);
+    background-color: transparent;
+}
+
+.book-carousel {
+    display: flex;
+    gap: 1.5rem;
+    padding: 1rem 0;
+    overflow-x: auto;
+    cursor: grab; /* THÊM VÀO: Đổi con trỏ chuột thành hình bàn tay */
+    /* XÓA BỎ scroll-behavior: smooth; */
+    
+    /* ẨN THANH CUỘN */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+.book-carousel::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, and Opera */
+}
+
+.book-card {
+    flex-shrink: 0; /* Ngăn các card bị co lại */
+    width: 200px;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+
+    /* Hiệu ứng ban đầu: làm mờ và tối đi */
+    filter: blur(1px) grayscale(50%) brightness(0.8);
+    transform: scale(0.95);
+    transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+/* Hiệu ứng khi di chuột vào */
+.book-card:hover {
+    filter: blur(0) grayscale(0%) brightness(1);
+    transform: scale(1);
+}
+
+.book-card img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    display: block;
+}
+
+.book-card .book-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1rem 5rem 1rem 1rem; /* Thêm padding bên phải */
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    color: white;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+}
+
+/* Hiệu ứng khi di chuột vào toàn bộ khung carousel */
+.book-carousel-wrapper:hover .book-card {
+    filter: blur(0) grayscale(0%) brightness(1);
+    transform: scale(1);
+}
+
+/* Thêm hiệu ứng phóng to nhẹ cho card đang được chỉ vào */
+.book-carousel-wrapper .book-card:hover {
+    transform: scale(1.05);
+    z-index: 10;
+}
+
+.book-title {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+    text-align: left;
+}
+
+.book-author {
+    font-size: 0.8rem;
+    margin-bottom: 0;
+    opacity: 0.8;
+    text-align: left;
+}
+
+/* --- Styling cho nút thể loại sách --- */
+
+.book-category {
+    position: absolute;
+    bottom: 0.75rem; /* Đổi từ top sang bottom */
+    right: 0.75rem;
+    z-index: 2; 
+}
+
+.category-tag {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    background-color: rgba(0, 0, 0, 0.6); /* Nền đen mờ */
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 500;
+    border-radius: 50px; /* Bo tròn thành hình con nhộng */
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.category-tag:hover {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    transform: scale(1.05);
+}
+
+/* Trong theme sáng, nút có thể cần màu nền khác nếu muốn */
+[data-bs-theme="light"] .category-tag:hover {
+    /* Đảm bảo màu chữ khi hover là trắng */
+    color: #fff;
+}
+
+/* Thay đổi con trỏ chuột khi kéo carousel */
+.book-carousel.active {
+    cursor: grabbing;
+    cursor: -webkit-grabbing;
+}
+
+/* --- Hiệu ứng hiện thông tin sách khi hover --- */
+
+.book-card:hover .book-info {
+    transform: translateY(0);
+}
+
+/* --- Styling cho khu vực Khám phá (Đã sửa lỗi animation) --- */
+#explore-section {
+    max-height: 0;          /* Mặc định không chiếm chiều cao */
+    overflow: hidden;       /* Ẩn nội dung bên trong */
+    opacity: 0;
+    transform: translateY(20px);
+    /* Thêm max-height vào transition */
+    transition: max-height 0.5s ease-in-out, opacity 0.5s ease, transform 0.5s ease;
+}
+
+#explore-section.visible {
+    max-height: 200px;      /* Chiều cao đủ lớn để chứa nội dung */
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- Styling cho hộp thoại ngẫu nhiên --- */
+#speech-bubble {
+    position: fixed; /* Giữ cố định trên màn hình */
+    bottom: 20px;
+    left: 20px;
+    z-index: 1000; /* Luôn nằm trên cùng */
+    
+    background-color: var(--component-bg);
+    color: var(--text-color);
+    padding: 1rem;
+    border-radius: 0.75rem;
+    max-width: 250px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    
+    /* Trạng thái ẩn mặc định */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.4s ease-in-out;
+}
+
+/* "Đuôi" của hộp thoại */
+#speech-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -20px; /* Nhô ra khỏi hộp thoại */
+    left: 25px;
+    
+    border-width: 10px;
+    border-style: solid;
+    /* Mẹo tạo hình tam giác */
+    border-color: var(--component-bg) transparent transparent transparent;
+    transition: border-color 0.3s ease;
+}
+
+/* Trạng thái hiện */
+#speech-bubble.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* --- Nút Lên/Xuống --- */
+#scroll-buttons {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 999;
+    display: flex;
+    flex-direction: column; /* Xếp các nút theo chiều dọc */
+    gap: 0.5rem; /* Khoảng cách giữa hai nút */
+}
+
+.scroll-btn {
+    width: 40px;
+    height: 40px;
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    cursor: pointer;
+    
+    /* Hiệu ứng ẩn/hiện */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+}
+
+.scroll-btn.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.scroll-btn:hover {
+    background-color: var(--primary-hover-color);
+    transform: scale(1.1);
+}
