@@ -1,0 +1,127 @@
+/* Đặt ảnh nền cho trang */
+.auth-background {
+    /* Thay 'your-image-url.jpg' bằng link ảnh của bạn (ví dụ đặt trong /assets/img/) */
+    background-image: url('https://images.unsplash.com/photo-1507842217343-583bb7270b66'); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+}
+
+/* Lớp phủ mờ để chữ dễ đọc hơn */
+.auth-background::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: -1;
+}
+
+.container {
+    position: relative;
+    z-index: 1;
+}
+
+/* === CẬP NHẬT HIỆU ỨNG XUYÊN THẤU === */
+.card {
+    /* Giảm độ mờ của nền trắng (từ 0.95 xuống 0.85) */
+    background-color: rgba(255, 255, 255, 0.85);
+    /* Tăng độ mờ của kính (từ 5px lên 8px) */
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Thêm viền trắng mờ */
+}
+
+/* === CẬP NHẬT MÀU TRẮNG/ĐEN === */
+
+/* Đổi màu link "Quên mật khẩu" */
+.text-center .small {
+    color: #333; /* Màu đen nhạt */
+    text-decoration: none;
+}
+.text-center .small:hover {
+    color: #000;
+    text-decoration: underline;
+}
+
+/* Ghi đè màu của Tab (nav-pills) khi được chọn (active) */
+.nav-pills .nav-link {
+    color: #000; /* Màu chữ tab khi chưa chọn */
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    background-color: #212529; /* Màu đen (giống btn-dark) */
+    color: #fff; /* Chữ trắng */
+}
+
+/* =========================================== */
+/* === QUY TẮC CHẾ ĐỘ TỐI CHO AUTH.HTML === */
+/* =========================================== */
+
+/* 1. Nền Card (Hộp đăng nhập) */
+body.dark-theme .card {
+    /* Đổi nền từ trắng mờ (light) sang đen mờ (dark) */
+    background-color: rgba(33, 37, 41, 0.85); /* Dùng màu xám tối */
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* 2. Logo "libkey" */
+body.dark-theme .card h2.text-dark {
+    color: #f8f9fa !important; /* Đổi chữ "lib" sang màu trắng */
+}
+
+/* 3. Nút Tab (Đăng nhập / Đăng ký) */
+body.dark-theme .nav-pills .nav-link {
+    color: #f8f9fa; /* Chữ trắng cho tab chưa chọn */
+}
+body.dark-theme .nav-pills .nav-link.active {
+    background-color: #f8f9fa; /* Nền trắng */
+    color: #212529; /* Chữ đen */
+}
+
+/* 4. Ô Input (Form) */
+body.dark-theme .form-control {
+    background-color: #495057; /* Nền input màu xám đậm */
+    color: #f8f9fa; /* Chữ gõ vào màu trắng */
+    border-color: #6c757d;
+}
+
+/* 5. Chữ Placeholder (Chữ mờ bên trong input) */
+body.dark-theme .form-control::placeholder {
+    color: #adb5bd; /* Màu xám sáng */
+    opacity: 0.7;
+}
+
+/* 6. Label (Họ tên, Email...) - ĐÂY LÀ PHẦN QUAN TRỌNG NHẤT */
+body.dark-theme .form-floating > label {
+    color: #adb5bd; /* Màu xám sáng */
+}
+
+/* 7. Link "Quên mật khẩu" */
+body.dark-theme .card a.small {
+    color: #adb5bd !important; /* Ghi đè style inline */
+}
+body.dark-theme .card a.small:hover {
+    color: #f8f9fa !important;
+}
+
+/* 8. Nút Bấm (Buttons) */
+
+/* Nút Đăng nhập (btn-dark) */
+body.dark-theme .card #login-button {
+    background-color: #f8f9fa; /* Đổi thành nền trắng */
+    color: #212529; /* Chữ đen */
+    border-color: #f8f9fa;
+}
+
+/* Nút Tạo tài khoản (btn-outline-dark) */
+body.dark-theme .card #register-button {
+    color: #f8f9fa; /* Chữ trắng */
+    border-color: #f8f9fa; /* Viền trắng */
+}
+body.dark-theme .card #register-button:hover {
+    background-color: #f8f9fa;
+    color: #212529;
+}
