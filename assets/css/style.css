@@ -141,7 +141,7 @@ h1, h2 {
 .hero-section {
     position: relative;
     z-index: 1;
-    background-image: url('/Library/assets/images/hero_image.png'); 
+    background-image: url('/assets/images/hero_image.png'); 
     background-size: cover;
     background-position: center;
     transition: filter 0.3s ease;
