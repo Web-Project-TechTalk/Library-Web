@@ -1,33 +1,36 @@
-// Tên file: js/profile.js
-// ĐÃ SỬA LỖI: Gộp hai khối DOMContentLoaded làm một.
-
 import { supabase } from './supabase-client.js';
-import { getSession, setupHeader, getCurrentUser, handleSignOut } from './dashboard.js';
+import { 
+    getSession, 
+    setupHeader, 
+    getCurrentUser, 
+    handleSignOut,
+    // Phần Đạt mới thêm - hd.dat
+    incrementViewCount,      
+    incrementDownloadCount   
+} from './dashboard.js';
 import 'https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js';
 
 let currentUser = null;
 let croppieInstance = null;
 let avatarModal = null;
-let croppedImageBlob = null; // <-- Lưu trữ ảnh đã cắt
+let croppedImageBlob = null; // Lưu trữ ảnh đã cắt
 
 let backgroundCroppieInstance = null;
 let backgroundModal = null;
 let croppedBackgroundBlob = null;
 
-// Chỉ sử dụng MỘT khối DOMContentLoaded duy nhất (dạng async)
 document.addEventListener('DOMContentLoaded', async function () {
 
     // === 1. LOGIC XÁC THỰC & HEADER (TỪ DASHBOARD.JS) ===
     const session = await getSession(); // Bảo vệ trang
     let profileData = null;
+    initializeUploadForm();
 
     if (session) {
         // Tải header và lấy dữ liệu profile cơ bản
         profileData = await setupHeader(session.user);
     }
-    
-    // === BẮT ĐẦU LOGIC UI (ĐÃ DI CHUYỂN TỪ KHỐI 1 VÀO ĐÂY) ===
-    
+        
     // === Khai báo biến ===
     const body = document.body;
     const sidebar = document.getElementById('sidebar');
@@ -83,7 +86,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     // === KẾT THÚC LOGIC UI ===
 
 
-    // === 3. LOGIC RIÊNG CỦA TRANG PROFILE (Form) ===
+    // === 3. LOGIC RIÊNG CỦA TRANG PROFILE  ===
 
     // === THAY THẾ LOGIC ĐỔI EMAIL ===
 
@@ -314,12 +317,6 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 }); // <-- Khối DOMContentLoaded DUY NHẤT kết thúc tại đây
 
-// === CÁC HÀM XỬ LÝ RIÊNG CỦA PROFILE ===
-
-/**
- * Hàm này điền dữ liệu vào TẤT CẢ các vị trí trên trang profile.
- * (Khu vực hiển thị tĩnh VÀ các ô input trong form)
- */
 function fillProfileData(data) {
     // 1. Điền form "Cài đặt thông tin" 
     const inputUsername = document.getElementById('profile-username');
@@ -524,3 +521,316 @@ async function handleChangePassword(event) {
     
     changeButton.disabled = false; // Bật lại nút
 }
+// === THÊM MỚI: HÀM XỬ LÝ UPLOAD TÀI LIỆU ===
+
+// Khởi tạo sự kiện cho form upload
+function initializeUploadForm() {
+    const uploadForm = document.getElementById('upload-form');
+    
+    if (uploadForm) {
+        uploadForm.addEventListener('submit', handleDocumentUpload);
+    }
+    
+    // Tải danh sách tài liệu đã upload
+    loadUploadedDocuments();
+}
+
+// Xử lý upload tài liệu
+// Sửa phần upload storage trong hàm handleDocumentUpload
+async function handleDocumentUpload(event) {
+    event.preventDefault();
+    
+    const statusDiv = document.getElementById('upload-status');
+    const submitButton = document.getElementById('upload-submit-button');
+    const currentUser = getCurrentUser();
+    
+    if (!currentUser) {
+        statusDiv.className = 'alert alert-danger';
+        statusDiv.textContent = 'Lỗi: Vui lòng đăng nhập để tải lên tài liệu.';
+        return;
+    }
+    
+    // Lấy dữ liệu từ form
+    const title = document.getElementById('document-title').value;
+    const author = document.getElementById('document-author').value;
+    const year = parseInt(document.getElementById('document-year').value);
+    const description = document.getElementById('document-description').value;
+    const thumbnail = document.getElementById('document-thumbnail').value;
+    const fileInput = document.getElementById('document-file');
+    const file = fileInput.files[0];
+    
+    if (!file) {
+        statusDiv.className = 'alert alert-danger';
+        statusDiv.textContent = 'Vui lòng chọn file tài liệu.';
+        return;
+    }
+    
+    // Kiểm tra kích thước file (tối đa 10MB)
+    if (file.size > 10 * 1024 * 1024) {
+        statusDiv.className = 'alert alert-danger';
+        statusDiv.textContent = 'File quá lớn. Kích thước tối đa là 10MB.';
+        return;
+    }
+    
+    // Vô hiệu hóa nút và hiển thị trạng thái
+    submitButton.disabled = true;
+    submitButton.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> Đang tải lên...';
+    statusDiv.className = 'alert alert-info';
+    statusDiv.textContent = 'Đang tải lên tài liệu...';
+    
+    try {
+        // 1. Upload file lên storage
+        const fileExt = file.name.split('.').pop();
+        const fileName = `documents/${currentUser.id}/${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
+        
+        const { data: uploadData, error: uploadError } = await supabase.storage
+            .from('sach-files')
+            .upload(fileName, file);
+            
+        if (uploadError) throw uploadError;
+        
+        // 2. Lấy URL public của file
+        const { data: urlData } = supabase.storage
+            .from('sach-files')
+            .getPublicUrl(uploadData.path);
+        
+        // 3. Thêm bản ghi vào bảng documents
+        const newDocument = {
+            user_id: currentUser.id,
+            title: title,
+            author_name: author,
+            publication_year: year,
+            description: description,
+            thumbnail_url: thumbnail || null
+        };
+        
+        const { data: docData, error: docError } = await supabase
+            .from('documents')
+            .insert([newDocument])
+            .select();
+            
+        if (docError) throw docError;
+        
+        // 4. Thêm bản ghi vào bảng attachments
+        const newAttachment = {
+            document_id: docData[0].document_id,
+            file_path: uploadData.path,
+            file_type: file.type,
+            file_name: file.name
+        };
+        
+        const { error: attachmentError } = await supabase
+            .from('attachments')
+            .insert([newAttachment]);
+            
+        if (attachmentError) throw attachmentError;
+        
+        // 5. Thành công
+        statusDiv.className = 'alert alert-success';
+        statusDiv.textContent = 'Tải lên tài liệu thành công!';
+        
+        // Reset form
+        document.getElementById('upload-form').reset();
+        
+        // Tải lại danh sách tài liệu
+        loadUploadedDocuments();
+        
+    } catch (error) {
+        console.error('Lỗi upload:', error);
+        statusDiv.className = 'alert alert-danger';
+        statusDiv.textContent = `Lỗi: ${error.message}`;
+    } finally {
+        // Bật lại nút
+        submitButton.disabled = false;
+        submitButton.innerHTML = '<i class="fas fa-upload me-2"></i> Tải lên Tài liệu';
+    }
+}
+// Tải danh sách tài liệu đã upload
+// Sửa phần lấy URL trong hàm loadUploadedDocuments
+async function loadUploadedDocuments() {
+    const container = document.getElementById('uploaded-documents-list');
+    const currentUser = getCurrentUser();
+    
+    if (!currentUser || !container) return;
+    
+    try {
+        const { data, error } = await supabase
+            .from('documents')
+            .select(`
+                document_id,
+                title,
+                author_name,
+                publication_year,
+                description,
+                thumbnail_url,
+                created_at,
+                view_count,
+                download_count,
+                attachments (
+                    attachment_id,
+                    file_path,
+                    file_type,
+                    file_name
+                )
+            `)
+            .eq('user_id', currentUser.id)
+            .order('created_at', { ascending: false });
+            
+        if (error) throw error;
+        
+        if (data.length === 0) {
+            container.innerHTML = '<p class="text-muted">Bạn chưa tải lên tài liệu nào.</p>';
+            return;
+        }
+        
+        let html = '<div class="list-group">';
+        data.forEach(doc => {
+            const createdDate = new Date(doc.created_at).toLocaleDateString('vi-VN');
+            const attachment = doc.attachments && doc.attachments[0];
+            
+            let fileUrl = '';
+            let fileName = 'Không có file';
+            
+            if (attachment) {
+                const { data: urlData } = supabase.storage
+                    .from('sach-files')
+                    .getPublicUrl(attachment.file_path);
+                fileUrl = urlData.publicUrl;
+                fileName = attachment.file_name;
+            }
+            
+            html += `
+                <div class="list-group-item">
+                    <div class="d-flex w-100 justify-content-between align-items-start">
+                        <div class="flex-grow-1">
+                            <h6 class="mb-1">${doc.title}</h6>
+                            <p class="mb-1 text-muted">
+                                <i class="fas fa-user-edit me-1"></i> ${doc.author_name} 
+                                <span class="mx-2">•</span> 
+                                <i class="fas fa-calendar me-1"></i> ${doc.publication_year}
+                            </p>
+                            <small class="text-muted d-block mb-2">
+                                <i class="fas fa-file-alt me-1"></i> ${fileName} 
+                                <span class="ms-3 badge bg-primary">
+                                    <i class="fas fa-eye me-1"></i> ${doc.view_count || 0}
+                                </span> 
+                                <span class="ms-2 badge bg-success">
+                                    <i class="fas fa-download me-1"></i> ${doc.download_count || 0}
+                                </span>
+                            </small>
+                        </div>
+                        <small class="text-muted">${createdDate}</small>
+                    </div>
+                    
+                    <div class="btn-group mt-2" role="group">`;
+            
+            // Nút Xem và Tải với logic tăng chỉ số
+            if (attachment && fileUrl) {
+                // Escape các ký tự đặc biệt trong URL và tên file
+                const safeUrl = fileUrl.replace(/'/g, "\\'");
+                const safeName = fileName.replace(/'/g, "\\'");
+                
+                html += `
+                        <button type="button" 
+                                class="btn btn-sm btn-outline-primary"
+                                onclick="handleViewDocument('${doc.document_id}').then(() => window.open('${safeUrl}', '_blank'))">
+                            <i class="fas fa-eye me-1"></i> Xem
+                        </button>
+                        <button type="button"
+                                class="btn btn-sm btn-outline-success"
+                                onclick="handleDownloadDocument('${doc.document_id}').then(() => { const a = document.createElement('a'); a.href='${safeUrl}'; a.download='${safeName}'; a.click(); })">
+                            <i class="fas fa-download me-1"></i> Tải về
+                        </button>`;
+            }
+            
+            html += `
+                        <button type="button" 
+                                class="btn btn-sm btn-outline-danger" 
+                                onclick="deleteUploadedDocument('${doc.document_id}', '${doc.title.replace(/'/g, "\\'")}')">
+                            <i class="fas fa-trash me-1"></i> Xóa
+                        </button>
+                    </div>
+                </div>
+            `;
+        });
+        html += '</div>';
+        
+        container.innerHTML = html;
+        
+    } catch (error) {
+        console.error('Lỗi tải danh sách tài liệu:', error);
+        container.innerHTML = `<div class="alert alert-danger">Lỗi khi tải danh sách: ${error.message}</div>`;
+    }
+}
+
+
+// Xóa tài liệu đã upload (GIỮ NGUYÊN)
+async function deleteUploadedDocument(documentId, title) {
+    if (!confirm(`Bạn có chắc chắn muốn xóa tài liệu "${title}" không?`)) {
+        return;
+    }
+    
+    try {
+        const { data: attachments, error: attachmentsError } = await supabase
+            .from('attachments')
+            .select('file_path')
+            .eq('document_id', documentId);
+            
+        if (attachmentsError) throw attachmentsError;
+        
+        if (attachments && attachments.length > 0) {
+            const filePaths = attachments.map(att => att.file_path);
+            const { error: storageError } = await supabase.storage
+                .from('sach-files')
+                .remove(filePaths);
+                
+            if (storageError) {
+                console.error('Lỗi xóa file từ storage:', storageError);
+            }
+        }
+        
+        const { error } = await supabase
+            .from('documents')
+            .delete()
+            .eq('document_id', documentId);
+            
+        if (error) throw error;
+        
+        alert('✅ Đã xóa tài liệu thành công!');
+        loadUploadedDocuments();
+        
+    } catch (error) {
+        console.error('Lỗi xóa tài liệu:', error);
+        alert(`❌ Lỗi khi xóa tài liệu: ${error.message}`);
+    }
+}
+// Hàm tăng lượt xem - GỌI RPC VÀ TỰ ĐỘNG RELOAD DANH SÁCH
+async function handleViewDocument(documentId) {
+    console.log(`🔍 Đang xem tài liệu ${documentId}...`);
+    
+    const success = await incrementViewCount(documentId);
+    
+    if (success) {
+        // Tự động reload danh sách sau 500ms để cập nhật số liệu
+        setTimeout(() => {
+            loadUploadedDocuments();
+        }, 500);
+    }
+}
+
+// Hàm tăng lượt tải - GỌI RPC VÀ TỰ ĐỘNG RELOAD DANH SÁCH
+async function handleDownloadDocument(documentId) {    
+    console.log(`⬇️ Đang tải tài liệu ${documentId}...`);
+
+    const success = await incrementDownloadCount(documentId);
+    
+    if (success) {
+        // Tự động reload danh sách sau 500ms
+        setTimeout(() => {
+            loadUploadedDocuments();
+        }, 500);
+    }
+}
+window.handleViewDocument = handleViewDocument;
+window.handleDownloadDocument = handleDownloadDocument;
+window.deleteUploadedDocument = deleteUploadedDocument;
