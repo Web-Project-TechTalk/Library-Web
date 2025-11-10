@@ -81,7 +81,19 @@ const translations = {
         emailChangeSuccess: 'Yêu cầu thành công! Vui lòng kiểm tra email (cả cũ và mới) để xác nhận thay đổi.',
 
         emailChangeSuccessTitle: 'Xác Nhận Đổi Email Thành Công!',
-        emailChangeSuccessMsg: 'Hãy chắc chắn bạn đã xác nhận cả hai email của mình.\nVui lòng quay về trang đăng nhập để đăng nhập lại với email mới.'
+        emailChangeSuccessMsg: 'Hãy chắc chắn bạn đã xác nhận cả hai email của mình.\nVui lòng quay về trang đăng nhập để đăng nhập lại với email mới.',
+        uploadTitle: "Tải lên Tài liệu",
+        uploadSubtitle: "Chọn file tài liệu để tải lên thư viện.",
+        documentTitle: "Tiêu đề tài liệu",
+        documentAuthor: "Tác giả",
+        documentYear: "Năm xuất bản",
+        documentDescription: "Mô tả",
+        documentThumbnail: "URL ảnh bìa (tùy chọn)",
+        documentFile: "Chọn file tài liệu",
+        documentFileHelp: "Hỗ trợ: PDF, DOC, DOCX, TXT, EPUB, MOBI (Tối đa 10MB)",
+        uploadSubmit: "Tải lên Tài liệu",
+        uploadedDocuments: "Tài liệu đã tải lên",
+        loadingDocuments: "Đang tải danh sách tài liệu..."
     },
     en: {
         // Topbar & Menu
@@ -161,7 +173,20 @@ const translations = {
         emailChangeSuccess: 'Request sent! Please check both your old and new email inboxes to confirm the change.',
 
         emailChangeSuccessTitle: 'Email Changed Successfully!',
-        emailChangeSuccessMsg: 'Your email has been updated.\nPlease return to the login page to sign in with your new email.'
+        emailChangeSuccessMsg: 'Your email has been updated.\nPlease return to the login page to sign in with your new email.',
+        // === THÊM MỚI: Key cho upload tab ===
+        uploadTitle: "Upload Documents",
+        uploadSubtitle: "Select document files to upload to the library.",
+        documentTitle: "Document Title",
+        documentAuthor: "Author",
+        documentYear: "Publication Year",
+        documentDescription: "Description",
+        documentThumbnail: "Thumbnail URL (optional)",
+        documentFile: "Choose Document File",
+        documentFileHelp: "Supported: PDF, DOC, DOCX, TXT, EPUB, MOBI (Max 10MB)",
+        uploadSubmit: "Upload Document",
+        uploadedDocuments: "Uploaded Documents",
+        loadingDocuments: "Loading documents list..."
     }
 };
 
