@@ -1,13 +1,36 @@
 // Tên file: /js/app-ui.js
-// File này sẽ xử lý Sáng/Tối và Ngôn ngữ cho TOÀN BỘ trang web.
 
-// 1. ĐỊNH NGHĨA BẢN DỊCH (Đã mở rộng)
+// === 1. HÀM ÁP DỤNG SÁNG/TỐI ===
+function applyTheme(isDarkMode) {
+    const body = document.body;
+    const themeToggle = document.getElementById('theme-toggle');
+    
+    if (isDarkMode) {
+        body.classList.add('dark-theme');
+    } else {
+        body.classList.remove('dark-theme');
+    }
+
+    if (themeToggle) {
+        const icon = themeToggle.querySelector('i');
+        if (isDarkMode) {
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+        } else {
+            icon.classList.remove('fa-sun');
+            icon.classList.add('fa-moon');
+        }
+    }
+}
+
+// === 2. BỘ TỪ ĐIỂN (Đưa ra ngoài) ===
 const translations = {
     vi: {
         // Topbar & Menu (Từ profile.js)
         searchPlaceholder: 'Tìm kiếm sách...',
         themeToggle: ' Sáng / Tối',
         logout: 'Đăng xuất',
+        profile: 'Trang cá nhân', // Key mới bạn thêm ở topbar
         // Profile Tabs (Từ profile.js)
         infoTab: 'Thông tin',
         uploadTab: 'Tải lên',
@@ -81,13 +104,26 @@ const translations = {
         emailChangeSuccess: 'Yêu cầu thành công! Vui lòng kiểm tra email (cả cũ và mới) để xác nhận thay đổi.',
 
         emailChangeSuccessTitle: 'Xác Nhận Đổi Email Thành Công!',
-        emailChangeSuccessMsg: 'Hãy chắc chắn bạn đã xác nhận cả hai email của mình.\nVui lòng quay về trang đăng nhập để đăng nhập lại với email mới.'
+        emailChangeSuccessMsg: 'Hãy chắc chắn bạn đã xác nhận cả hai email của mình.\nVui lòng quay về trang đăng nhập để đăng nhập lại với email mới.',
+        uploadTitle: "Tải lên Tài liệu",
+        uploadSubtitle: "Chọn file tài liệu để tải lên thư viện.",
+        documentTitle: "Tiêu đề tài liệu",
+        documentAuthor: "Tác giả",
+        documentYear: "Năm xuất bản",
+        documentDescription: "Mô tả",
+        documentThumbnail: "URL ảnh bìa (tùy chọn)",
+        documentFile: "Chọn file tài liệu",
+        documentFileHelp: "Hỗ trợ: PDF, DOC, DOCX, TXT, EPUB, MOBI (Tối đa 10MB)",
+        uploadSubmit: "Tải lên Tài liệu",
+        uploadedDocuments: "Tài liệu đã tải lên",
+        loadingDocuments: "Đang tải danh sách tài liệu..."
     },
     en: {
         // Topbar & Menu
         searchPlaceholder: 'Search for books...',
         themeToggle: ' Dark / Light',
         logout: 'Sign Out',
+        profile: 'Profile', // Key mới bạn thêm ở topbar
         // Profile Tabs
         infoTab: 'Info',
         uploadTab: 'Upload',
@@ -161,11 +197,24 @@ const translations = {
         emailChangeSuccess: 'Request sent! Please check both your old and new email inboxes to confirm the change.',
 
         emailChangeSuccessTitle: 'Email Changed Successfully!',
-        emailChangeSuccessMsg: 'Your email has been updated.\nPlease return to the login page to sign in with your new email.'
+        emailChangeSuccessMsg: 'Your email has been updated.\nPlease return to the login page to sign in with your new email.',
+        // === THÊM MỚI: Key cho upload tab ===
+        uploadTitle: "Upload Documents",
+        uploadSubtitle: "Select document files to upload to the library.",
+        documentTitle: "Document Title",
+        documentAuthor: "Author",
+        documentYear: "Publication Year",
+        documentDescription: "Description",
+        documentThumbnail: "Thumbnail URL (optional)",
+        documentFile: "Choose Document File",
+        documentFileHelp: "Supported: PDF, DOC, DOCX, TXT, EPUB, MOBI (Max 10MB)",
+        uploadSubmit: "Upload Document",
+        uploadedDocuments: "Uploaded Documents",
+        loadingDocuments: "Loading documents list..."
     }
 };
 
-// 2. HÀM CẬP NHẬT NGÔN NGỮ (Tối ưu hóa)
+// === 3. HÀM CẬP NHẬT NGÔN NGỮ (Đưa ra ngoài) ===
 // Hàm này sẽ tìm tất cả các element có [data-lang-key] và dịch chúng
 function updateLanguageUI(lang) {
     if (!translations[lang]) return;
@@ -186,7 +235,7 @@ function updateLanguageUI(lang) {
         }
     });
 
-    // === THÊM MỚI: Dịch PLACEHOLDER ===
+    // Dịch PLACEHOLDER
     document.querySelectorAll('[data-lang-key-placeholder]').forEach(el => {
         const key = el.dataset.langKeyPlaceholder;
         if (langData[key]) {
@@ -215,65 +264,199 @@ function updateLanguageUI(lang) {
     }
 }
 
-// 3. HÀM CẬP NHẬT GIAO DIỆN SÁNG/TỐI
-function applyTheme(isDarkMode) {
-    const body = document.body;
-    const themeToggle = document.getElementById('theme-toggle');
-    
-    if (isDarkMode) {
-        body.classList.add('dark-theme');
-    } else {
-        body.classList.remove('dark-theme');
-    }
+// === 4. LOGIC CHẠY NGAY KHI TẢI SCRIPT ===
+// (Đọc cài đặt và áp dụng ngay lập tức)
 
-    if (themeToggle) {
-        const icon = themeToggle.querySelector('i');
-        if (isDarkMode) {
-            icon.classList.remove('fa-moon');
-            icon.classList.add('fa-sun');
-        } else {
-            icon.classList.remove('fa-sun');
-            icon.classList.add('fa-moon');
-        }
-    }
-}
-
-// 4. LOGIC CHÍNH (Chạy ngay khi file được tải)
-
-// Đọc cài đặt từ localStorage
 let currentLang = localStorage.getItem('language') || 'vi';
 let isDarkMode = (localStorage.getItem('theme') === 'dark') || 
                  (localStorage.getItem('theme') === null && window.matchMedia('(prefers-color-scheme: dark)').matches);
 
 // Áp dụng theme và ngôn ngữ ngay lập tức
+// (Phải chạy sau khi các hàm đã được định nghĩa)
 applyTheme(isDarkMode);
 updateLanguageUI(currentLang);
 
-// 5. GÁN SỰ KIỆN (Chờ DOM tải xong)
-document.addEventListener('DOMContentLoaded', () => {
-    
-    const langToggle = document.getElementById('lang-toggle');
-    const themeToggle = document.getElementById('theme-toggle');
 
-    // Gán sự kiện cho nút Ngôn ngữ
+// === 5. HÀM TẢI COMPONENT (Giữ nguyên) ===
+/**
+ * Hàm tải một component HTML vào một placeholder
+ */
+async function loadComponent(elementId, url, callback) {
+    const placeholder = document.getElementById(elementId);
+    if (!placeholder) {
+        return;
+    }
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`Failed to fetch ${url}: ${response.statusText}`);
+        }
+        const html = await response.text();
+        placeholder.innerHTML = html;
+        if (callback) {
+            callback();
+        }
+    } catch (error) {
+        console.error(`Error loading component ${url}:`, error);
+        placeholder.innerHTML = `<p class="text-danger p-3">Lỗi tải component: ${url}</p>`;
+    }
+}
+
+// === 6. HÀM GÁN SỰ KIỆN SAU KHI TẢI COMPONENT ===
+/**
+ * Gán sự kiện cho Sidebar, Search và các nút Topbar.
+ * Hàm này phải được gọi SAU KHI component đã tải xong.
+ */
+function initializeDynamicElementsLogic() {
+    // --- Lấy các phần tử ---
+    const body = document.body;
+    const sidebar = document.getElementById('sidebar');
+    const sidebarToggleBtn = document.getElementById('sidebarToggleBtn');
+    const sidebarCloseBtn = document.getElementById('sidebarCloseBtn');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+    const searchInput = document.getElementById('searchInput');
+    const searchOverlay = document.getElementById('searchOverlay');
+    const searchFormWrapper = document.getElementById('searchFormWrapper');
+    const mobileSearchIcon = document.getElementById('mobileSearchIcon');
+    const topbarRightSection = document.getElementById('topbar-right-section');
+    
+    const DESKTOP_BREAKPOINT = 992;
+
+    // --- Logic Đóng/Mở Sidebar ---
+    const hideSidebar = () => {
+        if (sidebar) sidebar.classList.remove('active');
+        if (sidebarOverlay) sidebarOverlay.classList.remove('active');
+        body.classList.remove('sidebar-is-active');
+    };
+    const toggleSidebar = () => {
+        if (!sidebar) return;
+        if (sidebar.classList.contains('active')) { 
+            hideSidebar(); 
+        } else {
+            sidebar.classList.add('active');
+            body.classList.add('sidebar-is-active');
+            if (window.innerWidth < DESKTOP_BREAKPOINT && sidebarOverlay) { 
+                sidebarOverlay.classList.add('active'); 
+            }
+        }
+    };
+    if (window.innerWidth >= DESKTOP_BREAKPOINT && sidebar) { 
+        sidebar.classList.add('active'); 
+        body.classList.add('sidebar-is-active');
+    }
+    if (sidebarToggleBtn) sidebarToggleBtn.addEventListener('click', toggleSidebar);
+    if (sidebarCloseBtn) sidebarCloseBtn.addEventListener('click', hideSidebar);
+    if (sidebarOverlay) sidebarOverlay.addEventListener('click', hideSidebar);
+    
+    // --- Logic Đóng/Mở Search ---
+    const showSearch = () => {
+        if (searchOverlay) searchOverlay.classList.add('active');
+        if (searchFormWrapper) searchFormWrapper.classList.add('active');
+        if (body) body.classList.add('search-active');
+        if (searchInput) {
+            const dropdownInstance = bootstrap.Dropdown.getOrCreateInstance(searchInput);
+            dropdownInstance.show();
+        }
+    };
+    const hideSearch = () => {
+        if (searchOverlay) searchOverlay.classList.remove('active');
+        if (searchFormWrapper) searchFormWrapper.classList.remove('active');
+        if (body) body.classList.remove('search-active');
+        if (searchInput) {
+            const dropdownInstance = bootstrap.Dropdown.getInstance(searchInput);
+            if (dropdownInstance) { dropdownInstance.hide(); }
+        }
+    };
+    if (searchInput) searchInput.addEventListener('focus', showSearch);
+    if (searchOverlay) searchOverlay.addEventListener('click', hideSearch);
+    document.addEventListener('keydown', (e) => { 
+        if (e.key === 'Escape' && searchOverlay && searchOverlay.classList.contains('active')) { 
+            hideSearch(); 
+        }
+    });
+    if (mobileSearchIcon) mobileSearchIcon.addEventListener('click', (e) => { 
+        e.preventDefault(); 
+        showSearch(); 
+        if (searchInput) searchInput.focus(); 
+    });
+    if (topbarRightSection) topbarRightSection.addEventListener('click', (e) => { 
+        if (e.target === topbarRightSection && body && body.classList.contains('search-active')) { 
+            hideSearch(); 
+        }
+    });
+
+    // --- SỬA LỖI: GÁN SỰ KIỆN CHO CÁC NÚT TOPBAR ---
+    // (Vì các nút này chỉ tồn tại sau khi loadComponent)
+
+    // 1. Nút Đổi Ngôn ngữ
+    const langToggle = document.getElementById('lang-toggle');
     if (langToggle) {
         langToggle.addEventListener('click', (e) => {
             e.preventDefault();
-            currentLang = (localStorage.getItem('language') || 'vi') === 'vi' ? 'en' : 'vi';
+            // Đọc lại từ localStorage để chắc chắn
+            let currentLang = (localStorage.getItem('language') || 'vi') === 'vi' ? 'en' : 'vi';
             localStorage.setItem('language', currentLang);
+            
+            // Gọi hàm updateLanguageUI (đã được định nghĩa ở ngoài)
             updateLanguageUI(currentLang);
+            console.log('Đã đổi ngôn ngữ sang:', currentLang);
         });
     }
 
-    // Gán sự kiện cho nút Sáng/Tối
+    // 2. Nút Đổi Sáng/Tối
+    const themeToggle = document.getElementById('theme-toggle');
     if (themeToggle) {
         themeToggle.addEventListener('click', (e) => {
             e.preventDefault();
-            isDarkMode = !document.body.classList.contains('dark-theme');
+            // Đọc lại từ body
+            let isDarkMode = !document.body.classList.contains('dark-theme');
             localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+            
+            // Gọi hàm applyTheme (đã được định nghĩa ở ngoài)
             applyTheme(isDarkMode);
-            // Gọi lại hàm dịch để cập nhật text "Chế độ tối"
+            // Gọi lại hàm dịch để cập nhật text "Sáng / Tối"
             updateLanguageUI(localStorage.getItem('language') || 'vi');
+            console.log('Đã đổi theme sang:', isDarkMode ? 'dark' : 'light');
         });
     }
+
+    // 3. Nút Đăng xuất
+    const logoutButton = document.getElementById('logout-button');
+    if (logoutButton) {
+        logoutButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            //
+            // === LOGIC ĐĂNG XUẤT CỦA BẠN SẼ Ở ĐÂY ===
+            // (Ví dụ: gọi hàm handleSignOut() từ dashboard.js)
+            //
+            console.log('Nút Đăng xuất đã được bấm!');
+            // Ví dụ: 
+            // import { handleSignOut } from '/js/dashboard.js';
+            // handleSignOut();
+        });
+    }
+}
+
+// === 7. LOGIC CHẠY KHI DOM TẢI XONG ===
+// (Chỉ chạy loadComponent)
+document.addEventListener('DOMContentLoaded', () => {
+    
+    // Tải topbar trước
+    loadComponent('topbar-placeholder', '/components/topbar.html', () => {
+        // Tải sidebar sau khi topbar tải xong
+        loadComponent('sidebar-placeholder', '/components/sidebar.html', () => {
+            
+            // Cả hai đã tải xong, GÁN TẤT CẢ SỰ KIỆN
+            initializeDynamicElementsLogic(); 
+            
+            // Cập nhật lại UI (quan trọng)
+            // Vì component mới tải, cần chạy lại 2 hàm này
+            // để áp dụng đúng icon và ngôn ngữ cho các nút vừa tải
+            let currentLang = localStorage.getItem('language') || 'vi';
+            let isDarkMode = localStorage.getItem('theme') === 'dark';
+            
+            applyTheme(isDarkMode);
+            updateLanguageUI(currentLang);
+        });
+    });
 });

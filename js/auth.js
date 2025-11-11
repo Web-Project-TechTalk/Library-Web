@@ -128,7 +128,7 @@ async function handleLogin(event, form, button, statusDiv) {
         statusDiv.style.color = 'green';
         statusDiv.textContent = 'Đăng nhập thành công! Đang chuyển hướng...';
         // Chuyển hướng đến trang chính
-        window.location.replace('profile.html'); // Hoặc dashboard.html
+        window.location.replace('/index.html');
     }
 }
 
