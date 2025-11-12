@@ -14,6 +14,9 @@
     <link rel="stylesheet" href="..\assets\css\header_scrollsnap1.css">
     <link rel="stylesheet" href="..\assets\css\scrollsnap2.css">
     <link rel="stylesheet" href="..\assets\css\scrollsnap3.css">
+    <link rel="stylesheet" href="..\assets\css\scrollsnap4.css">
+    <link rel="stylesheet" href="..\assets\css\scrollsnap5_footer.css">
+
 
 </head>
 
@@ -32,8 +35,8 @@
             </div>
 
             <div class="collapse navbar-collapse" id="navbarNav">
-
                 <ul class="navbar-nav mx-auto">
+                    <a class="nav-link" href="#" role="button" data-key="nav_home">Trang chủ</a>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                             data-key="nav_books">Sách</a>
@@ -374,7 +377,7 @@
                         </div>
                     </div>
                     <div class="book-card">
-                        <img src="/assets/images/triet_hoc.jpg" alt="Bìa sách">
+                        <img src="/assets/images/triet_hoc.jpg" alt="Triết học Mác-Lênin">
                         <div class="book-category">
                             <a href="#" class="category-tag">Triết học</a>
                         </div>
@@ -384,7 +387,7 @@
                         </div>
                     </div>
                     <div class="book-card">
-                        <img src="/assets/images/sherlock_holmes.jpg" alt="Bìa sách">
+                        <img src="/assets/images/sherlock_holmes.jpg" alt="Những cuộc phiêu lưu của sherlock Holmes">
                         <div class="book-category">
                             <a href="#" class="category-tag">Thần bí, hư cấu</a>
                         </div>
@@ -394,7 +397,7 @@
                         </div>
                     </div>
                     <div class="book-card">
-                        <img src="/assets/images/truyen_kieu.jpg" alt="Bìa sách">
+                        <img src="/assets/images/truyen_kieu.jpg" alt="Truyện Kiều">
                         <div class="book-category">
                             <a href="#" class="category-tag">Truyện thơ</a>
                         </div>
@@ -410,15 +413,158 @@
                 <a href="#" class="btn btn-outline-primary px-5" data-i18n="exploreMore">Khám phá thêm</a>
             </div>
 
-            <p class="saying mt-4 text-center" data-i18n="quote">"Đọc vạn quyển sách, đi vạn dặm đường."</p>
+            <p class="saying mt-4 text-center" data-i18n="section3_saying">"Đọc vạn quyển sách, đi vạn dặm đường."</p>
         </section>
 
-<!--chinh section4 thi nho xoa background o css header_...-->
-        <div class="section" id="section4">
-            <div class="d-flex justify-content-center align-items-center h-100">
-                <h1>Trang 4</h1>
+        <!--section4 -->
+        <section id="section4" class="section light-theme">
+            <h2 class="text-center mb-4" data-i18n="recommendedBooks">Khám phá bộ sưu tập</h2>
+
+            <div class="carousel-controls">
+                <button class="arrow-btn prev"><i class="fas fa-chevron-left"></i></button>
+                <div class="book-carousel-wrapper static-carousel">
+                    <div class="book-carousel">
+                        <div class="book-card"><img src="/assets/images/duong_cach_menh.jpg" alt="Đường Kách mệnh">
+                            <div class="book-category"><a href="#" class="category-tag">Triết học</a></div>
+                            <div class="book-info">
+                                <h5 class="book-title">Đường Kách mệnh</h5>
+                                <p class="book-author">Hồ Chí Minh</p>
+                            </div>
+                        </div>
+                        <div class="book-card"><img src="/assets/images/doraemon.jpg" alt="Doraemon">
+                            <div class="book-category"><a href="#" class="category-tag">Truyện tranh</a></div>
+                            <div class="book-info">
+                                <h5 class="book-title">Doraemon</h5>
+                                <p class="book-author">Fujiko F.Fujio</p>
+                            </div>
+                        </div>
+                        <div class="book-card"><img src="/assets/images/harry_potter.jpg" alt="Harry Potter">
+                            <div class="book-category"><a href="#" class="category-tag">Fantasy</a></div>
+                            <div class="book-info">
+                                <h5 class="book-title">Harry Potter</h5>
+                                <p class="book-author">J.K. Rowling</p>
+                            </div>
+                        </div>
+                        <div class="book-card"><img src="/assets/images/tat_den.jpg" alt="Tắt đèn">
+                            <div class="book-category"><a href="#" class="category-tag">Văn học</a></div>
+                            <div class="book-info">
+                                <h5 class="book-title">Tắt đèn</h5>
+                                <p class="book-author">Ngô Tất Tố</p>
+                            </div>
+                        </div>
+                        <div class="book-card"><img src="/assets/images/tam_cam.jpg" alt="Tấm Cám">
+                            <div class="book-category"><a href="#" class="category-tag">Dân gian</a></div>
+                            <div class="book-info">
+                                <h5 class="book-title">Tấm Cám</h5>
+                                <p class="book-author">Nhiều tác giả</p>
+                            </div>
+                        </div>
+                        <div class="book-card"><img src="/assets/images/de_men.jpg" alt="Dế Mèn Phiêu Lưu Ký">
+                            <div class="book-category"><a href="#" class="category-tag">Thiếu nhi</a></div>
+                            <div class="book-info">
+                                <h5 class="book-title">Dế Mèn Phiêu Lưu Ký</h5>
+                                <p class="book-author">Tô Hoài</p>
+                            </div>
+                        </div>
+                        <div class="book-card"><img src="/assets/images/nha_gia_kim.jpg" alt="Nhà Giả Kim">
+                            <div class="book-category"><a href="#" class="category-tag">Triết lý</a></div>
+                            <div class="book-info">
+                                <h5 class="book-title">Nhà Giả Kim</h5>
+                                <p class="book-author">Paulo Coelho</p>
+                            </div>
+                        </div>
+                        <div class="book-card"><img src="/assets/images/cac_chom_sao.jpg" alt="Các chòm sao">
+                            <div class="book-category"><a href="#" class="category-tag">Vũ trụ</a></div>
+                            <div class="book-info">
+                                <h5 class="book-title">Các chòm sao</h5>
+                                <p class="book-author">Đặng Vũ Tuấn Sơn</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="arrow-btn next"><i class="fas fa-chevron-right"></i></button>
             </div>
-        </div>
+
+            <div class="text-center mt-3">
+                <a href="#" class="btn btn-outline-primary px-5" data-i18n="exploreMore">Khám phá thêm</a>
+            </div>
+
+            <p class="saying mt-4 text-center" data-i18n="section4_saying">"Sách vở chứa đựng nhiều kho báu hơn mọi của
+                cải của cướp biển."
+            </p>
+        </section>
+
+        <!--section5-->
+        <section id="section5" class="section light-theme">
+            <h2 class="text-center mb-4" data-i18n="events">Sự kiện</h2>
+
+            <div class="event-carousel-wrapper">
+                <div class="event-carousel">
+                    <div class="event-card">
+                        <img src="/assets/images/event1.jpg" alt="Event 1">
+                        <div class="event-info">
+                            <h5 class="event-title">Ngày hội sách 2025</h5>
+                            <p class="event-date">20/11/2025 - Thư viện Đại học</p>
+                        </div>
+                    </div>
+                    <div class="event-card">
+                        <img src="/assets/images/event2.jpg" alt="Event 2">
+                        <div class="event-info">
+                            <h5 class="event-title">Tọa đàm Văn học Việt Nam</h5>
+                            <p class="event-date">15/12/2025 - Hội trường lớn</p>
+                        </div>
+                    </div>
+                    <div class="event-card">
+                        <img src="/assets/images/event3.jpg" alt="Event 3">
+                        <div class="event-info">
+                            <h5 class="event-title">Workshop Kỹ năng đọc hiểu</h5>
+                            <p class="event-date">05/01/2026 - Online</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <p class="saying mt-4 text-center" data-i18n="section5_saying">
+                "Kiến thức là sức mạnh – chia sẻ là lan tỏa."
+            </p>
+
+            <footer class="site-footer">
+                <div class="footer-left">
+                    <div class="footer-identity">
+                        <span class="footer-logo">lib</span>
+                        <div class="footer-copyright-social">
+                            <p class="footer-copyright" data-i18n="copyright">Copyright © 2025 TechTalk</p>
+                            <div class="footer-social-icons">
+                                <a href="#" aria-label="Github"><i class="fab fa-github"></i></a>
+                                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="footer-tagline" data-i18n="footer_tagline">Constantly creative</p>
+                </div>
+
+                <div class="footer-right">
+                    <div class="footer-column">
+                        <h4 class="column-title" data-i18n="footer_help">HELP</h4>
+                        <ul>
+                            <li><a href="#" data-i18n="footer_support">Support</a></li>
+                            <li><a href="#" data-i18n="footer_faqs">FAQs</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4 class="column-title" data-i18n="footer_team">TEAM</h4>
+                        <ul>
+                            <li><a href="#" data-i18n="footer_about">About</a></li>
+                            <li><a href="#" data-i18n="footer_contact">Contact us</a></li>
+                            <li><a href="#" data-i18n="footer_license">Our license</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </footer>
+        </section>
+
 
     </div>
 
@@ -434,6 +580,9 @@
     <script src="js/main.js"></script>
     <script src="js/section2.js"></script>
     <script src="js/section3.js"></script>
+    <script src="js/section4.js"></script>
+    <script src="js/section5.js"></script>
+
 </body>
 
 </html>

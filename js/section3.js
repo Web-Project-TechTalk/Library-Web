@@ -5,12 +5,12 @@ const translations3 = {
     vi: {
         featuredBooks: "Sách nổi bật",
         exploreMore: "Khám phá thêm",
-        quote: '"Đọc vạn quyển sách, đi vạn dặm đường."'
+        section3_saying: '"Đọc vạn quyển sách, đi vạn dặm đường."'
     },
     en: {
         featuredBooks: "Featured Books",
         exploreMore: "Explore More",
-        quote: '"Read thousands of books, travel thousands of miles."'
+        section3_saying: '"Read thousands of books, travel thousands of miles."'
     }
 };
 

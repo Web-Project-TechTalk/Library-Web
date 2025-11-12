@@ -1,0 +1,98 @@
+#section4 {
+    position: relative;
+    padding: 4rem 0;
+    background-image: radial-gradient(var(--border-color) 1px, transparent 0);
+    background-size: 20px 20px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#section4 .book-card {
+    opacity: 1 !important;
+    filter: none !important;
+    transform: scale(1);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#section4 .book-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+#section4 .book-info {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+}
+
+#section4 .book-card:hover .book-info {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+#section4 .carousel-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+#section4 .arrow-btn {
+    border: none;
+    background: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-color);
+    transition: transform 0.2s ease;
+}
+#section4 .arrow-btn:hover {
+    transform: scale(1.2);
+}
+
+#section4 .book-carousel-wrapper {
+    overflow: hidden;
+    width: 80%;
+}
+
+#section4 .book-carousel {
+    display: flex;
+    gap: 1.5rem;
+    transition: transform 0.6s ease;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* Light / Dark theme */
+#section4.light-theme {
+    --bg-color: #fff;
+    --text-color: #222;
+    --border-color: #ccc;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+#section4.dark-theme {
+    --bg-color: #1e1e1e;
+    --text-color: #eee;
+    --border-color: #555;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+/* Mobile responsive */
+@media (max-width: 991px) {
+    #section4 .book-carousel-wrapper {
+        width: 100%;
+        overflow-x: auto;
+    }
+    #section4 .book-card {
+        flex-shrink: 0;
+        width: 120px;
+    }
+}
+@media (max-width: 479px) {
+    #section4 .book-card {
+        width: 100px;
+    }
+}

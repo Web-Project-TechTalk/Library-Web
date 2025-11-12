@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
         scrollHorizontally: true,
         navigation: true,
         navigationPosition: 'right',
-        anchors: ['home', 'collections', 'news', 'about'],
+        anchors: ['home', 'news', 'featured', 'collections', 'about'],
 
         afterLoad: function(origin, destination, direction){
             const lastSectionIndex = document.querySelectorAll('.section').length - 1;
@@ -162,6 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
             home_title: "Home | Digital Library",
             login_btn: "Login",
             signup_btn: "Sign Up",
+            nav_home: "Home",
             nav_books: "Books",
             nav_books_scan: "Scanned Books",
             nav_books_online: "Online Books",
@@ -195,6 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
             home_title: "Trang Chủ | Thư Viện Số",
             login_btn: "Đăng Nhập",
             signup_btn: "Đăng Ký",
+            nav_home: "Trang chủ",
             nav_books: "Sách",
             nav_books_scan: "Sách scan",
             nav_books_online: "Sách online",

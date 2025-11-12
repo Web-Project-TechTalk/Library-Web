@@ -7,6 +7,35 @@
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+#section3 .book-card {
+    opacity: 1 !important;          /* luôn rõ */
+    filter: none !important;        /* bỏ tất cả filter */
+    mix-blend-mode: normal !important; 
+    transform: scale(1);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover phóng to và nổi bật hơn */
+#section3 .book-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+/* Thông tin sách chỉ hiện khi hover */
+#section3 .book-info {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+}
+
+#section3 .book-card:hover .book-info {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
 /* ---------- Carousel Horizontal ---------- */
 #section3 .book-carousel-wrapper.static-carousel {
     display: flex;
@@ -61,8 +90,8 @@
 
     #section3 .book-card {
         flex-shrink: 0;
-        width: 120px;                   /* co nhỏ hơn trên mobile */
-        scroll-snap-align: start;       /* snap dừng đúng vị trí */
+        width: 120px;
+        scroll-snap-align: start;
     }
 
     #section3 .book-card img {
