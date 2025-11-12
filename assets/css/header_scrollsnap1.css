@@ -1,0 +1,655 @@
+/* --- Google Fonts --- */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;900&display=swap');
+
+/* --- CSS Variables for Light & Dark Themes --- */
+:root,
+[data-bs-theme="light"] {
+    --primary-color: #000000;
+    --primary-hover-color: #333333;
+    --secondary-color: #ffffff;
+    --text-color: #212529;
+    --body-bg: #ffffff;
+    --component-bg: #ffffff;
+    --border-color: #dee2e6;
+}
+
+[data-bs-theme="dark"] {
+    --primary-color: #ffffff;
+    --primary-hover-color: #cccccc;
+    --secondary-color: #000000;
+    --text-color: #dee2e6;
+    --body-bg: #1e1e1e;
+    --component-bg: #1a1a1a;
+    --border-color: #444444;
+}
+
+/* --- Không cho phép bôi đậm chữ --- */
+body {
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    margin: 0;
+    padding: 0;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+    overflow-y: scroll;
+    
+    /* Gộp các thuộc tính từ khối thứ hai vào đây */
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--body-bg);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* --- Ngăn chặn kéo ảnh mặc định --- */
+.book-carousel img {
+    pointer-events: none;
+}
+
+/* --- Header Cố định --- */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    /* Luôn nằm trên các section */
+}
+
+main {
+    overflow-y: visible;
+    height: auto;
+}
+
+/* --- Section Styling --- */
+.section {
+    text-align: center;
+    height: 100vh;
+    scroll-snap-align: start;
+    flex-shrink: 0;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+#section1 {
+    padding-top: 56px;
+}
+
+#section4 {
+    background-color: white;
+}
+
+.saying {
+    font-style: italic;
+    text-align: center;
+    margin-top: 1rem;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+h1,
+h2 {
+    font-weight: 900;
+}
+
+.navbar-nav .nav-link {
+    font-weight: 700;
+}
+
+/* --- Tùy chỉnh các thành phần Bootstrap --- */
+.btn {
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
+    font-weight: 500;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover-color);
+    border-color: var(--primary-hover-color);
+}
+
+.btn-primary:active {
+    background-color: var(--secondary-color) !important;
+    color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    transform: scale(0.98);
+}
+
+.btn-outline-primary {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+    --bs-btn-focus-box-shadow: none;
+}
+
+.btn-outline-primary:hover {
+    background-color: #6c757d;
+    color: var(--secondary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-outline-primary:active {
+    background-color: var(--secondary-color) !important;
+    color: var(--primary-color) !important;
+    transform: scale(0.98);
+    box-shadow: none !important;
+}
+
+.btn-outline-secondary.lang-btn {
+    border-color: var(--border-color);
+    color: var(--text-color);
+}
+
+.btn-outline-secondary.lang-btn.active {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    border-color: var(--primary-color);
+}
+
+.card {
+    background-color: var(--component-bg);
+    border-color: var(--border-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.card .card-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--text-color);
+    font-weight: 700;
+}
+
+/* --- Hero Section Background Styling (ĐÃ CẬP NHẬT HOÀN TOÀN) --- */
+
+/* Áp dụng ảnh nền và lớp phủ cho section toàn màn hình */
+.hero-section {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-image: url('../images/hero_image.png');
+    background-size: cover;
+    background-position: center;
+    transition: filter 0.3s ease;
+    height: 100%;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    transition: background-color 0.3s ease;
+}
+
+
+/* Tùy chỉnh lớp phủ cho GIAO DIỆN SÁNG */
+[data-bs-theme="light"] .hero-section::before {
+    background-color: rgba(255, 255, 255, 0.6);
+}
+
+[data-bs-theme="light"] .hero-section h1,
+[data-bs-theme="light"] .hero-section .lead {
+    color: #000;
+}
+
+[data-bs-theme="light"] .hero-section .btn-outline-primary {
+    color: #000;
+    border-color: #000;
+}
+
+
+/* Tùy chỉnh lớp phủ cho GIAO DIỆN TỐI */
+[data-bs-theme="dark"] .hero-section::before {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+[data-bs-theme="dark"] .hero-section h1,
+[data-bs-theme="dark"] .hero-section .lead {
+    color: #fff;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+[data-bs-theme="dark"] .hero-section .btn-outline-primary {
+    color: #fff;
+    border-color: #fff;
+}
+
+/* Tùy chỉnh ô tìm kiếm (giữ nguyên) */
+.hero-section .input-group {
+    position: relative;
+    z-index: 2;
+}
+
+/* --- Tùy chỉnh hover cho nút Xem Tất Cả Sách --- */
+
+/* Hiệu ứng đảo màu khi di chuột vào nút */
+#all-books-hero-btn:hover {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+}
+
+/* Ghi đè cho theme tối để đảm bảo nút có chữ trắng */
+[data-bs-theme="dark"] #all-books-hero-btn {
+    color: #fff;
+    border-color: #fff;
+}
+
+[data-bs-theme="dark"] #all-books-hero-btn:hover {
+    color: #000000;
+    border-color: #fff;
+}
+
+/* --- Book Carousel Styling --- */
+.book-carousel-wrapper {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, transparent, white 10%, white 90%, transparent);
+    mask-image: linear-gradient(to right, transparent, white 10%, white 90%, transparent);
+    background-color: transparent;
+}
+
+.book-carousel {
+    display: flex;
+    gap: 1.5rem;
+    padding: 1rem 0;
+    overflow-x: auto;
+    cursor: grab;
+    /* THÊM VÀO: Đổi con trỏ chuột thành hình bàn tay */
+    /* XÓA BỎ scroll-behavior: smooth; */
+
+    /* ẨN THANH CUỘN */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.book-carousel::-webkit-scrollbar {
+    display: none;
+    /* Chrome, Safari, and Opera */
+}
+
+.book-card {
+    flex-shrink: 0;
+    /* Ngăn các card bị co lại */
+    width: 200px;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+
+    /* Hiệu ứng ban đầu: làm mờ và tối đi */
+    filter: blur(1px) grayscale(50%) brightness(0.8);
+    transform: scale(0.95);
+    transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+/* Hiệu ứng khi di chuột vào */
+.book-card:hover {
+    filter: blur(0) grayscale(0%) brightness(1);
+    transform: scale(1);
+}
+
+.book-card img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    display: block;
+}
+
+.book-card .book-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1rem 5rem 1rem 1rem;
+    /* Thêm padding bên phải */
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    color: white;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+}
+
+/* Hiệu ứng khi di chuột vào toàn bộ khung carousel */
+.book-carousel-wrapper:hover .book-card {
+    filter: blur(0) grayscale(0%) brightness(1);
+    transform: scale(1);
+}
+
+/* Thêm hiệu ứng phóng to nhẹ cho card đang được chỉ vào */
+.book-carousel-wrapper .book-card:hover {
+    transform: scale(1.05);
+    z-index: 10;
+}
+
+.book-title {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+    text-align: left;
+}
+
+.book-author {
+    font-size: 0.8rem;
+    margin-bottom: 0;
+    opacity: 0.8;
+    text-align: left;
+}
+
+/* --- Styling cho nút thể loại sách --- */
+
+.book-category {
+    position: absolute;
+    bottom: 0.75rem;
+    /* Đổi từ top sang bottom */
+    right: 0.75rem;
+    z-index: 2;
+}
+
+.category-tag {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    background-color: rgba(0, 0, 0, 0.6);
+    /* Nền đen mờ */
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 500;
+    border-radius: 50px;
+    /* Bo tròn thành hình con nhộng */
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.category-tag:hover {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    transform: scale(1.05);
+}
+
+/* Trong theme sáng, nút có thể cần màu nền khác nếu muốn */
+[data-bs-theme="light"] .category-tag:hover {
+    /* Đảm bảo màu chữ khi hover là trắng */
+    color: #fff;
+}
+
+/* Thay đổi con trỏ chuột khi kéo carousel */
+.book-carousel.active {
+    cursor: grabbing;
+    cursor: -webkit-grabbing;
+}
+
+/* --- Hiệu ứng hiện thông tin sách khi hover --- */
+
+.book-card:hover .book-info {
+    transform: translateY(0);
+}
+
+/* --- Styling cho khu vực Khám phá (Đã sửa lỗi animation) --- */
+#explore-section {
+    max-height: 0;
+    /* Mặc định không chiếm chiều cao */
+    overflow: hidden;
+    /* Ẩn nội dung bên trong */
+    opacity: 0;
+    transform: translateY(20px);
+    /* Thêm max-height vào transition */
+    transition: max-height 0.5s ease-in-out, opacity 0.5s ease, transform 0.5s ease;
+}
+
+#explore-section.visible {
+    max-height: 200px;
+    /* Chiều cao đủ lớn để chứa nội dung */
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- Styling cho hộp thoại ngẫu nhiên --- */
+#speech-bubble {
+    position: fixed;
+    /* Giữ cố định trên màn hình */
+    bottom: 20px;
+    left: 20px;
+    z-index: 1000;
+    /* Luôn nằm trên cùng */
+
+    background-color: var(--component-bg);
+    color: var(--text-color);
+    padding: 1rem;
+    border-radius: 0.75rem;
+    max-width: 250px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+
+    /* Trạng thái ẩn mặc định */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.4s ease-in-out;
+}
+
+/* "Đuôi" của hộp thoại */
+#speech-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    /* Nhô ra khỏi hộp thoại */
+    left: 25px;
+
+    border-width: 10px;
+    border-style: solid;
+    /* Mẹo tạo hình tam giác */
+    border-color: var(--component-bg) transparent transparent transparent;
+    transition: border-color 0.3s ease;
+}
+
+/* Trạng thái hiện */
+#speech-bubble.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* --- Nút Lên/Xuống --- */
+#scroll-buttons {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    /* Xếp các nút theo chiều dọc */
+    gap: 0.5rem;
+    /* Khoảng cách giữa hai nút */
+}
+
+.scroll-btn {
+    width: 40px;
+    height: 40px;
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+
+    /* Hiệu ứng ẩn/hiện */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+}
+
+.scroll-btn.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.scroll-btn:hover {
+    background-color: var(--primary-hover-color);
+    transform: scale(1.1);
+}
+
+/* *****************************************Phần đăng nhập*/
+/* === USER ICON FLAT STYLE === */
+.user-icon-btn {
+    background: transparent;
+    /* Không nền */
+    border: none;
+    color: #fff;
+    /* Icon trắng trong dark mode */
+    font-size: 1.3rem;
+    /* Kích thước vừa phải */
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.user-icon-btn:hover {
+    color: #cccccc;
+    /* Màu xanh nhấn khi hover */
+}
+
+/* Light mode */
+[data-bs-theme="light"] .user-icon-btn {
+    color: #212529;
+    /* Màu tối */
+}
+
+[data-bs-theme="light"] .user-icon-btn:hover {
+    color: #cccccc;
+    /* Giữ hover xanh cho đồng nhất */
+}
+
+/* --- CSS chung cho menu thả xuống --- */
+.dropdown-container {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-menu {
+    /* Các thuộc tính chung (bo góc, bóng đổ) */
+    display: none;
+    /* Ban đầu ẩn menu đi */
+    position: absolute;
+    top: 100%;
+    /* Đặt menu bên dưới nút chính */
+    right: 0;
+    /* Đặt menu căn lề phải với nút chính */
+    width: 250px;
+    /* Chiều rộng của menu */
+    padding: 15px;
+    background-color: #1a1a1a;
+    /* Màu nền đen sẫm */
+    border-radius: 15px;
+    /* Bo góc của menu */
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.4);
+    z-index: 1;
+    /* Đảm bảo menu nằm trên các phần tử khác */
+    text-align: center;
+    border: 1px solid #333;
+    /* Đường viền mỏng */
+}
+
+.menu-header-icon {
+    display: block;
+    text-align: center;
+    color: #999;
+    /* Màu biểu tượng đường viền */
+    margin: 10px 0;
+    text-decoration: none;
+    /* Bỏ gạch chân link */
+}
+
+.menu-title {
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+}
+
+.menu-item {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 0.5rem;
+    border: 1px solid #ced4da;
+    /* Viền chung */
+    text-decoration: none;
+}
+
+/* --- LOG OUT BUTTON (áp dụng chung cho cả 2 chế độ) --- */
+.log-out-btn {
+    background-color: #dc3545;
+    /* Đỏ đặc trưng */
+    color: white;
+    border: none;
+    margin-top: 1rem;
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.log-out-btn:hover {
+    background-color: #bb2d3b;
+    /* Màu đỏ đậm khi hover */
+}
+
+/* --- LIGHT MODE (Mặc định) --- */
+.dropdown-menu {
+    background-color: #f8f9fa;
+    /* Nền sáng */
+    color: #212529;
+    /* Chữ tối */
+}
+
+.menu-item {
+    color: #495057;
+    border-color: #adb5bd;
+}
+
+/* --- DARK MODE (Áp dụng trực tiếp lên Dropdown) --- */
+.dropdown-menu.dark-mode-menu {
+    background-color: #212529;
+    /* Nền tối như hình */
+    color: #f8f9fa;
+    /* Chữ sáng */
+}
+
+.dropdown-menu.dark-mode-menu .menu-header-icon {
+    color: #f8f9fa;
+    /* Icon sáng như hình */
+}
+
+.dropdown-menu.dark-mode-menu .menu-title {
+    color: #f8f9fa;
+}
+
+.dropdown-menu.dark-mode-menu .menu-item {
+    background-color: #343a40;
+    /* Nền button tối hơn */
+    color: #f8f9fa;
+    border-color: #495057;
+}
+
+.dropdown-menu.dark-mode-menu .log-out-btn {
+    background-color: #dc3545;
+    color: white;
+}

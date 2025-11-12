@@ -1,0 +1,194 @@
+/* ------------------------------------------- */
+/* --- SECTION 2: What's New Styling (Refactored) --- */
+/* ------------------------------------------- */
+
+/* 1. Main Container: Centering, Padding, and Dot Background Effect */
+#section2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 4rem 0;
+    overflow: hidden; /* Remove unwanted horizontal scrollbar */
+    /* Dot background effect */
+    background-image: radial-gradient(var(--border-color) 1px, transparent 0);
+    background-size: 20px 20px;
+    height: auto;
+    min-height: auto;
+}
+
+/* 2. Content Wrapper: Max Width and Layout */
+#section2 .section-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5rem;
+    max-width: 1200px;
+    width: 100%;
+    flex-wrap: wrap;
+    overflow: visible; /* Allow carousel controls to be visible */
+    height: auto;
+    min-height: auto;
+}
+
+/* 3. Typography */
+.section-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-color);
+    text-align: center;
+    margin-bottom: 2.5rem;
+    letter-spacing: 0.5px;
+}
+
+.section-saying {
+    font-style: italic;
+    text-align: center;
+    margin-top: 3rem;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+/* 4. Carousel Structure */
+.book-info-carousel-container {
+    position: relative;
+    width: 100%;
+    overflow: visible;
+}
+
+.book-info-carousel {
+    display: flex;
+    transition: transform 0.7s ease-in-out;
+}
+
+/* 5. Individual Slide and Active State */
+.book-slide {
+    min-width: 100%;
+    opacity: 0;
+    transform: translateX(50px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    pointer-events: none; /* Hide interaction by default */
+}
+
+.book-slide.active {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto; /* Enable interaction for active slide */
+}
+
+/* 6. Book Cover Styling (Left Side) */
+.book-cover-lg {
+    flex: 0 0 55%; 
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.book-cover-lg:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 35px rgba(0,0,0,0.25);
+}
+
+/* 7. Book Details Box (Right Side) */
+.book-details-box {
+    flex: 1;
+    min-width: 280px;
+    max-width: 420px;
+    background-color: var(--component-bg);
+    border: 1px solid var(--border-color);
+    padding: 2rem 2.5rem;
+    border-radius: 12px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* 8. Detail Table */
+.details-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.details-table td {
+    padding: 0.6rem 0;
+}
+
+.details-table td:first-child {
+    font-weight: 700;
+    color: var(--primary-color);
+    width: 35%;
+}
+
+.details-table td:last-child {
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+/* 9. Carousel Navigation Buttons */
+.carousel-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    z-index: 10;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.carousel-nav-btn:hover {
+    opacity: 1;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.prev-btn { left: 0; }
+.next-btn { right: 0; }
+
+/* Dark mode override for visibility */
+[data-bs-theme="dark"] .carousel-nav-btn {
+    color: var(--primary-color); /* Ensure visibility in dark mode */
+}
+
+/* 10. Scrollbar Reset (Global within section) */
+#section2 * {
+    scrollbar-width: none;
+}
+#section2 *::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hiệu ứng fade cho các slide sách */
+.book-slide {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.6s ease-in-out, visibility 0.6s ease-in-out;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.book-slide.active {
+  opacity: 1;
+  visibility: visible;
+  position: relative;
+  z-index: 2;
+}
+
+/* Đảm bảo vùng chứa sách có vị trí tương đối */
+.book-carousel {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Cố định kích thước vùng slide để tránh giật layout */
+.book-slide img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: opacity 0.6s ease-in-out;
+}
