@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="vi" data-bs-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-key="home_title">Trang Chủ | Thư Viện Số</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.20/fullpage.min.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="..\assets\css\header_scrollsnap1.css">
+    <link rel="stylesheet" href="..\assets\css\scrollsnap2.css">
+    <link rel="stylesheet" href="..\assets\css\scrollsnap3.css">
+
+</head>
+
+<body>
+    <!--nav bar-->
+    <header class="navbar navbar-expand-lg sticky-top bg-body-tertiary shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">
+                <i class="fas fa-book-reader me-2"></i>lib<sup>&copy;</sup>
+            </a>
+
+            <div class="d-flex align-items-center">
+                <button class="navbar-toggler ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            data-key="nav_books">Sách</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#" data-key="nav_books_scan">Sách scan</a></li>
+                            <li><a class="dropdown-item" href="#" data-key="nav_books_online">Sách online</a></li>
+                            <li><a class="dropdown-item" href="#" data-key="nav_books_audio">Sách nói</a></li>
+                            <li><a class="dropdown-item" href="#" data-key="nav_books_ebooks">Ebooks</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#" data-key="nav_books_all">Tất cả</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            data-key="nav_collections">Bộ sưu tập</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#" data-key="nav_collections_category">Theo thể loại</a>
+                            </li>
+                            <li><a class="dropdown-item" href="#" data-key="nav_collections_author">Theo tác giả</a>
+                            </li>
+                            <li><a class="dropdown-item" href="#" data-key="nav_collections_series">Theo bộ</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#" data-key="nav_collections_all">Tất cả</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            data-key="nav_news">Tin tức & Sự kiện</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#" data-key="nav_news_news">Tin tức</a></li>
+                            <li><a class="dropdown-item" href="#" data-key="nav_news_events">Sự kiện</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            data-key="nav_about">Giới thiệu</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#" data-key="nav_about_team">Đội ngũ</a></li>
+                            <li><a class="dropdown-item" href="#" data-key="nav_about_license">Giấy phép</a></li>
+                            <li><a class="dropdown-item" href="#" data-key="nav_about_contact">Liên lạc</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <!--user-->
+                <div class="d-lg-none mt-3 border-top pt-3">
+
+                    <div class="d-flex flex-column align-items-center mb-3">
+                        <a href="\pages\profile.html" class="menu-header-icon mb-2">
+                            <i class="fas fa-user-circle fa-4x"></i>
+                        </a>
+                        <div class="menu-title mb-3 fw-bold">GUEST</div>
+                        <a href="\pages\profile.html" class="btn btn-outline-secondary w-75 mb-2" data-key="profile">My
+                            Profile</a>
+                        <a href="#" class="btn btn-outline-secondary w-75 mb-2" data-key="books">My Books</a>
+                        <a href="#" class="btn btn-outline-secondary w-75 mb-3" data-key="settings">Settings</a>
+                        <button class="btn btn-danger w-75" onclick="logout()" data-key="logout">Log out</button>
+                    </div>
+
+                    <hr>
+
+                    <div class="d-flex justify-content-center align-items-center mt-3">
+                        <span class="me-3">Ngôn ngữ:</span>
+                        <div class="btn-group btn-group-sm me-auto" role="group">
+                            <button type="button" class="btn btn-outline-secondary lang-btn" data-lang="vi">VI</button>
+                            <button type="button" class="btn btn-outline-secondary lang-btn" data-lang="en">EN</button>
+                        </div>
+                        <span class="me-2">Giao diện:</span>
+                        <button class="btn" id="theme-switcher-btn-mobile">
+                            <i class="fas fa-moon" id="theme-icon-mobile"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="d-none d-lg-flex align-items-center">
+
+                    <div class="dropdown-container">
+                        <button class="menu-toggle-button user-icon-btn" onclick="toggleMenu()">
+                            <i class="fas fa-user-circle"></i>
+                        </button>
+                        <div class="dropdown-menu" id="userDropdown">
+                            <a href="\pages\profile.html" class="menu-header-icon">
+                                <i class="fas fa-user-circle fa-4x"></i>
+                            </a>
+                            <div class="menu-title">GUEST</div>
+                            <a href="\pages\profile.html" class="menu-item" data-key="profile">My Profile</a>
+                            <a href="#" class="menu-item" data-key="books">My Books</a>
+                            <a href="#" class="menu-item" data-key="settings">Settings</a>
+                            <button class="menu-item log-out-btn" onclick="logout()" data-key="logout">Log out</button>
+                        </div>
+                    </div>
+
+                    <div class="vr mx-3"></div>
+
+                    <div class="btn-group btn-group-sm me-2" role="group">
+                        <button type="button" class="btn btn-outline-secondary lang-btn" data-lang="vi">VI</button>
+                        <button type="button" class="btn btn-outline-secondary lang-btn" data-lang="en">EN</button>
+                    </div>
+
+                    <button class="btn" id="theme-switcher-btn">
+                        <i class="fas fa-moon" id="theme-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div id="speech-bubble">
+        <p id="speech-bubble-text"></p>
+    </div>
+
+    <div id="fullpage">
+        <!--section 1-->
+        <div class="section fp-auto-height" id="section1">
+            <main>
+                <section class="hero-section">
+                    <div class="container pt-3 pb-4">
+                        <div class="row py-lg-5 justify-content-center">
+                            <div class="col-lg-8 col-md-10 text-center">
+
+                                <h1 class="fw-light">
+                                    <span class="d-lg-none fw-bold" data-key="hero_title_mobile">Chào mừng</span>
+                                    <span class="d-none d-lg-inline fw-bold" data-key="hero_title_desktop">Chào mừng đến
+                                        với thư viện số</span>
+                                </h1>
+                                <p class="lead" data-key="hero_description">Tìm kiếm và đọc hàng ngàn đầu sách, tài liệu
+                                    miễn phí.</p>
+
+                                <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mt-4">
+                                    <a id="all-books-hero-btn" href="#"
+                                        class="btn btn-outline-primary btn-lg px-4 gap-3" data-key="all_books_btn">Xem
+                                        Tất Cả Sách</a>
+                                </div>
+
+                                <div class="input-group mt-4 shadow-lg mx-auto" style="max-width: 700px;">
+                                    <input type="text" class="form-control form-control-lg"
+                                        data-key-placeholder="search_placeholder"
+                                        placeholder="Nhập tên sách, tác giả...">
+                                    <button class="btn btn-primary" type="button">
+                                        <i class="fas fa-search me-1"></i> <span data-key="search_btn">Tìm Kiếm</span>
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+
+            <div class="container-fluid">
+                <div class="book-carousel-wrapper">
+                    <div class="book-carousel" id="book-carousel">
+                        <div class="book-card">
+                            <img src="/assets/images/mat_biec.jpg" alt="Bìa sách">
+                            <div class="book-category">
+                                <a href="#" class="category-tag">Tiểu thuyết</a>
+                            </div>
+                            <div class="book-info">
+                                <h5 class="book-title">Mắt biếc</h5>
+                                <p class="book-author">Nguyễn Nhật Ánh</p>
+                            </div>
+                        </div>
+                        <div class="book-card">
+                            <img src="/assets/images/tu_tuong.jpg" alt="Bìa sách">
+                            <div class="book-category">
+                                <a href="#" class="category-tag">Triết học</a>
+                            </div>
+                            <div class="book-info">
+                                <h5 class="book-title">Tư tưởng Hồ Chí Minh</h5>
+                                <p class="book-author">PGS.TS. Nguyễn Ngọc Khá, ThS. Nguyễn Huỳnh Bích Phương</p>
+                            </div>
+                        </div>
+                        <div class="book-card">
+                            <img src="/assets/images/giai_tich.jpg" alt="Bìa sách">
+                            <div class="book-category">
+                                <a href="#" class="category-tag">Học thuật</a>
+                            </div>
+                            <div class="book-info">
+                                <h5 class="book-title">Giải tích II</h5>
+                                <p class="book-author">Đại học Bách khoa Hà Nội</p>
+                            </div>
+                        </div>
+                        <div class="book-card">
+                            <img src="/assets/images/de_men.jpg" alt="Bìa sách">
+                            <div class="book-category">
+                                <a href="#" class="category-tag">Thiếu nhi</a>
+                            </div>
+                            <div class="book-info">
+                                <h5 class="book-title">Dế mèn phiêu lưu ký</h5>
+                                <p class="book-author">Tô Hoài</p>
+                            </div>
+                        </div>
+                        <div class="book-card">
+                            <img src="/assets/images/tan_uoc.jpg" alt="Bìa sách">
+                            <div class="book-category">
+                                <a href="#" class="category-tag">Tôn giáo</a>
+                            </div>
+                            <div class="book-info">
+                                <h5 class="book-title">Tân Ước</h5>
+                                <p class="book-author">Linh mục Nguyễn Thế Thuấn</p>
+                            </div>
+                        </div>
+                        <div class="book-card">
+                            <img src="/assets/images/dien_bien.jpg" alt="Bìa sách">
+                            <div class="book-category">
+                                <a href="#" class="category-tag">Lịch sử</a>
+                            </div>
+                            <div class="book-info">
+                                <h5 class="book-title">Chiến thắng Điện Biên Phủ</h5>
+                                <p class="book-author">Hoàng Minh Phương</p>
+                            </div>
+                        </div>
+                        <div class="book-card">
+                            <img src="/assets/images/cau_hoi.jpg" alt="Bìa sách">
+                            <div class="book-category">
+                                <a href="#" class="category-tag">Khám phá</a>
+                            </div>
+                            <div class="book-info">
+                                <h5 class="book-title">1 vạn câu hỏi vì sao</h5>
+                                <p class="book-author">Nhiều tác giả</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="explore-section" class="container text-center mt-4">
+                <a href="#" class="btn btn-outline-primary btn-lg px-5" data-key="explore_btn">Khám phá thêm thể
+                    loại</a>
+            </div>
+
+            <p class="saying" data-key="saying_1">Chúng ta đọc sách không phải thuộc lòng từng câu chữ, mà để thấu hiểu
+                sâu sắc và vận dụng vào cuộc sống."</p>
+        </div>
+
+        <!--section2-->
+        <div class="section" id="section2">
+            <h2 class="text-center fw-bold mb-5 section2_title" data-key="section2_title">Sách mới</h2>
+            <!-- GÓI TOÀN BỘ CAROUSEL TRONG 1 KHỐI -->
+            <div class="section-content container h-100 py-5">
+
+                <div class="book-info-carousel-container">
+                    <div class="book-info-carousel">
+
+                        <!-- Nút điều hướng -->
+                        <button class="carousel-nav-btn prev-btn" aria-label="Previous book">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+
+                        <!-- Slide (1) -->
+                        <div class="book-slide active" data-book-id="1">
+                            <div class="row align-items-center justify-content-center">
+                                <div class="col-md-4 col-sm-6 text-center mb-4 mb-md-0">
+                                    <img id="book-cover-1" src="assets/images/thanthoai_va_truyenthuyet.jpg"
+                                        alt="Bìa sách Thần Thoại Truyền Thuyết" class="book-cover-lg shadow-lg">
+                                </div>
+
+                                <div class="col-md-6 col-sm-8">
+                                    <div class="book-details-box shadow">
+                                        <table class="table table-borderless details-table">
+                                            <tbody id="book-details-body-1"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Slide (2) — THÊM slide trống cho hiệu ứng trượt -->
+                        <div class="book-slide" data-book-id="2">
+                            <div class="row align-items-center justify-content-center">
+                                <div class="col-md-4 col-sm-6 text-center mb-4 mb-md-0">
+                                    <img id="book-cover-2" src="assets/images/sach_2_placeholder.jpg"
+                                        alt="Bìa sách khác" class="book-cover-lg shadow-lg">
+                                </div>
+
+                                <div class="col-md-6 col-sm-8">
+                                    <div class="book-details-box shadow">
+                                        <table class="table table-borderless details-table">
+                                            <tbody id="book-details-body-2"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Nút điều hướng -->
+                        <button class="carousel-nav-btn next-btn" aria-label="Next book">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ĐƯA QUOTE RA KHỎI .section-content -->
+            <p class="section-saying mt-5" data-key="section2_saying">
+                "Think before you speak. Read before you think."
+            </p>
+        </div>
+
+        <!--section 3-->
+        <section id="section3" class="section light-theme">
+            <h2 class="text-center mb-4" data-i18n="featuredBooks">Sách nổi bật</h2>
+            <div class="book-carousel-wrapper static-carousel">
+                <div class="book-carousel">
+                    <div class="book-card">
+                        <img src="/assets/images/dac-nhan-tam.jpg" alt="Đắc Nhân Tâm">
+                        <div class="book-category">
+                            <a href="#" class="category-tag">Kỹ năng</a>
+                        </div>
+                        <div class="book-info">
+                            <h5 class="book-title">Đắc Nhân Tâm</h5>
+                            <p class="book-author">Dale Carnegie</p>
+                        </div>
+                    </div>
+                    <div class="book-card">
+                        <img src="/assets/images/nha_gia_kim.jpg" alt="Nhà Giả Kim">
+                        <div class="book-category">
+                            <a href="#" class="category-tag">Tiểu thuyết</a>
+                        </div>
+                        <div class="book-info">
+                            <h5 class="book-title">Nhà Giả Kim</h5>
+                            <p class="book-author">Paulo Coelho</p>
+                        </div>
+                    </div>
+                    <div class="book-card">
+                        <img src="/assets/images/nhat_ky_trong_tu.jpg" alt="Nhật ký trong tù">
+                        <div class="book-category">
+                            <a href="#" class="category-tag">Nhật ký</a>
+                        </div>
+                        <div class="book-info">
+                            <h5 class="book-title">Nhật ký trong tù</h5>
+                            <p class="book-author">Hồ Chí Minh</p>
+                        </div>
+                    </div>
+                    <div class="book-card">
+                        <img src="/assets/images/triet_hoc.jpg" alt="Bìa sách">
+                        <div class="book-category">
+                            <a href="#" class="category-tag">Triết học</a>
+                        </div>
+                        <div class="book-info">
+                            <h5 class="book-title">Triết học Mác-Lênin</h5>
+                            <p class="book-author">PGS.TS. Đặn Quang Định</p>
+                        </div>
+                    </div>
+                    <div class="book-card">
+                        <img src="/assets/images/sherlock_holmes.jpg" alt="Bìa sách">
+                        <div class="book-category">
+                            <a href="#" class="category-tag">Thần bí, hư cấu</a>
+                        </div>
+                        <div class="book-info">
+                            <h5 class="book-title">Những cuộc phiêu lưu của sherlock Holmes</h5>
+                            <p class="book-author">Arthur Conan Doyle</p>
+                        </div>
+                    </div>
+                    <div class="book-card">
+                        <img src="/assets/images/truyen_kieu.jpg" alt="Bìa sách">
+                        <div class="book-category">
+                            <a href="#" class="category-tag">Truyện thơ</a>
+                        </div>
+                        <div class="book-info">
+                            <h5 class="book-title">Truyện Kiều</h5>
+                            <p class="book-author">Nguyễn Du</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-3">
+                <a href="#" class="btn btn-outline-primary px-5" data-i18n="exploreMore">Khám phá thêm</a>
+            </div>
+
+            <p class="saying mt-4 text-center" data-i18n="quote">"Đọc vạn quyển sách, đi vạn dặm đường."</p>
+        </section>
+
+<!--chinh section4 thi nho xoa background o css header_...-->
+        <div class="section" id="section4">
+            <div class="d-flex justify-content-center align-items-center h-100">
+                <h1>Trang 4</h1>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="scroll-buttons">
+        <a id="scroll-up-btn" class="scroll-btn" title="Lên trên cùng"><i class="fas fa-arrow-up"></i></a>
+        <a id="scroll-down-btn" class="scroll-btn" title="Xuống dưới cùng"><i class="fas fa-arrow-down"></i></a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.20/fullpage.min.js"></script>
+
+    <script src="js/main.js"></script>
+    <script src="js/section2.js"></script>
+    <script src="js/section3.js"></script>
+</body>
+
+</html>
