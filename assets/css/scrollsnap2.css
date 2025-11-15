@@ -8,7 +8,8 @@
     flex-direction: column;
     align-items: center;
     padding: 4rem 0;
-    overflow: hidden; /* Remove unwanted horizontal scrollbar */
+    overflow: hidden;
+    /* Remove unwanted horizontal scrollbar */
     /* Dot background effect */
     background-image: radial-gradient(var(--border-color) 1px, transparent 0);
     background-size: 20px 20px;
@@ -25,7 +26,8 @@
     max-width: 1200px;
     width: 100%;
     flex-wrap: wrap;
-    overflow: visible; /* Allow carousel controls to be visible */
+    overflow: visible;
+    /* Allow carousel controls to be visible */
     height: auto;
     min-height: auto;
 }
@@ -55,48 +57,87 @@
     overflow: visible;
 }
 
+/* Hiệu ứng fade cho các slide sách */
+/* Dùng selector .book-info-carousel-container .book-info-slide để đảm bảo chỉ áp dụng cho section 2 */
+.book-info-carousel-container .book-info-slide {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.6s ease-in-out, visibility 0.6s ease-in-out;
+    /* Quan trọng: Absolute position để các slide chồng lên nhau */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding-left: 5rem;
+    /* Thêm padding để tạo khoảng trống cho nút prev */
+    padding-right: 5rem;
+    /* Thêm padding để tạo khoảng trống cho nút next */
+}
+
+.book-info-carousel-container .book-info-slide.active {
+    opacity: 1;
+    visibility: visible;
+    /* Quan trọng: Đổi về relative để chiếm không gian trong container */
+    position: relative;
+    z-index: 2;
+}
+
+/* Đảm bảo vùng chứa sách có vị trí tương đối */
+.book-info-carousel-container .book-carousel {
+    position: relative;
+    overflow: hidden;
+    /* Đảm bảo chiều cao được thiết lập từ các slide con */
+    height: auto;
+}
+
+/* Fix height collapse for carousel */
 .book-info-carousel {
-    display: flex;
-    transition: transform 0.7s ease-in-out;
+    position: relative;
+    overflow: hidden;
+    min-height: 400px;
+    /* Default min-height to avoid initial collapse */
 }
 
 /* 5. Individual Slide and Active State */
+/* (Phần này bị trùng, có thể bỏ, nhưng giữ lại để không làm hỏng code gốc nếu có) */
 .book-slide {
     min-width: 100%;
     opacity: 0;
     transform: translateX(50px);
     transition: opacity 0.6s ease, transform 0.6s ease;
-    pointer-events: none; /* Hide interaction by default */
+    pointer-events: none;
+    /* Hide interaction by default */
 }
 
 .book-slide.active {
     opacity: 1;
     transform: translateX(0);
-    pointer-events: auto; /* Enable interaction for active slide */
+    pointer-events: auto;
+    /* Enable interaction for active slide */
 }
 
 /* 6. Book Cover Styling (Left Side) */
 .book-cover-lg {
-    flex: 0 0 55%; 
+    max-width: 350px;
+    /* Giới hạn chiều rộng để phù hợp với bố cục */
     width: 100%;
-    max-width: 600px;
     height: auto;
     border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     transition: transform 0.3s ease;
     cursor: pointer;
 }
 
 .book-cover-lg:hover {
     transform: scale(1.05);
-    box-shadow: 0 8px 35px rgba(0,0,0,0.25);
+    box-shadow: 0 8px 35px rgba(0, 0, 0, 0.25);
 }
 
 /* 7. Book Details Box (Right Side) */
 .book-details-box {
-    flex: 1;
-    min-width: 280px;
-    max-width: 420px;
+    width: 100%;
+    max-width: 450px;
+    /* Tăng max-width để trông cân đối hơn */
     background-color: var(--component-bg);
     border: 1px solid var(--border-color);
     padding: 2rem 2.5rem;
@@ -117,7 +158,8 @@
 .details-table td:first-child {
     font-weight: 700;
     color: var(--primary-color);
-    width: 35%;
+    width: 40%;
+    /* Tăng chiều rộng cột nhãn */
 }
 
 .details-table td:last-child {
@@ -145,50 +187,82 @@
     transform: translateY(-50%) scale(1.1);
 }
 
-.prev-btn { left: 0; }
-.next-btn { right: 0; }
+.prev-btn {
+    left: 0;
+}
+
+.next-btn {
+    right: 0;
+}
 
 /* Dark mode override for visibility */
 [data-bs-theme="dark"] .carousel-nav-btn {
-    color: var(--primary-color); /* Ensure visibility in dark mode */
+    color: var(--primary-color);
+    /* Ensure visibility in dark mode */
 }
 
 /* 10. Scrollbar Reset (Global within section) */
 #section2 * {
     scrollbar-width: none;
 }
+
 #section2 *::-webkit-scrollbar {
     display: none;
 }
 
 /* Hiệu ứng fade cho các slide sách */
-.book-slide {
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.6s ease-in-out, visibility 0.6s ease-in-out;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
+.book-info-slide {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.6s ease-in-out, visibility 0.6s ease-in-out;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
 }
 
-.book-slide.active {
-  opacity: 1;
-  visibility: visible;
-  position: relative;
-  z-index: 2;
+.book-info-slide.active {
+    opacity: 1;
+    visibility: visible;
+    position: relative;
+    z-index: 2;
 }
 
 /* Đảm bảo vùng chứa sách có vị trí tương đối */
 .book-carousel {
-  position: relative;
-  overflow: hidden;
+    position: relative;
+    overflow: hidden;
 }
 
 /* Cố định kích thước vùng slide để tránh giật layout */
 .book-slide img {
-  display: block;
-  width: 100%;
-  height: auto;
-  transition: opacity 0.6s ease-in-out;
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: opacity 0.6s ease-in-out;
+}
+
+/* MEDIA QUERY: Đảo ngược thứ tự cột trên màn hình nhỏ và điều chỉnh nút */
+@media (max-width: 991.98px) {
+    .book-info-carousel-container .book-info-slide {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .prev-btn {
+        left: 5px;
+    }
+
+    .next-btn {
+        right: 5px;
+    }
+
+    /* Đảo ngược thứ tự cột để ảnh lên trên (order-md-1 lên 1, order-md-2 lên 2)*/
+    .book-info-slide .order-md-1 {
+        order: 1 !important;
+    }
+
+    .book-info-slide .order-md-2 {
+        order: 2 !important;
+    }
 }

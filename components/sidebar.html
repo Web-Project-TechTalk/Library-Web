@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <div class="search-overlay" id="searchOverlay"></div>
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <a class="navbar-brand" href="../index.html">
+                lib<sup class="copyright">©</sup> <span class="text-danger">Books</span>
+            </a>
+            <button type="button" class="btn-close" id="sidebarCloseBtn">
+                <span class="toggler-icon top-bar"></span>
+                <span class="toggler-icon middle-bar"></span>
+                <span class="toggler-icon bottom-bar"></span>
+            </button>
+        </div>
+        <ul class="list-unstyled components">
+            <li><a href="/pages/dashboard.html" id="sidebar-home" data-lang-key="home"><i class="fas fa-home"></i> Home</a></li>
+            <li>
+                <a href="#followSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle" id="sidebar-follow" data-lang-key="follow">
+                    <i class="fas fa-book-reader"></i> Follow
+                </a>
+                <ul class="collapse list-unstyled" id="followSubmenu">
+                    <li><a href="#" id="sidebar-reading-history" data-lang-key="readingHistory">Reading history</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#titlesSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle" id="sidebar-titles" data-lang-key="titles">
+                    <i class="fas fa-book"></i> Titles
+                </a>
+                <ul class="collapse list-unstyled" id="titlesSubmenu">
+                    <li><a href="#" id="sidebar-all-books" data-lang-key="allBooks">All Books</a></li>
+                    <li><a href="#" id="sidebar-adv-search" data-lang-key="advSearch">Advance search</a></li>
+                    <li><a href="#" id="sidebar-recent-add" data-lang-key="recentAdd">Recently Added</a></li>
+                    <li><a href="#" id="sidebar-random" data-lang-key="random">Random</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#libSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle" id="sidebar-lib" data-lang-key="lib">
+                    <i class="fas fa-university"></i> Lib
+                </a>
+                <ul class="collapse list-unstyled" id="libSubmenu">
+                    <li><a href="#" id="sidebar-guidelines" data-lang-key="guidelines">Guidelines</a></li>
+                    <li><a href="#" id="sidebar-announce" data-lang-key="announcement">Announcement</a></li>
+                    <li><a href="#" id="sidebar-about" data-lang-key="aboutUs">About us</a></li>
+                    <li><a href="#" id="sidebar-contact" data-lang-key="contact">Contact</a></li>
+                    <li><a href="#" id="sidebar-advertise" data-lang-key="advertise">Advertise</a></li>
+                </ul>
+            </li>
+        </ul>
+        <div class="sidebar-footer">
+            <a href="#" class="me-3"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="me-3"><i class="fab fa-github"></i></a>
+            <a href="#"><i class="fab fa-discord"></i></a>
+        </div>
+    </nav>
+</body>
+</html>

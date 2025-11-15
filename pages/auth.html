@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>libkey - Đăng nhập / Đăng ký</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/auth.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // Khởi tạo client 
+        // Đặt file này ở nơi an toàn, ví dụ: supabase-client.js
+        // const { createClient } = supabase
+        // const _supabase = createClient('URL_DEN_SUPABASE', 'YOUR_ANON_KEY')
+        
+        // Hoặc để demo nhanh (không khuyến khích cho production):
+        // window.supabase = supabase.createClient('URL_DEN_SUPABASE', 'YOUR_ANON_KEY');
+    </script>
+    </head>
+<body class="auth-background">
+
+    <div class="container">
+        <div class="row min-vh-100 justify-content-center align-items-center">
+            <div class="col-md-7 col-lg-6">
+                <div class="card shadow-lg border-0 rounded-3">
+                    <div class="card-body p-4 p-sm-5">
+                        
+                        <h2 class="text-center mb-4 fw-bold text-dark">
+                            lib<span class="text-danger">key</span>
+                        </h2>
+
+                        <div id="status" class="mb-3"></div>
+                        <ul class="nav nav-pills nav-fill mb-4" id="authTabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="login-tab-btn" data-bs-toggle="tab" data-bs-target="#login-pane" type="button" role="tab" data-lang-key="loginTitle">Đăng nhập</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="register-tab-btn" data-bs-toggle="tab" data-bs-target="#register-pane" type="button" role="tab" data-lang-key="registerTitle">Đăng ký</button>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content" id="authTabsContent">
+                            <div class="tab-pane fade" id="forgot-pane" role="tabpanel">
+    
+                                <h5 class="card-title text-center mb-4 fw-light fs-5" 
+                                    data-lang-key="forgotPasswordTitle">Khôi phục mật khẩu</h5>
+                                
+                                <form id="forgot-form">
+                                    <p class="text-secondary small mb-3" 
+                                    data-lang-key="forgotPasswordSubtitle">
+                                        Nhập email của bạn, chúng tôi sẽ gửi một liên kết để đặt lại mật khẩu.
+                                    </p>
+                                    
+                                    <div class="form-floating mb-3">
+                                        <input type="email" class="form-control" id="forgot-email" 
+                                            required placeholder=" ">
+                                        <label for="forgot-email" 
+                                            data-lang-key="emailLabel">Địa chỉ email</label>
+                                    </div>
+
+                                    <div class="d-grid">
+                                        <button class="btn btn-dark btn-lg fw-bold" type="submit" 
+                                                id="forgot-button" 
+                                                data-lang-key="sendResetLinkButton">
+                                            Gửi link khôi phục
+                                        </button>
+                                    </div>
+                                    
+                                    <hr class="my-4">
+                                    
+                                    <div class="text-center">
+                                        <a href="#" class="small text-decoration-none" 
+                                        id="back-to-login-link" 
+                                        data-lang-key="backToLogin">
+                                            Quay về Đăng nhập
+                                        </a>
+                                    </div>
+                                </form>
+                            </div>
+                            
+                            <div class="tab-pane fade show active" id="login-pane" role="tabpanel">
+                                <form id="login-form">
+                                    <div class="form-floating mb-3">
+                                        <input type="email" class="form-control" id="login-email" placeholder=" " required>
+                                        <label for="login-email" data-lang-key="emailLabel">Địa chỉ email</label>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <input type="password" class="form-control" id="login-password" placeholder=" " required>
+                                        <label for="login-password" data-lang-key="passwordLabel">Mật khẩu</label>
+                                    </div>
+                                    
+                                    <div class="text-end mb-3">
+                                        <a href="#" class="small text-decoration-none" 
+                                            id="forgot-password-link" 
+                                            style="color: #333;" 
+                                            data-lang-key="forgotPassword">
+                                            Quên mật khẩu?
+                                        </a>
+                                    </div>
+
+                                    <div class="d-grid">
+                                        <button class="btn btn-dark btn-lg fw-bold" type="submit" id="login-button" data-lang-key="loginButton">Đăng nhập</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="tab-pane fade" id="register-pane" role="tabpanel">
+                                <form id="register-form">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" id="register-full_name" placeholder=" " required>
+                                        <label for="register-full_name" data-lang-key="fullNameLabel">Họ và tên</label>
+                                    </div>
+                                    
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" id="register-username" placeholder=" " required>
+                                        <label for="register-username" data-lang-key="usernameLabel">Tên đăng nhập</label>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <input type="email" class="form-control" id="register-email" placeholder=" " required>
+                                        <label for="register-email" data-lang-key="emailLabel">Địa chỉ email</label>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <input type="password" class="form-control" id="register-password" placeholder=" " required>
+                                        <label for="register-password" data-lang-key="passwordLabel">Mật khẩu</label>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <input type="password" class="form-control" id="register-confirm-password" placeholder=" " required>
+                                        <label for="register-confirm-password" data-lang-key="confirmPasswordLabel">Xác nhận mật khẩu</label>
+                                    </div>
+                                    <div class="d-grid">
+                                        <button class="btn btn-outline-dark btn-lg fw-bold" type="submit" id="register-button" data-lang-key="registerButton">Tạo tài khoản</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script src="/js/app-ui.js" defer></script>
+    <script type="module" src="/js/auth.js"></script> 
+</body>
+</html>

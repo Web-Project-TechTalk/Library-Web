@@ -29,14 +29,47 @@
             </a>
 
             <div class="d-flex align-items-center">
-                <button class="navbar-toggler ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <div class="d-lg-none">
+
+                    <div id="auth-buttons-mobile">
+                        <a href="/pages/auth.html" class="btn btn-outline-primary btn-sm me-1" data-key="login_btn">Đăng
+                            Nhập</a>
+                        <a href="/pages/auth.html" class="btn btn-primary btn-sm" data-key="signup_btn">Đăng Ký</a>
+                    </div>
+
+                    <div class="nav-item dropdown d-none" id="profile-dropdown-mobile">
+                        <a class="nav-link dropdown-toggle p-0" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <img id="mobile-user-avatar" src="/assets/images/logo.gif" alt="Avatar"
+                                class="rounded-circle" width="30" height="30">
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" style="position: absolute;">
+                            <li><a class="dropdown-item" href="../pages/profile.html" data-key="profile">Hồ sơ của
+                                    tôi</a></li>
+                            <li><a class="dropdown-item" href="../pages/profile.html#favorites" data-key="books">Sách
+                                    của tôi</a></li>
+                            <li><a class="dropdown-item" href="#" data-key="settings">Cài đặt</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#" id="logout-btn-mobile" data-key="logout">Đăng xuất</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <button class="navbar-toggler ms-2" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
             </div>
 
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav mx-auto">
-                    <a class="nav-link" href="#" role="button" data-key="nav_home">Trang chủ</a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#home" data-key="nav_home">Trang chủ</a>
+                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                             data-key="nav_books">Sách</a>
@@ -84,65 +117,44 @@
                         </ul>
                     </li>
                 </ul>
-                <!--user-->
-                <div class="d-lg-none mt-3 border-top pt-3">
+            </div>
 
-                    <div class="d-flex flex-column align-items-center mb-3">
-                        <a href="\pages\profile.html" class="menu-header-icon mb-2">
-                            <i class="fas fa-user-circle fa-4x"></i>
-                        </a>
-                        <div class="menu-title mb-3 fw-bold">GUEST</div>
-                        <a href="\pages\profile.html" class="btn btn-outline-secondary w-75 mb-2" data-key="profile">My
-                            Profile</a>
-                        <a href="#" class="btn btn-outline-secondary w-75 mb-2" data-key="books">My Books</a>
-                        <a href="#" class="btn btn-outline-secondary w-75 mb-3" data-key="settings">Settings</a>
-                        <button class="btn btn-danger w-75" onclick="logout()" data-key="logout">Log out</button>
-                    </div>
+            <div class="d-none d-lg-flex align-items-center">
 
-                    <hr>
-
-                    <div class="d-flex justify-content-center align-items-center mt-3">
-                        <span class="me-3">Ngôn ngữ:</span>
-                        <div class="btn-group btn-group-sm me-auto" role="group">
-                            <button type="button" class="btn btn-outline-secondary lang-btn" data-lang="vi">VI</button>
-                            <button type="button" class="btn btn-outline-secondary lang-btn" data-lang="en">EN</button>
-                        </div>
-                        <span class="me-2">Giao diện:</span>
-                        <button class="btn" id="theme-switcher-btn-mobile">
-                            <i class="fas fa-moon" id="theme-icon-mobile"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="d-none d-lg-flex align-items-center">
-
-                    <div class="dropdown-container">
-                        <button class="menu-toggle-button user-icon-btn" onclick="toggleMenu()">
-                            <i class="fas fa-user-circle"></i>
-                        </button>
-                        <div class="dropdown-menu" id="userDropdown">
-                            <a href="\pages\profile.html" class="menu-header-icon">
-                                <i class="fas fa-user-circle fa-4x"></i>
-                            </a>
-                            <div class="menu-title">GUEST</div>
-                            <a href="\pages\profile.html" class="menu-item" data-key="profile">My Profile</a>
-                            <a href="#" class="menu-item" data-key="books">My Books</a>
-                            <a href="#" class="menu-item" data-key="settings">Settings</a>
-                            <button class="menu-item log-out-btn" onclick="logout()" data-key="logout">Log out</button>
-                        </div>
-                    </div>
-
+                <div id="auth-buttons-desktop" class="d-flex align-items-center">
+                    <a href="/pages/auth.html" class="btn btn-outline-primary me-2" data-key="login_btn">Đăng Nhập</a>
+                    <a href="/pages/auth.html" class="btn btn-primary" data-key="signup_btn">Đăng Ký</a>
                     <div class="vr mx-3"></div>
-
-                    <div class="btn-group btn-group-sm me-2" role="group">
-                        <button type="button" class="btn btn-outline-secondary lang-btn" data-lang="vi">VI</button>
-                        <button type="button" class="btn btn-outline-secondary lang-btn" data-lang="en">EN</button>
-                    </div>
-
-                    <button class="btn" id="theme-switcher-btn">
-                        <i class="fas fa-moon" id="theme-icon"></i>
-                    </button>
                 </div>
+
+                <div class="nav-item dropdown d-none me-3" id="profile-dropdown-desktop">
+                    <a class="nav-link dropdown-toggle d-flex align-items-center p-0" href="#" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <img id="desktop-user-avatar" src="/assets/images/logo.gif" alt="Avatar"
+                            class="rounded-circle me-2" width="30" height="30">
+                        <span id="desktop-user-name" class="fw-bold">Tên User</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="../pages/profile.html" data-key="profile">Hồ sơ của tôi</a>
+                        </li>
+                        <li><a class="dropdown-item" href="../pages/profile.html#favorites" data-key="books">Sách của
+                                tôi</a></li>
+                        <li><a class="dropdown-item" href="#" data-key="settings">Cài đặt</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#" id="logout-btn-desktop" data-key="logout">Đăng xuất</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="btn-group btn-group-sm me-2" role="group">
+                    <button type="button" class="btn btn-outline-secondary lang-btn" data-lang="vi">VI</button>
+                    <button type="button" class="btn btn-outline-secondary lang-btn" data-lang="en">EN</button>
+                </div>
+                <button class="btn" id="theme-switcher-btn">
+                    <i class="fas fa-moon" id="theme-icon"></i>
+                </button>
             </div>
         </div>
     </header>
@@ -165,13 +177,12 @@
                                     <span class="d-none d-lg-inline fw-bold" data-key="hero_title_desktop">Chào mừng đến
                                         với thư viện số</span>
                                 </h1>
-                                <p class="lead" data-key="hero_description">Tìm kiếm và đọc hàng ngàn đầu sách, tài liệu
-                                    miễn phí.</p>
+                                <p class="lead" data-key="hero_description">Bạn có thể tìm mọi loại sách ở đây</p>
 
                                 <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mt-4">
                                     <a id="all-books-hero-btn" href="#"
-                                        class="btn btn-outline-primary btn-lg px-4 gap-3" data-key="all_books_btn">Xem
-                                        Tất Cả Sách</a>
+                                        class="btn btn-outline-primary btn-lg px-4 gap-3" data-key="all_books_btn">Tất
+                                        Cả Sách</a>
                                 </div>
 
                                 <div class="input-group mt-4 shadow-lg mx-auto" style="max-width: 700px;">
@@ -277,67 +288,56 @@
 
         <!--section2-->
         <div class="section" id="section2">
-            <h2 class="text-center fw-bold mb-5 section2_title" data-key="section2_title">Sách mới</h2>
-            <!-- GÓI TOÀN BỘ CAROUSEL TRONG 1 KHỐI -->
-            <div class="section-content container h-100 py-5">
+            <h2 class="text-center fw-bold mb-5 section2_title" data-key="new_books_title">Sách mới</h2>
 
+            <div class="container py-5">
                 <div class="book-info-carousel-container">
                     <div class="book-info-carousel">
 
-                        <!-- Nút điều hướng -->
-                        <button class="carousel-nav-btn prev-btn" aria-label="Previous book">
+                        <button class="carousel-nav-btn prev-btn" aria-label="Previous">
                             <i class="fas fa-chevron-left"></i>
                         </button>
 
-                        <!-- Slide (1) -->
-                        <div class="book-slide active" data-book-id="1">
-                            <div class="row align-items-center justify-content-center">
-                                <div class="col-md-4 col-sm-6 text-center mb-4 mb-md-0">
-                                    <img id="book-cover-1" src="assets/images/thanthoai_va_truyenthuyet.jpg"
-                                        alt="Bìa sách Thần Thoại Truyền Thuyết" class="book-cover-lg shadow-lg">
+                        <div class="row book-info-slide active">
+                            <div class="col-md-6 order-md-2 order-2 d-flex align-items-center justify-content-center">
+                                <div class="book-details-box shadow">
+                                    <table class="table table-borderless details-table">
+                                        <tbody id="book-details-body-1">
+                                        </tbody>
+                                    </table>
                                 </div>
-
-                                <div class="col-md-6 col-sm-8">
-                                    <div class="book-details-box shadow">
-                                        <table class="table table-borderless details-table">
-                                            <tbody id="book-details-body-1"></tbody>
-                                        </table>
-                                    </div>
-                                </div>
+                            </div>
+                            <div class="col-md-6 order-md-1 order-1 d-flex justify-content-center align-items-center">
+                                <img id="book-cover-1" src="/assets/images/thanthoai_va_truyenthuyet.jpg" alt="Bìa sách"
+                                    class="book-cover-lg shadow-lg">
                             </div>
                         </div>
 
-                        <!-- Slide (2) — THÊM slide trống cho hiệu ứng trượt -->
-                        <div class="book-slide" data-book-id="2">
-                            <div class="row align-items-center justify-content-center">
-                                <div class="col-md-4 col-sm-6 text-center mb-4 mb-md-0">
-                                    <img id="book-cover-2" src="assets/images/sach_2_placeholder.jpg"
-                                        alt="Bìa sách khác" class="book-cover-lg shadow-lg">
+                        <div class="row book-info-slide">
+                            <div class="col-md-6 order-md-2 order-2 d-flex align-items-center justify-content-center">
+                                <div class="book-details-box shadow">
+                                    <table class="table table-borderless details-table">
+                                        <tbody id="book-details-body-2">
+                                        </tbody>
+                                    </table>
                                 </div>
-
-                                <div class="col-md-6 col-sm-8">
-                                    <div class="book-details-box shadow">
-                                        <table class="table table-borderless details-table">
-                                            <tbody id="book-details-body-2"></tbody>
-                                        </table>
-                                    </div>
-                                </div>
+                            </div>
+                            <div class="col-md-6 order-md-1 order-1 d-flex justify-content-center align-items-center">
+                                <img id="book-cover-2" src="/assets/images/sach_2_placeholder.jpg" alt="Bìa sách"
+                                    class="book-cover-lg shadow-lg">
                             </div>
                         </div>
 
-                        <!-- Nút điều hướng -->
-                        <button class="carousel-nav-btn next-btn" aria-label="Next book">
+                        <button class="carousel-nav-btn next-btn" aria-label="Next">
                             <i class="fas fa-chevron-right"></i>
                         </button>
 
                     </div>
                 </div>
-
             </div>
 
-            <!-- ĐƯA QUOTE RA KHỎI .section-content -->
-            <p class="section-saying mt-5" data-key="section2_saying">
-                "Think before you speak. Read before you think."
+            <p class="section-saying mt-5 text-center" data-key="section2_saying">
+                “Nghĩ trước khi nói. Đọc trước khi nghĩ.”
             </p>
         </div>
 
@@ -542,23 +542,23 @@
                             </div>
                         </div>
                     </div>
-                    <p class="footer-tagline" data-i18n="footer_tagline">Constantly creative</p>
+                    <p class="footer-tagline" data-i18n="footer_tagline">Không ngừng sáng tạo</p>
                 </div>
 
                 <div class="footer-right">
                     <div class="footer-column">
-                        <h4 class="column-title" data-i18n="footer_help">HELP</h4>
+                        <h4 class="column-title" data-i18n="footer_help">TRỢ GIÚP</h4>
                         <ul>
-                            <li><a href="#" data-i18n="footer_support">Support</a></li>
-                            <li><a href="#" data-i18n="footer_faqs">FAQs</a></li>
+                            <li><a href="#" data-i18n="footer_support">Hỗ trợ</a></li>
+                            <li><a href="#" data-i18n="footer_faqs">Câu hỏi thường gặp</a></li>
                         </ul>
                     </div>
                     <div class="footer-column">
                         <h4 class="column-title" data-i18n="footer_team">TEAM</h4>
                         <ul>
-                            <li><a href="#" data-i18n="footer_about">About</a></li>
-                            <li><a href="#" data-i18n="footer_contact">Contact us</a></li>
-                            <li><a href="#" data-i18n="footer_license">Our license</a></li>
+                            <li><a href="#" data-i18n="footer_about">Giới thiệu</a></li>
+                            <li><a href="#" data-i18n="footer_contact">Liên hệ</a></li>
+                            <li><a href="#" data-i18n="footer_license">Giấy phép</a></li>
                         </ul>
                     </div>
                 </div>
@@ -577,11 +577,16 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.20/fullpage.min.js"></script>
 
-    <script src="js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/3.1.2/fullpage.extensions.min.js"></script>
+
+    <script type="module" src="js/supabase-client.js"></script>
+
     <script src="js/section2.js"></script>
     <script src="js/section3.js"></script>
     <script src="js/section4.js"></script>
     <script src="js/section5.js"></script>
+
+    <script type="module" src="js/main.js"></script>
 
 </body>
 

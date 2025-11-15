@@ -27,7 +27,6 @@ body {
     font-family: var(--font-family-sans-serif);
     background-color: var(--bg-primary);
     color: var(--text-primary);
-    padding-top: 56px;
     transition: background-color 0.3s, color 0.3s;
 }
 
@@ -206,17 +205,24 @@ h1 {
 
 /* --- Giao diện Máy tính (màn hình rộng từ 992px trở lên) --- */
 @media (min-width: 992px) {
-    /* Nội dung được đẩy sang phải khi sidebar active */
+    
+    /* Mặc định, .main-content KHÔNG có margin-left.
+      Nó sẽ tự động có transition 0.3s (đã định nghĩa ở trên) 
+    */
     .main-content {
-        margin-left: 210px;
-    }
-
-    /* Nội dung trở về vị trí cũ khi sidebar không active */
-    .sidebar:not(.active) ~ .main-content {
         margin-left: 0;
     }
+
+    /* KHI sidebar active (body có class), 
+      đẩy .main-content sang phải 210px 
+    */
+    body.sidebar-is-active .main-content {
+        margin-left: 210px; /* 210px là chiều rộng của sidebar  */
+    }
     
-    /* Không bao giờ hiện lớp phủ màu xám trên máy tính */
+    /* Không bao giờ hiện lớp phủ màu xám trên máy tính
+      (Giữ nguyên)
+    */
     .sidebar-overlay {
         display: none !important;
     }
@@ -351,7 +357,7 @@ h1 {
 }
 
 .navbar-brand:hover .text-danger {
-    color: #0d6efd !important; /* Màu xanh dương mặc định của Bootstrap */
+    color: #ff6767 !important; /* Màu xanh dương mặc định của Bootstrap */
 }
 
 /* --- 12. Search Bar Enhancement --- */
@@ -491,7 +497,7 @@ body.dark-theme .search-form .form-control::placeholder {
     background-color: var(--bg-tertiary);
     /* border-radius bị xóa để banner vuông vức với các cạnh */
     overflow: hidden;
-    margin-bottom: 50px;
+    margin-bottom: 70px;
 }
 
 .profile-banner img {
@@ -562,11 +568,21 @@ body.dark-theme .search-form .form-control::placeholder {
         flex-grow: 1;
     }
 
+    .profile-username {
+        position: relative;
+        left: 200px;
+        top: -100px;
+    }
+
     .profile-realname {
-        margin-left: 55px;
+        position: relative;
+        left: 200px;
+        top: -100px;
     }
     .profile-actions-desktop {
-        margin-left: 30px;
+        position: relative;
+        left: 28px;
+        top: -80px;
     }
 }
 
@@ -600,15 +616,22 @@ body.dark-theme .search-form .form-control::placeholder {
     }
 }
 
-/* --- Style chung cho các thành phần Info --- */
+/* CSS Mới - Sửa lỗi username dài */
 .profile-username {
     font-weight: 700;
     font-size: 1.8rem;
+
+    max-width: 100%;
+    white-space: nowrap;       /* Bắt buộc text nằm trên một dòng */
 }
 
 .profile-realname {
     margin-top: -5px;
-    margin-bottom: 20px;
+
+    max-width: 100%;           /* Giới hạn chiều rộng bằng cột cha */
+    overflow: hidden;          /* Ẩn phần text bị tràn */
+    text-overflow: ellipsis;   /* Hiển thị dấu "..." */
+    white-space: nowrap;       /* Bắt buộc text nằm trên một dòng */
 }
 
 .profile-actions-desktop {
@@ -684,4 +707,115 @@ body.dark-theme .btn-outline-dark:hover {
 
 body.dark-theme .profile-actions-mobile .btn {
     color: var(--text-primary);
+}
+
+/* === SỬA LỖI CROPPIE MẤT ẢNH (Bản V2) === */
+
+/* 1. Đảm bảo modal-body có không gian */
+.modal-body {
+    /* Đặt chiều cao tối thiểu để chứa Croppie và thanh trượt */
+    min-height: 450px; 
+    overflow-y: auto; /* Cho phép cuộn nếu cần, nhưng không phải 'visible' */
+}
+
+/* 2. Đặt kích thước CỐ ĐỊNH cho vùng Croppie */
+#cropper-ui {
+    width: 100%;
+    height: 350px; /* Chiều cao này PHẢI KHỚP với JS (boundary) */
+}
+
+/* 3. Bắt Croppie tuân thủ 100% kích thước cha */
+/* (Đây là phần sửa lỗi chính) */
+#cropper-ui .cr-boundary {
+    position: relative; /* Bắt buộc phải có */
+    overflow: hidden;   /* Ẩn phần ảnh tràn ra (không làm vỡ modal) */
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* 4. Đảm bảo thanh trượt (slider) nằm trong vùng an toàn */
+#cropper-ui .cr-slider-wrap {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+/* === SỬA LỖI MÀU TỐI TRONG CÁC TAB (PROFILE) === */
+
+/* Ghi đè màu của các thành phần Bootstrap KHI ở chế độ tối */
+body.dark-theme .tab-content {
+    /* Đảm bảo màu chữ chung trong tab là màu sáng */
+    color: var(--text-secondary); 
+}
+
+body.dark-theme .tab-content h5 {
+    /* Tiêu đề (ví dụ: "Cài đặt Thông tin") */
+    color: var(--text-primary);
+}
+
+/* Class này (text-secondary) được dùng cho <p> "Đây là cách..." 
+  
+*/
+body.dark-theme .text-secondary {
+    color: var(--text-secondary) !important;
+}
+
+body.dark-theme .tab-content .form-label {
+    /* Tất cả các <label> (ví dụ: "Họ và tên") */
+    color: var(--text-primary); 
+}
+
+body.dark-theme .tab-content .form-text {
+    /* Text trợ giúp (ví dụ: "Bạn không thể...") 
+       
+    */
+    color: var(--text-secondary); 
+}
+
+/* Áp dụng padding-top 56px cho TẤT CẢ các con
+  trực tiếp của main-content 
+*/
+.main-content > * {
+    padding-top: 56px;
+}
+
+/* NHƯNG, loại bỏ padding-top cho phần tử con ĐẦU TIÊN
+  (Đây chính là section "Popular" của chúng ta)
+*/
+.main-content > *:first-child {
+    padding-top: 0;
+}
+
+/* 1. Sửa lỗi kéo ngang (horizontal overflow) */
+body {
+    overflow-x: hidden;
+}
+
+/* 2. Khóa sao chép (copy/paste) text */
+body {
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none;    /* Firefox */
+    -ms-user-select: none;     /* IE/Edge */
+    user-select: none;         /* Standard */
+}
+
+/* 3. Bỏ gạch chân trên slide link */
+.pnt-slide-link,
+.pnt-slide-link:hover,
+.pnt-slide-link:hover .pnt-title {
+    text-decoration: none !important; /* Bỏ gạch chân mọi lúc */
+}
+
+/* 4. (Tùy chọn) Thêm hiệu ứng hover mới 
+      thay cho gạch chân
+*/
+.pnt-slide-link:hover .pnt-title {
+    transition: color 0.2s ease-in-out;
+}
+
+/* Khóa kéo ảnh cho mọi ảnh trên trang */
+img {
+    -webkit-user-drag: none; /* (Safari/Chrome) */
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
 }

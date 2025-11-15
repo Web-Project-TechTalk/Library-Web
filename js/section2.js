@@ -1,8 +1,8 @@
+// js/section2.js
 document.addEventListener('DOMContentLoaded', () => {
 
     const bookData = [
         {
-            id: 1,
             cover: '/assets/images/thanthoai_va_truyenthuyet.jpg',
             details: {
                 vi: {
@@ -26,7 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         },
         {
-            id: 2,
             cover: '/assets/images/sach_2_placeholder.jpg',
             details: {
                 vi: {
@@ -53,43 +52,54 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const prevBtn = document.querySelector('.prev-btn');
     const nextBtn = document.querySelector('.next-btn');
-    const slides = document.querySelectorAll('.book-slide');
-    let currentBookIndex = 0;
-    let currentLang = localStorage.getItem('language') || 'vi';
+    // Lấy các slide bằng class 'book-info-slide'
+    const slides = document.querySelectorAll('.book-info-slide'); 
+    const carousel = document.querySelector('.book-info-carousel');
 
-    // Cập nhật nội dung slide theo index và ngôn ngữ
+    let currentBookIndex = 0;
+    // Lấy ngôn ngữ hiện tại
+    let currentLang = localStorage.getItem('language') || 'vi'; 
+    let autoInterval;
+
+    // Cập nhật chiều cao carousel
+    const updateHeight = () => {
+        let maxH = 0;
+        // Chỉ tính chiều cao của slide đang hiển thị
+        slides.forEach(slide => {
+             if (slide.classList.contains('active')) {
+                maxH = Math.max(maxH, slide.offsetHeight);
+            }
+        });
+        if (maxH > 0 && carousel) {
+            carousel.style.height = `${maxH}px`; 
+        } else if (carousel) {
+             carousel.style.minHeight = '400px'; 
+        }
+    };
+
+    // Render chi tiết sách
     const renderBookDetails = (index, lang) => {
-        const slide = slides[index];
-        const body = slide.querySelector('.details-table tbody');
-        const cover = slide.querySelector('.book-cover-lg');
+        // Truy cập body và cover qua ID để đảm bảo khớp với HTML
+        const body = document.getElementById(`book-details-body-${index + 1}`); 
+        const cover = document.getElementById(`book-cover-${index + 1}`);
         const details = bookData[index].details[lang];
+
+        if (!body || !cover) return;
 
         cover.src = bookData[index].cover;
         cover.alt = details.title;
 
         let html = '';
-        html += `<tr><td>${details.author_label}</td><td>${details.author_value}</td></tr>`;
-        html += `<tr><td>${details.translator_label}</td><td>${details.translator_value}</td></tr>`;
-        html += `<tr><td>${details.publisher_label}</td><td>${details.publisher_value}</td></tr>`;
-        html += `<tr><td>${details.size_label}</td><td>${details.size_value}</td></tr>`;
-        html += `<tr><td>${details.pages_label}</td><td>${details.pages_value}</td></tr>`;
-        html += `<tr><td>${details.release_label}</td><td>${details.release_value}</td></tr>`;
+        // Xây dựng HTML cho bảng chi tiết sách
+        ['author', 'translator', 'publisher', 'size', 'pages', 'release'].forEach(field => {
+            const label = details[`${field}_label`];
+            const value = details[`${field}_value`];
+            // Cấu trúc <tr><td>Label</td><td>Value</td></tr>
+            if (label && value) html += `<tr><td>${label}</td><td>${value}</td></tr>`;
+        });
 
         body.innerHTML = html;
-        //cập nhật header của section
-        const title = document.querySelector('[data-key="section2_title"]');
-        if (title) {
-            title.textContent = lang === 'vi'
-                ? "Sách mới"
-                : "What's New";
-        }
-        // Cập nhật câu nói
-        const saying = document.querySelector('[data-key="section2_saying"]');
-        if (saying) {
-            saying.textContent = lang === 'vi'
-                ? "“Đọc trước khi nghĩ, nói sau khi nghĩ.”"
-                : "\"Think before you speak. Read before you think.\"";
-        }
+        updateHeight();
     };
 
     // Hiển thị slide hiện tại
@@ -103,26 +113,34 @@ document.addEventListener('DOMContentLoaded', () => {
     // Xử lý chuyển slide
     const switchBook = (direction) => {
         const total = slides.length;
-        if (direction === 'next') {
-            currentBookIndex = (currentBookIndex + 1) % total;
-        } else {
-            currentBookIndex = (currentBookIndex - 1 + total) % total;
-        }
+        currentBookIndex = direction === 'next' 
+            ? (currentBookIndex + 1) % total 
+            : (currentBookIndex - 1 + total) % total;
         showSlide(currentBookIndex);
     };
 
-    // Gán sự kiện
-    if (nextBtn) nextBtn.addEventListener('click', () => switchBook('next'));
-    if (prevBtn) prevBtn.addEventListener('click', () => switchBook('prev'));
+    // Auto switch
+    const startAuto = () => {
+        autoInterval = setInterval(() => switchBook('next'), 8000);
+    };
 
-    // Gán event cho đổi ngôn ngữ
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            currentLang = e.currentTarget.dataset.lang;
-            setTimeout(() => showSlide(currentBookIndex), 50);
-        });
+    // Gán sự kiện cho nút
+    if (nextBtn) nextBtn.addEventListener('click', () => { clearInterval(autoInterval); switchBook('next'); startAuto(); });
+    if (prevBtn) prevBtn.addEventListener('click', () => { clearInterval(autoInterval); switchBook('prev'); startAuto(); });
+
+    // Tạm dừng/tiếp tục tự động cuộn khi hover
+    const container = document.querySelector('.book-info-carousel-container');
+    container?.addEventListener('mouseenter', () => clearInterval(autoInterval));
+    container?.addEventListener('mouseleave', startAuto);
+    
+    // LẮNG NGHE SỰ KIỆN ĐỔI NGÔN NGỮ TỪ MAIN.JS
+    document.addEventListener('languageChanged', (e) => {
+        currentLang = e.detail.lang;
+        // Gọi lại showSlide để render lại chi tiết sách với ngôn ngữ mới
+        showSlide(currentBookIndex); 
     });
 
     // Khởi tạo
-    showSlide(currentBookIndex);
+    showSlide(currentBookIndex); 
+    startAuto();
 });

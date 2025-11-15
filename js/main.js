@@ -1,8 +1,13 @@
+// js/main.js
+// QUAN TRỌNG: Đảm bảo các file này tồn tại trong thư mục js/
+import { supabase } from './supabase-client.js';
+
+
 document.addEventListener('DOMContentLoaded', () => {
 
     const scrollUpBtn = document.getElementById('scroll-up-btn');
     const scrollDownBtn = document.getElementById('scroll-down-btn');
-    
+
     // ====================================================================
     // 1. DỮ LIỆU DỊCH THUẬT CHO MENU CÁ NHÂN (USER DROPDOWN)
     // ====================================================================
@@ -26,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ====================================================================
 
     // Hàm mở/đóng menu (Gán vào nút có onclick="toggleMenu()")
-    window.toggleMenu = function() {
+    window.toggleMenu = function () {
         const userDropdown = document.getElementById('userDropdown');
         if (userDropdown) {
             userDropdown.style.display = userDropdown.style.display === 'block' ? 'none' : 'block';
@@ -34,13 +39,13 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Hàm đăng xuất (Gán vào nút có onclick="logout()")
-    window.logout = function() {
+    window.logout = function () {
         console.log("User logged out!");
         // Thêm logic đăng xuất thực tế ở đây (ví dụ: chuyển hướng, xóa token)
     };
 
     // Đóng menu khi click ra ngoài
-    document.addEventListener('click', function(event) {
+    document.addEventListener('click', function (event) {
         const container = document.querySelector('.dropdown-container');
         const dropdown = document.getElementById('userDropdown');
         const toggleButton = document.querySelector('.menu-toggle-button');
@@ -53,29 +58,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Hàm chuyên biệt để dịch các mục trong User Dropdown
     const changeUserMenuLanguage = (lang) => {
-    const texts = userMenuLangs[lang];
-    if (!texts) return;
+        const texts = userMenuLangs[lang];
+        if (!texts) return;
 
-    // NHẮM MỤC TIÊU TẤT CẢ CÁC PHẦN TỬ CÓ data-key TRONG MENU CÁ NHÂN
-    // (Bao gồm các mục dạng 'menu-item' trong desktop và mục dạng 'btn' trong mobile)
-    const profileItems = document.querySelectorAll('#userDropdown [data-key="profile"], .d-lg-none [data-key="profile"]');
-    const booksItems = document.querySelectorAll('#userDropdown [data-key="books"], .d-lg-none [data-key="books"]');
-    const settingsItems = document.querySelectorAll('#userDropdown [data-key="settings"], .d-lg-none [data-key="settings"]');
-    const logoutItems = document.querySelectorAll('#userDropdown [data-key="logout"], .d-lg-none [data-key="logout"]');
+        // NHẮM MỤC TIÊU TẤT CẢ CÁC PHẦN TỬ CÓ data-key TRONG MENU CÁ NHÂN
+        // CHÚNG TA CẦN CHỌN TẤT CẢ CÁC PHẦN TỬ CÓ data-key="profile" HOẶC data-key="books", v.v...
 
-    if (profileItems) {
-        profileItems.forEach(item => item.textContent = texts.profile);
-    }
-    if (booksItems) {
-        booksItems.forEach(item => item.textContent = texts.books);
-    }
-    if (settingsItems) {
-        settingsItems.forEach(item => item.textContent = texts.settings);
-    }
-    if (logoutItems) {
-        logoutItems.forEach(item => item.textContent = texts.logout);
-    }
-};
+        // Đảm bảo bạn đang sử dụng querySelectorAll một cách chính xác
+        document.querySelectorAll('[data-key="profile"]').forEach(item => {
+            if (item.textContent !== texts.profile) { // Chỉ cập nhật nếu khác để tránh flicker
+                item.textContent = texts.profile;
+            }
+        });
+
+        document.querySelectorAll('[data-key="books"]').forEach(item => {
+            if (item.textContent !== texts.books) {
+                item.textContent = texts.books;
+            }
+        });
+
+        document.querySelectorAll('[data-key="settings"]').forEach(item => {
+            if (item.textContent !== texts.settings) {
+                item.textContent = texts.settings;
+            }
+        });
+
+        document.querySelectorAll('[data-key="logout"]').forEach(item => {
+            if (item.textContent !== texts.logout) {
+                item.textContent = texts.logout;
+            }
+        });
+    };
 
     // ====================================================================
     // LOGIC CHÍNH CỦA BẠN (ĐÃ GIỮ NGUYÊN)
@@ -88,18 +101,18 @@ document.addEventListener('DOMContentLoaded', () => {
         navigationPosition: 'right',
         anchors: ['home', 'news', 'featured', 'collections', 'about'],
 
-        afterLoad: function(origin, destination, direction){
+        afterLoad: function (origin, destination, direction) {
             const lastSectionIndex = document.querySelectorAll('.section').length - 1;
 
             // Điều khiển nút "Lên trên"
-            if(destination.index > 0){
+            if (destination.index > 0) {
                 scrollUpBtn.classList.add('visible');
             } else {
                 scrollUpBtn.classList.remove('visible');
             }
 
             // Điều khiển nút "Xuống dưới"
-            if(destination.index === lastSectionIndex){
+            if (destination.index === lastSectionIndex) {
                 scrollDownBtn.classList.remove('visible');
             } else {
                 scrollDownBtn.classList.add('visible');
@@ -108,10 +121,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     if (scrollUpBtn) {
-    scrollUpBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        fullpage_api.moveTo('home'); // Cuộn về trang có anchor là 'home'
-    });
+        scrollUpBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            fullpage_api.moveTo('home'); // Cuộn về trang có anchor là 'home'
+        });
     }
     if (scrollDownBtn) {
         scrollDownBtn.addEventListener('click', (e) => {
@@ -124,12 +137,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeSwitcherBtns = document.querySelectorAll('#theme-switcher-btn, #theme-switcher-btn-mobile');
     const themeIcons = document.querySelectorAll('#theme-icon, #theme-icon-mobile');
     const htmlElement = document.documentElement;
-    
+
     // Cập nhật hàm updateThemeIcons để xử lý theme cho User Dropdown
     const updateThemeIcons = (theme) => {
         const newIconClass = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
         themeIcons.forEach(icon => icon.className = newIconClass);
-        
+
         // Thêm/Xóa class cho User Dropdown để áp dụng CSS Dark Mode
         const userDropdown = document.getElementById('userDropdown');
         if (userDropdown) {
@@ -139,9 +152,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 userDropdown.classList.remove('dark-mode-menu');
             }
         }
-        
+
     };
-    
+
     const savedTheme = localStorage.getItem('theme') || 'light';
     htmlElement.setAttribute('data-bs-theme', savedTheme);
     updateThemeIcons(savedTheme);
@@ -154,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem('theme', newTheme);
         });
     });
-    
+
     const langButtons = document.querySelectorAll('.lang-btn');
     const translations = {
         en: {
@@ -189,7 +202,9 @@ document.addEventListener('DOMContentLoaded', () => {
             all_books_btn: "All Books",
             featured_books: "Featured Books",
             explore_btn: "Explore More Categories",
-            saying_1: "We read books not to memorize every word, but to deeply understand and apply them in life."
+            saying_1: "We read books not to memorize every word, but to deeply understand and apply them in life.",
+            new_books_title: "What's New",
+            section2_saying: "“Think before you speak. Read before you think.”"
         },
         vi: {
             // ... (các khóa dịch thuật khác của bạn)
@@ -223,43 +238,46 @@ document.addEventListener('DOMContentLoaded', () => {
             all_books_btn: "Tất Cả Sách",
             featured_books: "Sách Nổi Bật",
             explore_btn: "Khám phá thêm thể loại",
-            saying_1: "Chúng ta đọc sách không phải thuộc lòng từng câu chữ, mà để thấu hiểu sâu sắc và vận dụng vào cuộc sống."
+            saying_1: "Chúng ta đọc sách không phải thuộc lòng từng câu chữ, mà để thấu hiểu sâu sắc và vận dụng vào cuộc sống.",
+            new_books_title: "Sách mới",
+            section2_saying: "“Nghĩ trước khi nói. Đọc trước khi nghĩ.”"
         }
     };
-    
+
     // Đã thay đổi hàm setLanguage để gọi changeUserMenuLanguage()
     const setLanguage = (lang) => {
-    // Logic dịch các nhãn data-key chung của navbar/body
-    document.querySelectorAll('[data-key]').forEach(element => { 
-        const key = element.getAttribute('data-key'); 
-        // Đảm bảo không ghi đè lên các nhãn của menu cá nhân nếu không cần thiết
-        if (!userMenuLangs.en.hasOwnProperty(key) && translations[lang][key]) { 
-            element.textContent = translations[lang][key]; 
-        } 
-    });
-    
-    // Logic dịch các placeholder
-    document.querySelectorAll('[data-key-placeholder]').forEach(element => { 
-        const key = element.getAttribute('data-key-placeholder'); 
-        if (translations[lang][key]) { 
-            element.placeholder = translations[lang][key]; 
-        } 
-    });
-    
-    htmlElement.setAttribute('lang', lang);
-    localStorage.setItem('language', lang);
-    langButtons.forEach(btn => { 
-        if (btn.getAttribute('data-lang') === lang) { 
-            btn.classList.add('active'); 
-        } else { 
-            btn.classList.remove('active'); 
-        } 
-    });
+        // Logic dịch các nhãn data-key chung của navbar/body
+        document.querySelectorAll('[data-key]').forEach(element => {
+            const key = element.getAttribute('data-key');
+            // Đảm bảo không ghi đè lên các nhãn của menu cá nhân nếu không cần thiết
+            if (!userMenuLangs.en.hasOwnProperty(key) && translations[lang][key]) {
+                element.textContent = translations[lang][key];
+            }
+        });
 
-    // GỌI HÀM DỊCH CHUYÊN BIỆT CHO USER DROPDOWN (Áp dụng cho cả Mobile và Desktop)
-    changeUserMenuLanguage(lang);
-};
-    
+        // Logic dịch các placeholder
+        document.querySelectorAll('[data-key-placeholder]').forEach(element => {
+            const key = element.getAttribute('data-key-placeholder');
+            if (translations[lang][key]) {
+                element.placeholder = translations[lang][key];
+            }
+        });
+
+        htmlElement.setAttribute('lang', lang);
+        localStorage.setItem('language', lang);
+        langButtons.forEach(btn => {
+            if (btn.getAttribute('data-lang') === lang) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+
+        // GỌI HÀM DỊCH CHUYÊN BIỆT CHO USER DROPDOWN (Áp dụng cho cả Mobile và Desktop)
+        changeUserMenuLanguage(lang);
+        document.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang } }));
+    };
+
     langButtons.forEach(button => { button.addEventListener('click', () => { const selectedLang = button.getAttribute('data-lang'); setLanguage(selectedLang); }); });
     const savedLanguage = localStorage.getItem('language') || 'vi';
     setLanguage(savedLanguage);
@@ -319,7 +337,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 });
             }
-            
+
             requestAnimationFrame(autoScroll);
         }
     });
@@ -383,4 +401,93 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         setTimeout(showNextBubble, 3000);
     }
+
+    // ====================================================================
+    // 4. LOGIC XÁC THỰC (ẨN/HIỆN NÚT) - PHẦN QUAN TRỌNG NHẤT
+    // ====================================================================
+
+    // Lấy các element 
+    const authButtonsDesktop = document.getElementById('auth-buttons-desktop');
+    const profileDropdownDesktop = document.getElementById('profile-dropdown-desktop');
+    const desktopUserName = document.getElementById('desktop-user-name');
+    const desktopUserAvatar = document.getElementById('desktop-user-avatar');
+
+    const authButtonsMobile = document.getElementById('auth-buttons-mobile');
+    const profileDropdownMobile = document.getElementById('profile-dropdown-mobile');
+    const mobileUserAvatar = document.getElementById('mobile-user-avatar');
+
+    const logoutBtnDesktop = document.getElementById('logout-btn-desktop');
+    const logoutBtnMobile = document.getElementById('logout-btn-mobile');
+
+    // Hàm helper để bật/tắt class 'd-none'
+    const toggleVisibility = (isLoggedIn, loggedOutEl, loggedInEl) => {
+        // Nếu đã đăng nhập (isLoggedIn = true): Ẩn loggedOutEl, Hiện loggedInEl
+        if (loggedOutEl) loggedOutEl.classList.toggle('d-none', isLoggedIn);
+        // Ngược lại: Ẩn loggedInEl, Hiện loggedOutEl
+        if (loggedInEl) loggedInEl.classList.toggle('d-none', !isLoggedIn);
+    };
+
+    // Hàm khởi tạo UI xác thực
+    async function initializeAuthUI() {
+        // 1. Lấy phiên đăng nhập (session)
+        const { data: { session }, error } = await supabase.auth.getSession();
+
+        if (error) {
+            console.error("Lỗi khi lấy session:", error.message);
+            // Hiển thị nút đăng nhập/ký nếu có lỗi
+            toggleVisibility(false, authButtonsDesktop, profileDropdownDesktop);
+            toggleVisibility(false, authButtonsMobile, profileDropdownMobile);
+            return;
+        }
+
+        if (session) {
+            // 2. Nếu đã đăng nhập, lấy thông tin profile
+            const { data: profile, error: profileError } = await supabase
+                .from('users')
+                .select('username, avatar_url')
+                .eq('user_id', session.user.id)
+                .single();
+
+            if (profileError) {
+                console.warn("Không thể lấy profile:", profileError.message);
+            }
+
+            // 3. Cập nhật UI
+            toggleVisibility(true, authButtonsDesktop, profileDropdownDesktop);
+            toggleVisibility(true, authButtonsMobile, profileDropdownMobile);
+
+            // Sử dụng thông tin profile (nếu có)
+            const userName = profile?.username || session.user.email; // Ưu tiên username
+            const avatarUrl = profile?.avatar_url || '/assets/images/logo.gif'; // Ảnh mặc định
+
+            // Cập nhật desktop
+            if (desktopUserName) desktopUserName.textContent = userName;
+            if (desktopUserAvatar) desktopUserAvatar.src = avatarUrl;
+
+            // Cập nhật mobile (chỉ cần avatar)
+            if (mobileUserAvatar) mobileUserAvatar.src = avatarUrl;
+
+            // 4. Gắn sự kiện Đăng xuất 
+            if (logoutBtnDesktop) logoutBtnDesktop.addEventListener('click', handleSignOut);
+            if (logoutBtnMobile) logoutBtnMobile.addEventListener('click', handleSignOut);
+
+        } else {
+            // 5. Nếu chưa đăng nhập, hiển thị nút Đăng nhập/Đăng ký
+            toggleVisibility(false, authButtonsDesktop, profileDropdownDesktop);
+            toggleVisibility(false, authButtonsMobile, profileDropdownMobile);
+        }
+    }
+
+    // Chạy hàm
+    initializeAuthUI();
+
+    async function handleSignOut() {
+        const { error } = await supabase.auth.signOut();
+        if (error) {
+            console.error('Error signing out:', error.message);
+        } else {
+            window.location.reload(); // Reload to update UI
+        }
+    }
+
 });
