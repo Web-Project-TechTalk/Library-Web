@@ -1,0 +1,113 @@
+/* Section3 - Dot background */
+#section3 {
+    position: relative;
+    padding: 4rem 0;
+    background-image: radial-gradient(var(--border-color) 1px, transparent 0);
+    background-size: 20px 20px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#section3 .book-card {
+    opacity: 1 !important;          /* luôn rõ */
+    filter: none !important;        /* bỏ tất cả filter */
+    mix-blend-mode: normal !important; 
+    transform: scale(1);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover phóng to và nổi bật hơn */
+#section3 .book-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+/* Thông tin sách chỉ hiện khi hover */
+#section3 .book-info {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+}
+
+#section3 .book-card:hover .book-info {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+/* ---------- Carousel Horizontal ---------- */
+#section3 .book-carousel-wrapper.static-carousel {
+    display: flex;
+    justify-content: center;
+    overflow-x: auto;
+    padding: 1rem 0;
+    gap: 1.5rem;
+}
+
+#section3 .book-carousel {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: nowrap;
+    cursor: default;
+}
+
+/* Light / Dark theme */
+#section3.light-theme {
+    --bg-color: #fff;
+    --text-color: #222;
+    --border-color: #ccc;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+#section3.dark-theme {
+    --bg-color: #1e1e1e;
+    --text-color: #eee;
+    --border-color: #555;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+/* Book cards remain visible in dark mode */
+#section3.dark-theme .book-card {
+    box-shadow: 0 4px 10px rgba(255,255,255,0.1);
+}
+/* Mobile & tablet: scroll ngang với snap */
+@media (max-width: 991px) {
+    #section3 .book-carousel-wrapper.static-carousel {
+        overflow-x: auto;               /* cho phép scroll ngang */
+        -webkit-overflow-scrolling: touch; /* vuốt mượt trên iOS */
+        scroll-snap-type: x mandatory;  /* snap từng book-card */
+        padding: 1rem 0;
+    }
+
+    #section3 .book-carousel {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: nowrap;
+    }
+
+    #section3 .book-card {
+        flex-shrink: 0;
+        width: 120px;
+        scroll-snap-align: start;
+    }
+
+    #section3 .book-card img {
+        height: 180px;                  /* co hình theo card */
+    }
+}
+
+/* Mobile nhỏ hơn 480px */
+@media (max-width: 479px) {
+    #section3 .book-card {
+        width: 100px;
+    }
+
+    #section3 .book-card img {
+        height: 150px;
+    }
+}
+
+
