@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thư Viện Số</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <link rel="stylesheet" href="/assets/css/profile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-light bg-light fixed-top">
+        <div class="container-fluid d-flex align-items-center">
+            <button class="navbar-toggler" type="button" id="sidebarToggleBtn">
+                <span class="toggler-icon top-bar"></span>
+                <span class="toggler-icon middle-bar"></span>
+                <span class="toggler-icon bottom-bar"></span>
+            </button>
+
+            <a class="navbar-brand" href="#">
+                <span>l</span><span>i</span><span>b</span><sup class="copyright">©</sup> <span class="text-danger"><span>B</span><span>o</span><span>o</span><span>k</span><span>s</span></span>
+            </a>
+
+            <div class="ms-auto d-flex align-items-center justify-content-end" id="topbar-right-section">
+                <a href="#" class="text-body" id="mobileSearchIcon">
+                    <i class="fas fa-search fa-lg"></i>
+                </a>
+                <div class="search-form-wrapper dropdown flex-grow-1 mx-3" id="searchFormWrapper">
+                    <form class="search-form" role="search">
+                        <input class="form-control" type="search" placeholder="Tìm kiếm sách..." aria-label="Search" id="searchInput" autocomplete="off">
+                    </form>
+                    <div class="dropdown-menu p-3" id="searchDropdown">
+                        <h6>Lịch sử tìm kiếm</h6>
+                        <ul class="list-unstyled mb-0">
+                            <li><a class="dropdown-item" href="#">Sách lập trình C++</a></li>
+                            <li><a class="dropdown-item" href="#">Tài liệu Node.js</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="dropdown me-3">
+                    <a href="#" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="/assets/images/logo.gif" alt="User Avatar" class="topbar-avatar" id="topbar-avatar-img">
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                        <li><a class="dropdown-item" href="#" id="lang-toggle"><i class="fas fa-globe me-2"></i> English</a></li>
+                        <li><a class="dropdown-item" href="#" id="theme-toggle"><i class="fas fa-moon me-2"></i> Sáng / Tối</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#" id="logout-button" data-lang-key="logout"><i class="fas fa-sign-out-alt me-2"></i> Đăng xuất</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <div class="search-overlay" id="searchOverlay"></div>
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <a class="navbar-brand" href="#">
+                lib<sup class="copyright">©</sup> <span class="text-danger">Books</span>
+            </a>
+            <button type="button" class="btn-close" id="sidebarCloseBtn">
+                <span class="toggler-icon top-bar"></span>
+                <span class="toggler-icon middle-bar"></span>
+                <span class="toggler-icon bottom-bar"></span>
+            </button>
+        </div>
+        <ul class="list-unstyled components">
+            <li><a href="#" id="sidebar-home" data-lang-key="home"><i class="fas fa-home"></i> Home</a></li>
+            <li>
+                <a href="#followSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle" id="sidebar-follow" data-lang-key="follow">
+                    <i class="fas fa-book-reader"></i> Follow
+                </a>
+                <ul class="collapse list-unstyled" id="followSubmenu">
+                    <li><a href="#" id="sidebar-reading-history" data-lang-key="readingHistory">Reading history</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#titlesSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle" id="sidebar-titles" data-lang-key="titles">
+                    <i class="fas fa-book"></i> Titles
+                </a>
+                <ul class="collapse list-unstyled" id="titlesSubmenu">
+                    <li><a href="#" id="sidebar-all-books" data-lang-key="allBooks">All Books</a></li>
+                    <li><a href="#" id="sidebar-adv-search" data-lang-key="advSearch">Advance search</a></li>
+                    <li><a href="#" id="sidebar-recent-add" data-lang-key="recentAdd">Recently Added</a></li>
+                    <li><a href="#" id="sidebar-random" data-lang-key="random">Random</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#libSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle" id="sidebar-lib" data-lang-key="lib">
+                    <i class="fas fa-university"></i> Lib
+                </a>
+                <ul class="collapse list-unstyled" id="libSubmenu">
+                    <li><a href="#" id="sidebar-guidelines" data-lang-key="guidelines">Guidelines</a></li>
+                    <li><a href="#" id="sidebar-announce" data-lang-key="announcement">Announcement</a></li>
+                    <li><a href="#" id="sidebar-about" data-lang-key="aboutUs">About us</a></li>
+                    <li><a href="#" id="sidebar-contact" data-lang-key="contact">Contact</a></li>
+                    <li><a href="#" id="sidebar-advertise" data-lang-key="advertise">Advertise</a></li>
+                </ul>
+            </li>
+        </ul>
+        <div class="sidebar-footer">
+            <a href="#" class="me-3"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="me-3"><i class="fab fa-github"></i></a>
+            <a href="#"><i class="fab fa-discord"></i></a>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        <div class="profile-header">
+            <div class="profile-banner">
+                <img src="/assets/images/background.jpg" alt="Profile Banner">
+            </div>
+            <div class="profile-avatar">
+                <img src="/assets/images/logo.gif" alt="User Avatar" id="display-avatar-img">
+            </div>
+        </div>
+
+        <div class="profile-body container-fluid">
+        <div class="profile-content-wrapper">
+
+            <div class="profile-info-column">
+                <h4 class="profile-username" id="display-username">Đang tải...</h4>
+                <p class="profile-realname text-secondary" id="display-realname">Đang tải...</p>
+
+                <div class="profile-actions-desktop d-none d-lg-flex">
+                    <a href="#" class="btn btn-outline-dark" id="btn-upload-desktop" data-lang-key="uploadBtn">Upload</a>
+                    <a href="#" class="btn btn-outline-dark" id="btn-follow-desktop" data-lang-key="followBtn">Follow</a>
+                    <a href="#" class="btn btn-danger" id="btn-report-desktop" data-lang-key="reportBtn">Report</a>
+                    <a href="#" class="btn btn-secondary" id="btn-signout-desktop" data-lang-key="signOutBtn">Sign Out</a>
+                </div>
+
+                <div class="profile-actions-mobile dropdown d-lg-none">
+                    <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#" id="btn-upload-mobile" data-lang-key="uploadBtn">Upload</a></li>
+                        <li><a class="dropdown-item" href="#" id="btn-follow-mobile" data-lang-key="followBtn">Follow</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" href="#" id="btn-report-mobile" data-lang-key="reportBtn">Report</a></li>
+                        <li><a class="dropdown-item" href="#" id="btn-signout-mobile" data-lang-key="signOutBtn">Sign Out</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="profile-tabs-column">
+                <ul class="nav nav-tabs" id="profileTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="info-tab" data-bs-toggle="tab" data-bs-target="#info-tab-pane" type="button" role="tab" data-lang-key="infoTab" data-lang-key="infoTab">Info</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="upload-tab" data-bs-toggle="tab" data-bs-target="#upload-tab-pane" type="button" role="tab" data-lang-key="uploadTab">Upload</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="activity-tab" data-bs-toggle="tab" data-bs-target="#activity-tab-pane" type="button" role="tab" data-lang-key="activityTab">Activity</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="favorites-tab" data-bs-toggle="tab" data-bs-target="#favorites-tab-pane" type="button" role="tab" data-lang-key="favoritesTab">Favorites</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="security-tab" data-bs-toggle="tab" data-bs-target="#security-tab-pane" type="button" role="tab" data-lang-key="securityTab">Bảo mật</button>
+                    </li>
+                </ul>
+                <div class="tab-content" id="profileTabContent">
+                    
+                    <div class="tab-pane fade show active" id="info-tab-pane" role="tabpanel">
+                        <h5 class="pt-3" data-lang-key="settingsInfoTitle">Cài đặt Thông tin</h5>
+                        <p class="text-secondary small" data-lang-key="settingsInfoSubtitle">Đây là cách người khác nhìn thấy bạn.</p>
+                        
+                        <div id="profile-status" class="mb-3"></div>
+
+                        <form id="profile-form-inputs">
+                            <div class="mb-3">
+                                <label for="profile-username" class="form-label" data-lang-key="usernameLabel">Tên đăng nhập (Username)</label>
+                                <input type="text" class="form-control" id="profile-username" readonly disabled>
+                                <div class="form-text" data-lang-key="usernameHelpText">Bạn không thể thay đổi tên đăng nhập.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="profile-fullname" class="form-label" data-lang-key="fullNameLabel">Họ và tên (Full Name)</label>
+                                <input type="text" class="form-control" id="profile-fullname" placeholder="Tên của bạn..." data-lang-key-placeholder="fullNamePlaceholder">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="profile-phone" class="form-label" data-lang-key="phoneLabel">Số điện thoại</label>
+                                <input type="tel" class="form-control" id="profile-phone" placeholder="09xxxxxxxx">
+                            </div>
+                            <div class="mb-3">
+                                <label for="profile-age" class="form-label" data-lang-key="ageLabel">Tuổi</label>
+                                <input type="number" class="form-control" id="profile-age" placeholder="Ví dụ: 18" min="1">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="profile-avatar" class="form-label" data-lang-key="avatarLinkLabel">Link ảnh đại diện:</label>
+                                
+                                <input type="text" class="form-control" id="profile-avatar" placeholder="https://..." readonly disabled>
+                                
+                                <label for="avatar-file-input" class="form-label mt-2" data-lang-key="avatarChangeLabel">Thay đổi avatar:</label>
+                                <input type="file" class="form-control" id="avatar-file-input" accept="image/png, image/jpeg, image/gif">
+                                
+                            </div>
+                            <div class="mb-3">
+                                <label for="background-file-input" class="form-label mt-2" data-lang-key="backgroundChangeLabel">Thay đổi ảnh bìa:</label>
+                                <input type="file" class="form-control" id="background-file-input" accept="image/png, image/jpeg, image/gif">
+                            </div>
+                            <button type="button" class="btn btn-dark" id="update-profile-button" data-lang-key="updateProfileButton">
+                                <i class="fas fa-save me-2"></i> Cập nhật Profile
+                            </button>
+                        </form>
+                    </div>
+                    <div class="tab-pane fade" id="upload-tab-pane" role="tabpanel">
+                        <p class="pt-3">Đây là danh sách các file đã được upload.</p>
+                    </div>
+
+                    <div class="tab-pane fade" id="upload-tab-pane" role="tabpanel">
+                        <p class="pt-3">Đây là danh sách các file đã được upload.</p>
+                    </div>
+                    <div class="tab-pane fade" id="activity-tab-pane" role="tabpanel">
+                        <p class="pt-3">Đây là lịch sử hoạt động của người dùng.</p>
+                    </div>
+                    <div class="tab-pane fade" id="favorites-tab-pane" role="tabpanel">
+                        <p class="pt-3">Đây là danh sách các mục yêu thích.</p>
+                    </div>
+                    <div class="tab-pane fade" id="security-tab-pane" role="tabpanel">
+                        <h5 class="pt-3" data-lang-key="changeEmailTitle">Đổi Email</h5>
+    
+                        <div id="email-status" class="mb-3"></div>
+
+                        <form id="email-change-form">
+                            <p class="text-secondary small" data-lang-key="changeEmailSubtitle">
+                                Chúng tôi sẽ gửi link xác nhận đến cả email cũ và mới của bạn.
+                            </p>
+                            <div class="mb-3">
+                                <label for="new-email" class="form-label" data-lang-key="newEmailLabel">Email mới</label>
+                                <input type="email" class="form-control" id="new-email" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="confirm-new-email" class="form-label" data-lang-key="confirmNewEmailLabel">Xác nhận email mới</label>
+                                <input type="email" class="form-control" id="confirm-new-email" required>
+                            </div>
+                            <button type="submit" class="btn btn-dark" id="change-email-button" data-lang-key="changeEmailButton">
+                                Gửi Yêu cầu Đổi Email
+                            </button>
+                        </form> <br>
+                        <h5 class="pt-3" data-lang-key="changePasswordTitle">Đổi mật khẩu</h5>
+                        <p class="text-secondary small">Để bảo mật, mật khẩu của bạn phải có ít nhất 6 ký tự.</p>
+                        
+                        <div id="password-status" class="mb-3"></div>
+
+                        <form id="password-change-form">
+                            <div class="mb-3">
+                                <label for="new-password" class="form-label" data-lang-key="newPasswordLabel">Mật khẩu mới</label>
+                                <input type="password" class="form-control" id="new-password" required minlength="6">
+                            </div>
+                            <div class="mb-3">
+                                <label for="confirm-new-password" class="form-label" data-lang-key="confirmNewPasswordLabel">Xác nhận mật khẩu mới</label>
+                                <input type="password" class="form-control" id="confirm-new-password" required minlength="6">
+                            </div>
+                            <button type="submit" class="btn btn-dark" id="change-password-button" data-lang-key="changePasswordButton">
+                                Lưu Mật Khẩu Mới
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div> 
+        </div>
+    </div>
+
+    <div class="modal fade" id="avatar-cropper-modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="modalLabel">Cắt ảnh đại diện</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div id="cropper-ui" style="width: 100%; height: 400px;"></div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+            <button type="button" class="btn btn-primary" id="crop-save-button">Lưu ảnh</button>
+        </div>
+        </div>
+    </div>
+    </div>
+    <div class="modal fade" id="background-cropper-modal" tabindex="-1" aria-labelledby="modalLabelBg" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="modalLabelBg">Cắt ảnh bìa</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div id="background-cropper-ui" style="width: 100%; height: 400px;"></div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+            <button type="button" class="btn btn-primary" id="background-crop-save-button">Lưu ảnh</button>
+        </div>
+        </div>
+    </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/app-ui.js" defer></script>
+    <script type="module" src="/js/profile.js"></script>
+</body>
+</html>

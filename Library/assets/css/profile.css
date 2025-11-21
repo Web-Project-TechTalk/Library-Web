@@ -1,0 +1,766 @@
+/* --- 1. Biến màu và Font chữ --- */
+:root {
+    /* Font chữ */
+    --font-family-sans-serif: 'Be Vietnam Pro', sans-serif;
+
+    /* Chế độ Sáng (Mặc định) */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f9fa;
+    --bg-tertiary: #e9ecef;
+    --text-primary: #212529;
+    --text-secondary: #6c757d;
+    --border-color: #dee2e6;
+}
+
+body.dark-theme {
+    /* Chế độ Tối */
+    --bg-primary: #1a1a1a;
+    --bg-secondary: #2c2c2c;
+    --bg-tertiary: #3e3e3e;
+    --text-primary: #f8f9fa;
+    --text-secondary: #adb5bd;
+    --border-color: #495057;
+}
+
+/* --- 2. Áp dụng Font và màu cơ bản --- */
+body {
+    font-family: var(--font-family-sans-serif);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    padding-top: 56px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* --- 3. Tùy chỉnh các thành phần --- */
+/* Topbar */
+.navbar {
+    background-color: var(--bg-secondary) !important;
+    border-bottom: 1px solid var(--border-color);
+
+    /* Họa tiết đường chéo NÉT ĐỨT */
+    background-image: repeating-linear-gradient(
+        -45deg,
+        var(--border-color) 0,
+        transparent 2px,
+        transparent 20px /* Khoảng cách giữa các đoạn đứt */
+    );
+}
+.navbar-brand, .text-body {
+    color: var(--text-primary) !important;
+    padding-left: 10px;
+}
+/* Tăng kích thước và độ đậm cho logo */
+.navbar-brand {
+    font-size: 1.5rem !important; /* Tăng kích thước chữ */
+    font-weight: 700 !important;   /* Bôi đậm chữ */
+}
+
+/* Dropdown menu */
+.dropdown-menu {
+    background-color: var(--bg-secondary) !important;
+    border: 1px solid var(--border-color) !important;
+}
+.dropdown-item {
+    color: var(--text-primary) !important;
+}
+.dropdown-item:hover {
+    background-color: var(--bg-tertiary) !important;
+    color: var(--text-primary) !important;
+}
+
+/* Sidebar */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -250px;
+    width: 210px;
+    height: 100%;
+    background: var(--bg-secondary);
+    border-right: 1px solid var(--border-color);
+    transition: left 0.3s ease, background-color 0.3s;
+    z-index: 1050;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar.active {
+    left: 0; /* Hiện ra khi có class 'active' */
+}
+
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1.25rem; /* Điều chỉnh padding cho phù hợp */
+    height: 63px; /* Đặt chiều cao bằng topbar */
+    background-color: var(--bg-tertiary);
+    border-bottom: 1px solid var(--border-color);
+}
+.sidebar-header h3 {
+    color: var(--text-primary);
+}
+
+.sidebar ul.components {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.sidebar ul p {
+    color: var(--text-secondary);
+    padding: 10px;
+}
+
+.sidebar ul li a {
+    padding: 10px 20px;
+    font-size: 1.1em;
+    display: block;
+    color: var(--text-secondary);
+    transition: background-color 0.2s, color 0.2s;
+    text-decoration: none;
+}
+
+.sidebar ul li a:hover, .sidebar ul li.active > a {
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+}
+
+.sidebar ul li a i {
+    margin-right: 10px;
+}
+
+.sidebar ul ul a {
+    font-size: 1em !important;
+    padding-left: 30px !important;
+    background: var(--bg-secondary)
+}
+
+.sidebar-footer {
+    padding: 20px;
+    background-color: var(--bg-tertiary);
+    border-top: 1px solid var(--border-color);
+    text-align: center;
+}
+
+.sidebar-footer a {
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+}
+
+/* Overlay for when sidebar is open */
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1040;
+}
+
+.sidebar-overlay.active {
+    display: block;
+}
+
+
+/* Main Content */
+.main-content {
+    padding: 0; /* Xóa padding để banner bám sát lề */
+    transition: margin-left 0.3s ease;
+}
+h1 {
+    color: var(--text-primary);
+}
+
+/* Lớp phủ */
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1040;
+}
+
+/* Copyright symbol styling */
+.copyright {
+    font-size: 0.75rem;
+    vertical-align: 8px;
+}
+
+/* Navbar toggler for sidebar */
+#sidebarToggleBtn {
+    border: none;
+}
+
+/* --- Giao diện Điện thoại (màn hình rộng dưới 992px) --- */
+@media (max-width: 991.98px) {
+    /* Khi sidebar mở, hiện lớp phủ màu xám */
+    .sidebar-overlay.active {
+        display: block;
+    }
+    
+    /* Nội dung không bao giờ bị đẩy đi */
+    .main-content {
+        margin-left: 0 !important;
+    }
+}
+
+/* --- Giao diện Máy tính (màn hình rộng từ 992px trở lên) --- */
+@media (min-width: 992px) {
+    /* Nội dung được đẩy sang phải khi sidebar active */
+    .main-content {
+        margin-left: 210px;
+    }
+
+    /* Nội dung trở về vị trí cũ khi sidebar không active */
+    .sidebar:not(.active) ~ .main-content {
+        margin-left: 0;
+    }
+    
+    /* Không bao giờ hiện lớp phủ màu xám trên máy tính */
+    .sidebar-overlay {
+        display: none !important;
+    }
+}
+
+/* --- 6. Hamburger & Close Button Animation --- */
+
+/* Loại bỏ style mặc định của Bootstrap */
+.navbar-toggler {
+    border: none;
+    padding: 0;
+    width: 30px; /* Kích thước nút */
+    height: 24px; /* Kích thước nút */
+    position: relative;
+    transform: rotate(0deg);
+    transition: .5s ease-in-out;
+    cursor: pointer;
+}
+.navbar-toggler:focus {
+    box-shadow: none;
+}
+
+/* Style cho các thanh (bar) của icon */
+.toggler-icon {
+    display: block;
+    position: absolute;
+    height: 3px; /* Độ dày của thanh */
+    width: 100%;
+    background: var(--text-primary);
+    border-radius: 9px;
+    opacity: 1;
+    left: 0;
+    transform: rotate(0deg);
+    transition: .25s ease-in-out;
+}
+
+/* Vị trí ban đầu của 3 thanh (trạng thái hamburger) */
+.toggler-icon.top-bar {
+    top: 0px;
+}
+.toggler-icon.middle-bar {
+    top: 10px;
+}
+.toggler-icon.bottom-bar {
+    top: 20px;
+}
+
+/* Nút "X" trong sidebar header */
+.sidebar-header .btn-close {
+    width: 30px;
+    height: 24px;
+    position: relative;
+    background: none;
+    border: none;
+    opacity: 1;
+    margin-top: 6px;
+    margin-left: 10px;
+}
+.sidebar-header .btn-close:focus {
+    box-shadow: none;
+}
+
+/* -- 7. Hover effect for Hamburger (Star Animation) -- */
+
+/* Khi hover vào nút hamburger, biến nó thành hình sao 6 cánh */
+.navbar-toggler:hover .top-bar {
+    top: 10px; /* Di chuyển thanh vào vị trí trung tâm */
+    transform: rotate(60deg);
+}
+.navbar-toggler:hover .middle-bar {
+    transform: rotate(-60deg);
+}
+.navbar-toggler:hover .bottom-bar {
+    top: 10px; /* Di chuyển thanh vào vị trí trung tâm */
+    transform: rotate(0deg); /* Giữ thanh này nằm ngang */
+}
+
+/* Biến nút X trong sidebar thành 2 gạch ngang */
+.sidebar-header .btn-close .top-bar {
+    top: 10px;
+    transform: rotate(135deg);
+}
+.sidebar-header .btn-close .middle-bar {
+    opacity: 0;
+}
+.sidebar-header .btn-close .bottom-bar {
+    top: 10px;
+    transform: rotate(-135deg);
+}
+.sidebar-header .btn-close:hover .top-bar {
+    transform: rotate(0deg);
+}
+.sidebar-header .btn-close:hover .bottom-bar {
+    top: 5px;
+    transform: rotate(0deg);
+}
+
+/* --- 9. Logo Text Gradient Wave Animation on Hover --- */
+
+.navbar-brand {
+    /* Mặc định giữ màu bình thường */
+    color: var(--text-primary);
+    transition: color 0.3s ease-in-out;
+}
+
+/* Khi hover vào logo */
+.navbar-brand:hover {
+    color: transparent; /* Làm chữ trong suốt để lộ nền gradient */
+    
+    /* Tạo dải màu gradient. Bạn có thể thay đổi màu ở đây */
+    background: linear-gradient(
+        90deg, 
+        var(--text-primary), 
+        #dc3545, /* Màu đỏ của chữ "Books" */
+        var(--text-primary)
+    );
+    
+    background-size: 200% auto; /* Kích thước nền lớn hơn chữ để có thể di chuyển */
+    
+    /* Yêu cầu trình duyệt cắt nền theo hình dạng của chữ */
+    -webkit-background-clip: text;
+    background-clip: text;
+    
+    /* Áp dụng animation */
+    animation: gradient-wave 2s linear infinite;
+}
+
+/* Định nghĩa chuyển động của animation */
+@keyframes gradient-wave {
+    0% { background-position: 200% center; }
+    100% { background-position: 0% center; }
+}
+
+.navbar-brand:hover .text-danger {
+    color: #0d6efd !important; /* Màu xanh dương mặc định của Bootstrap */
+}
+
+/* --- 12. Search Bar Enhancement --- */
+
+/* Lớp phủ cho tìm kiếm */
+.search-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 1055; 
+}
+.search-overlay.active {
+    display: block;
+}
+
+/* Khi tìm kiếm active, nâng toàn bộ topbar lên trên lớp phủ */
+body.search-active .navbar {
+    z-index: 1060;
+}
+
+/* Wrapper cho form tìm kiếm */
+.search-form-wrapper {
+    position: static;
+}
+
+/* Ô tìm kiếm */
+.search-form .form-control {
+    width: 200px; /* Chiều rộng ban đầu (ngắn) */
+    border-radius: 20px;
+    transition: width 0.4s ease-in-out; /* Chỉ áp dụng transition cho width */
+    background-color: var(--bg-tertiary);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+/* Định dạng màu cho chữ mờ (placeholder) */
+.search-form .form-control::placeholder {
+    color: var(--text-secondary);
+    opacity: 0.7; /* Làm cho chữ mờ hơn một chút */
+}
+
+/* Đảm bảo chữ mờ có màu đúng trong chế độ tối */
+body.dark-theme .search-form .form-control::placeholder {
+    color: var(--text-secondary);
+}
+
+/* Khi ô tìm kiếm được kích hoạt, nó sẽ dài ra */
+.search-form-wrapper.active .form-control {
+    width: 400px; /* Chiều rộng khi được bấm vào */
+    transform: scale(1.2);
+    margin-right: 40px;
+}
+.search-form .form-control:focus {
+    box-shadow: none;
+    border-color: #dc3545;
+}
+
+/* Bảng gợi ý tìm kiếm (bảng trắng) */
+#searchDropdown {
+    width: 100%;
+    top: 60px !important;
+    border-radius: 10px;
+    border: 1px solid var(--border-color) !important;
+    background-color: var(--bg-secondary) !important;
+    z-index: 1060;
+}
+
+/* --- 13. Mobile Search View --- */
+
+/* Mặc định ẩn icon kính lúp trên máy tính */
+#mobileSearchIcon {
+    display: none;
+}
+
+/* --- Áp dụng cho màn hình điện thoại --- */
+@media (max-width: 991.98px) {
+    /* Hiện icon kính lúp và căn chỉnh nó */
+    #mobileSearchIcon {
+        display: block;
+        padding: 0 15px; /* Tạo không gian xung quanh icon */
+    }
+
+    /* Ẩn ô tìm kiếm mặc định trên điện thoại */
+    .search-form-wrapper {
+        display: none;
+    }
+    
+    /* -- Khi tìm kiếm được kích hoạt trên điện thoại -- */
+
+    /* Hiện lại ô tìm kiếm và cho nó chiếm gần hết không gian */
+    body.search-active .search-form-wrapper {
+        display: flex;
+        flex-grow: 1;
+    }
+    body.search-active .search-form .form-control {
+        width: 100%; /* Cho ô input dài hết cỡ */
+    }
+
+    /* Ẩn các icon khác để tập trung vào tìm kiếm */
+    body.search-active #mobileSearchIcon,
+    body.search-active #profileDropdown,
+    body.search-active .navbar-brand,
+    body.search-active #sidebarToggleBtn {
+        display: none !important;
+    }
+    
+    /* Thêm nút "Hủy" hoặc "Đóng" khi tìm kiếm active */
+    body.search-active #topbar-right-section::after {
+        content: 'Hủy';
+        color: var(--text-primary);
+        font-weight: 500;
+        cursor: pointer;
+        padding: 0 15px;
+        animation: fadeIn 0.3s;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+}
+
+/* --- 14. Profile Page Content --- */
+
+.profile-header {
+    position: relative;
+    /* Tạo khoảng trống bên dưới để chứa avatar và nội dung tiếp theo */
+}
+
+/* Định dạng cho banner */
+.profile-banner {
+    height: 200px;
+    background-color: var(--bg-tertiary);
+    /* border-radius bị xóa để banner vuông vức với các cạnh */
+    overflow: hidden;
+    margin-bottom: 70px;
+}
+
+.profile-banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Giữ tỷ lệ ảnh và lấp đầy khung */
+}
+
+/* Định dạng cho avatar */
+.profile-avatar {
+    position: absolute;
+    /* Đẩy avatar xuống dưới, nằm một nửa trong một nửa ngoài banner */
+    bottom: -75px; /* (Một nửa chiều cao của avatar) */
+    left: 10%; /* Khoảng cách từ lề trái */
+
+    width: 150px;
+    height: 150px;
+}
+
+.profile-avatar img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%; /* Tạo hình tròn */
+    object-fit: cover;
+    /* Tạo viền trắng/xám xung quanh avatar để tách biệt khỏi banner */
+    border: 5px solid var(--bg-primary); 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+}
+
+/* Tạo padding cho nội dung bên dưới banner */
+.profile-body {
+    padding: 20px 40px; /* Thêm lại padding cho các nội dung bên dưới */
+}
+
+/* --- 15. Topbar Avatar --- */
+
+.topbar-avatar {
+    width: 40px; /* Kích thước của avatar */
+    height: 40px;
+    border-radius: 50%; /* Bo tròn thành hình tròn */
+    object-fit: cover; /* Đảm bảo ảnh không bị méo */
+    border: 2px solid var(--border-color); /* Thêm viền nhỏ cho đẹp */
+}
+
+/* --- 16. Profile Layout (NEW & RESPONSIVE) --- */
+
+/* Bố cục cho PC (màn hình rộng) */
+@media (min-width: 992px) {
+
+    .profile-avatar {
+        left: 225px;
+        transform: translateX(-50%);
+    }
+
+    .profile-content-wrapper {
+        display: flex;
+        align-items: flex-start;
+        gap: 30px;
+    }
+
+    .profile-info-column {
+        flex: 0 0 250px;
+        padding-top: 15px;
+        padding-left: 80px; /* TẠO KHOẢNG CÁCH BÊN TRÁI CHO TÊN */
+    }
+
+    .profile-tabs-column {
+        flex-grow: 1;
+    }
+
+    .profile-username {
+        position: relative;
+        left: 200px;
+        top: -100px;
+    }
+
+    .profile-realname {
+        position: relative;
+        left: 200px;
+        top: -100px;
+    }
+    .profile-actions-desktop {
+        position: relative;
+        left: 28px;
+        top: -80px;
+    }
+}
+
+/* Bố cục cho Điện thoại (màn hình hẹp) */
+@media (max-width: 991.98px) {
+    /* CĂN GIỮA AVATAR TRÊN ĐIỆN THOẠI */
+    .profile-avatar {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .profile-content-wrapper {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .profile-info-column {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 10px;
+        width: 100%;
+    }
+    
+    .profile-tabs-column {
+        margin-top: 30px;
+    }
+
+    .profile-actions-mobile .dropdown-menu {
+        text-align: center; /* Căn giữa các mục menu */
+    }
+}
+
+/* CSS Mới - Sửa lỗi username dài */
+.profile-username {
+    font-weight: 700;
+    font-size: 1.8rem;
+
+    max-width: 100%;
+    white-space: nowrap;       /* Bắt buộc text nằm trên một dòng */
+}
+
+.profile-realname {
+    margin-top: -5px;
+
+    max-width: 100%;           /* Giới hạn chiều rộng bằng cột cha */
+    overflow: hidden;          /* Ẩn phần text bị tràn */
+    text-overflow: ellipsis;   /* Hiển thị dấu "..." */
+    white-space: nowrap;       /* Bắt buộc text nằm trên một dòng */
+}
+
+.profile-actions-desktop {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 150px;
+}
+
+/* --- 18. Profile Tabs Layout (NEW STYLING) --- */
+
+/* Hộp mờ chứa toàn bộ khu vực tab */
+.profile-tabs-column {
+    background-color: rgba(128, 128, 128, 0.1); /* Màu xám trong suốt */
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 20px;
+    backdrop-filter: blur(5px); /* Hiệu ứng kính mờ */
+    -webkit-backdrop-filter: blur(5px);
+}
+
+/* Tùy chỉnh màu sắc cho Tabbar */
+.nav-tabs {
+    border-bottom-color: var(--border-color);
+}
+
+.nav-tabs .nav-link {
+    color: var(--text-secondary);
+    border-color: transparent;
+    border-bottom-color: transparent !important;
+    transition: 0.3s ease; /* Thêm hiệu ứng chuyển động mượt mà */
+    opacity: 0.6; /* LÀM MỜ các mục không được chọn */
+}
+
+.nav-tabs .nav-link:hover {
+    border-color: transparent;
+    opacity: 1; /* Hiện rõ khi di chuột vào */
+    isolation: isolate;
+}
+
+/* Ô được chọn có nền đen chữ trắng */
+.nav-tabs .nav-link.active {
+    color: white !important;
+    background-color: #212529 !important; /* Nền đen */
+    border-radius: 8px;
+    border-color: transparent !important;
+    opacity: 1; /* Hiện rõ 100% */
+}
+
+/* Chỉnh màu cho chế độ tối */
+body.dark-theme .nav-tabs .nav-link.active {
+    color: black !important;
+    background-color: #f8f9fa !important; /* Nền trắng */
+}
+
+/* Nội dung của các Tab */
+.tab-content {
+    color: var(--text-secondary);
+    margin-top: 20px;
+}
+
+/* --- 19. Fix Dark Mode for Buttons --- */
+
+body.dark-theme .btn-outline-dark {
+    color: var(--text-primary);
+    border-color: var(--border-color);
+}
+
+body.dark-theme .btn-outline-dark:hover {
+    background-color: var(--text-primary);
+    color: var(--bg-primary);
+}
+
+body.dark-theme .profile-actions-mobile .btn {
+    color: var(--text-primary);
+}
+
+/* === SỬA LỖI CROPPIE MẤT ẢNH (Bản V2) === */
+
+/* 1. Đảm bảo modal-body có không gian */
+.modal-body {
+    /* Đặt chiều cao tối thiểu để chứa Croppie và thanh trượt */
+    min-height: 450px; 
+    overflow-y: auto; /* Cho phép cuộn nếu cần, nhưng không phải 'visible' */
+}
+
+/* 2. Đặt kích thước CỐ ĐỊNH cho vùng Croppie */
+#cropper-ui {
+    width: 100%;
+    height: 350px; /* Chiều cao này PHẢI KHỚP với JS (boundary) */
+}
+
+/* 3. Bắt Croppie tuân thủ 100% kích thước cha */
+/* (Đây là phần sửa lỗi chính) */
+#cropper-ui .cr-boundary {
+    position: relative; /* Bắt buộc phải có */
+    overflow: hidden;   /* Ẩn phần ảnh tràn ra (không làm vỡ modal) */
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* 4. Đảm bảo thanh trượt (slider) nằm trong vùng an toàn */
+#cropper-ui .cr-slider-wrap {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+/* === SỬA LỖI MÀU TỐI TRONG CÁC TAB (PROFILE) === */
+
+/* Ghi đè màu của các thành phần Bootstrap KHI ở chế độ tối */
+body.dark-theme .tab-content {
+    /* Đảm bảo màu chữ chung trong tab là màu sáng */
+    color: var(--text-secondary); 
+}
+
+body.dark-theme .tab-content h5 {
+    /* Tiêu đề (ví dụ: "Cài đặt Thông tin") */
+    color: var(--text-primary);
+}
+
+/* Class này (text-secondary) được dùng cho <p> "Đây là cách..." 
+  
+*/
+body.dark-theme .text-secondary {
+    color: var(--text-secondary) !important;
+}
+
+body.dark-theme .tab-content .form-label {
+    /* Tất cả các <label> (ví dụ: "Họ và tên") */
+    color: var(--text-primary); 
+}
+
+body.dark-theme .tab-content .form-text {
+    /* Text trợ giúp (ví dụ: "Bạn không thể...") 
+       
+    */
+    color: var(--text-secondary); 
+}
