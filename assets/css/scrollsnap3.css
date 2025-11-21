@@ -1,0 +1,163 @@
+/* Section3 - Dot background */
+#section3 {
+    position: relative;
+    padding: 4rem 0;
+    background-image: radial-gradient(var(--border-color) 1px, transparent 0);
+    background-size: 20px 20px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#section3 .book-card {
+    opacity: 1 !important;          /* luôn rõ */
+    filter: none !important;        /* bỏ tất cả filter */
+    mix-blend-mode: normal !important; 
+    transform: scale(1);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover phóng to và nổi bật hơn */
+#section3 .book-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+/* Thông tin sách chỉ hiện khi hover */
+#section3 .book-info {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+}
+
+#section3 .book-card:hover .book-info {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+/* ---------- Carousel Horizontal ---------- */
+#section3 .book-carousel-wrapper.static-carousel {
+    display: flex;
+    justify-content: center;
+    overflow-x: auto;
+    padding: 1rem 0;
+    gap: 1.5rem;
+}
+
+#section3 .book-carousel {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: nowrap;
+    cursor: default;
+}
+
+/* Light / Dark theme */
+#section3.light-theme {
+    --bg-color: #fff;
+    --text-color: #222;
+    --border-color: #ccc;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+#section3.dark-theme {
+    --bg-color: #1e1e1e;
+    --text-color: #eee;
+    --border-color: #555;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+/* Book cards remain visible in dark mode */
+#section3.dark-theme .book-card {
+    box-shadow: 0 4px 10px rgba(255,255,255,0.1);
+}
+/* Mobile & tablet: scroll ngang với snap */
+@media (max-width: 991px) {
+    #section3 .book-carousel-wrapper.static-carousel {
+        overflow-x: auto;               /* cho phép scroll ngang */
+        -webkit-overflow-scrolling: touch; /* vuốt mượt trên iOS */
+        scroll-snap-type: x mandatory;  /* snap từng book-card */
+        padding: 1rem 0;
+    }
+
+    #section3 .book-carousel {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: nowrap;
+    }
+
+    #section3 .book-card {
+        flex-shrink: 0;
+        width: 120px;
+        scroll-snap-align: start;
+    }
+
+    #section3 .book-card img {
+        height: 180px;                  /* co hình theo card */
+    }
+}
+
+/* Mobile nhỏ hơn 480px */
+@media (max-width: 479px) {
+    #section3 .book-card {
+        width: 100px;
+    }
+
+    #section3 .book-card img {
+        height: 150px;
+    }
+}
+/* ==================== SECTION 3 – HOVER TRẮNG SÁNG 100% (BẮN PHÁT ĂN THẬT) ==================== */
+#section3 .book-card {
+    position: relative;
+    transition: transform 0.4s ease;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+#section3 .book-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+
+/* Nền tối cực mạnh khi hover */
+#section3 .book-cover-wrapper {
+    position: relative;
+}
+#section3 .book-cover-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(135deg, rgba(0,0,0,0.75), rgba(0,0,0,0.6));
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    border-radius: 12px;
+    pointer-events: none;
+}
+#section3 .book-card:hover .book-cover-wrapper::after {
+    opacity: 1;
+}
+
+/* BẮN PHÁT ĂN THẬT – CHỮ TRẮNG SÁNG KHÔNG THỂ NÀO KHÔNG ĐỌC ĐƯỢC */
+#section3 .book-card .book-title,
+#section3 .book-card .book-author,
+#section3 .book-card small {
+    transition: color 0.4s ease !important;
+}
+
+#section3 .book-card:hover .book-title,
+#section3 .book-card:hover .book-author,
+#section3 .book-card:hover small,
+#section3 .book-card:hover .book-info * {
+    color: #ffffff !important;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.9) !important;
+}
+
+/* Badge thể loại vẫn nổi bật */
+#section3 .badge {
+    z-index: 10;
+    font-size: 0.85rem;
+}
+
