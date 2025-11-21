@@ -1,10 +1,12 @@
+import { supabase } from './supabase-client.js';
+import { handleSignOut } from './dashboard.js';
+
 document.addEventListener('DOMContentLoaded', () => {
 
     const scrollUpBtn = document.getElementById('scroll-up-btn');
     const scrollDownBtn = document.getElementById('scroll-down-btn');
 
     new fullpage('#fullpage', {
-        licenseKey: 'YOUR_KEY_HERE',
         autoScrolling: true,
         scrollHorizontally: true,
         navigation: true,
@@ -102,7 +104,11 @@ document.addEventListener('DOMContentLoaded', () => {
             // Carousel
             featured_books: "Featured Books",
             explore_btn: "Explore More Categories",
-            saying_1: "We read books not to memorize every word, but to deeply understand and apply them in life."
+            saying_1: "We read books not to memorize every word, but to deeply understand and apply them in life.",
+
+            profile_link: "My Profile",
+            my_books_link: "My Books",
+            logout_btn: "Sign Out"
         },
         vi: {
             // General
@@ -141,7 +147,11 @@ document.addEventListener('DOMContentLoaded', () => {
             // Carousel
             featured_books: "Sách Nổi Bật",
             explore_btn: "Khám phá thêm thể loại",
-            saying_1: "Chúng ta đọc sách không phải thuộc lòng từng câu chữ, mà để thấu hiểu sâu sắc và vận dụng vào cuộc sống."
+            saying_1: "Chúng ta đọc sách không phải thuộc lòng từng câu chữ, mà để thấu hiểu sâu sắc và vận dụng vào cuộc sống.",
+
+            profile_link: "Thông tin tài khoản",
+            my_books_link: "Sách của tôi",
+            logout_btn: "Đăng xuất"
         }
     };
     const setLanguage = (lang) => {
@@ -274,4 +284,80 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         setTimeout(showNextBubble, 3000);
     }
+    
+    // --- BẮT ĐẦU: TÍCH HỢP XÁC THỰC SUPABASE ---
+
+    // Lấy các element (giống như code cũ, nhưng thêm avatar)
+    const authButtonsDesktop = document.getElementById('auth-buttons-desktop');
+    const profileDropdownDesktop = document.getElementById('profile-dropdown-desktop');
+    const desktopUserName = document.getElementById('desktop-user-name');
+    const desktopUserAvatar = document.getElementById('desktop-user-avatar'); // <-- Element mới
+
+    const authButtonsMobile = document.getElementById('auth-buttons-mobile');
+    const profileDropdownMobile = document.getElementById('profile-dropdown-mobile');
+    const mobileUserAvatar = document.getElementById('mobile-user-avatar'); // <-- Element mới
+    
+    const logoutBtnDesktop = document.getElementById('logout-btn-desktop');
+    const logoutBtnMobile = document.getElementById('logout-btn-mobile');
+
+    // Hàm helper để bật/tắt class 'd-none' (giữ lại từ code cũ)
+    const toggleVisibility = (isLoggedIn, loggedOutEl, loggedInEl) => {
+        if (loggedOutEl) loggedOutEl.classList.toggle('d-none', isLoggedIn);
+        if (loggedInEl) loggedInEl.classList.toggle('d-none', !isLoggedIn);
+    };
+
+    // Hàm khởi tạo UI xác thực
+    async function initializeAuthUI() {
+        // 1. Lấy phiên đăng nhập (session)
+        const { data: { session }, error } = await supabase.auth.getSession();
+
+        if (error) {
+            console.error("Lỗi khi lấy session:", error.message);
+            toggleVisibility(false, authButtonsDesktop, profileDropdownDesktop);
+            toggleVisibility(false, authButtonsMobile, profileDropdownMobile);
+            return;
+        }
+
+        if (session) {
+            // 2. Nếu đã đăng nhập, lấy thông tin profile
+            const { data: profile, error: profileError } = await supabase
+                .from('users')
+                .select('username, avatar_url')
+                .eq('user_id', session.user.id)
+                .single();
+            
+            if (profileError) {
+                    console.warn("Không thể lấy profile:", profileError.message);
+            }
+
+            // 3. Cập nhật UI
+            toggleVisibility(true, authButtonsDesktop, profileDropdownDesktop);
+            toggleVisibility(true, authButtonsMobile, profileDropdownMobile);
+
+            // Sử dụng thông tin profile (nếu có)
+            const userName = profile?.username || session.user.email; // Ưu tiên username
+            const avatarUrl = profile?.avatar_url || '/assets/images/logo.gif'; // Ảnh mặc định
+
+            // Cập nhật desktop
+            if (desktopUserName) desktopUserName.textContent = userName;
+            if (desktopUserAvatar) desktopUserAvatar.src = avatarUrl;
+            
+            // Cập nhật mobile
+            if (mobileUserAvatar) mobileUserAvatar.src = avatarUrl;
+
+            // 4. Gắn sự kiện Đăng xuất (dùng hàm import từ dashboard.js)
+            if (logoutBtnDesktop) logoutBtnDesktop.addEventListener('click', handleSignOut);
+            if (logoutBtnMobile) logoutBtnMobile.addEventListener('click', handleSignOut);
+
+        } else {
+            // 5. Nếu chưa đăng nhập, hiển thị nút Đăng nhập/Đăng ký
+            toggleVisibility(false, authButtonsDesktop, profileDropdownDesktop);
+            toggleVisibility(false, authButtonsMobile, profileDropdownMobile);
+        }
+    }
+
+    // Chạy hàm
+    initializeAuthUI();
+
+    // --- KẾT THÚC: TÍCH HỢP XÁC THỰC SUPABASE ---
 });

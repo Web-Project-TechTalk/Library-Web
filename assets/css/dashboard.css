@@ -1,0 +1,307 @@
+
+/* Chúng ta cần định nghĩa màu nền (dưới dạng RGB)
+  để tạo hiệu ứng gradient mờ dần về màu nền.
+*/
+:root {
+    --bg-primary-rgb: 255, 255, 255; /* Nền sáng */
+    --text-primary-rgb: 33, 37, 41; /* Chữ sáng */
+}
+
+body.dark-theme {
+    --bg-primary-rgb: 26, 26, 26; /* Nền tối */
+    --text-primary-rgb: 248, 249, 250; /* Chữ tối */
+}
+
+/* --- Popular New Titles (PNT) --- */
+
+/* Container chính của slide
+  Chúng ta dùng overflow: hidden để bo góc
+  và position: relative để chứa các lớp con
+*/
+.pnt-slide-wrapper {
+    position: relative;
+    overflow: hidden;
+    background-color: var(--bg-tertiary);
+    /* Bỏ: display: flex; */
+    /* Bỏ: flex-direction: column; */
+}
+
+/* 1. Lớp Nền Mờ (Blurred Background)
+  - Nằm ở dưới cùng (z-index: 1)
+  - Bị làm mờ và tối đi
+  - "transform: scale(1.1)" để viền mờ không bị lộ
+*/
+.pnt-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: blur(5px) brightness(0.9); /* Mờ 10px, giảm sáng 30% */
+    transform: scale(1.1);
+    z-index: 1;
+}
+
+/* 2. Lớp Gradient (Mờ dần từ trên xuống)
+  - Nằm trên lớp nền mờ (z-index: 2)
+  - Dùng màu nền (rgb) đã định nghĩa ở :root
+  - Mờ dần từ 30% ở trên, 70% ở giữa, và 100% ở dưới
+*/
+.pnt-gradient-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to bottom,
+        rgba(var(--bg-primary-rgb), 0.3) 0%,  /* Bắt đầu hơi mờ */
+        rgba(var(--bg-primary-rgb), 0.7) 50%, /* Mờ 70% ở giữa */
+        rgb(var(--bg-primary-rgb)) 95%        /* Che kín ở dưới */
+    );
+    z-index: 2;
+}
+
+/* 3. Lớp Nội dung (Chữ và Bìa)
+  - Nằm trên cùng (z-index: 3)
+  - Dùng flexbox để chia 2 cột
+*/
+.pnt-content {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    gap: 24px; /* Khoảng cách giữa bìa và chữ */
+    height: 100%;
+    padding: 30px;
+}
+
+/* Cột trái: Bìa sách */
+.pnt-cover img {
+    height: 100%; /* Cao 100% (350px - 60px padding = 290px) */
+    width: auto;
+    aspect-ratio: 2 / 3; /* Giữ tỷ lệ 2:3 cho bìa sách */
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Đổ bóng */
+}
+
+/* Cột phải: Thông tin */
+.pnt-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1; /* Tự động co dãn lấp đầy */
+    color: rgb(var(--text-primary-rgb)); /* Màu chữ an toàn */
+}
+
+.pnt-title {
+    font-weight: 700;
+    font-size: 2.25rem; /* Tiêu đề lớn */
+    color: rgb(var(--text-primary-rgb));
+    margin-bottom: 10px;
+    
+    /* Chống tràn chữ 1 dòng */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.pnt-genre {
+    font-size: 0.8rem;
+    padding: 5px 10px;
+    width: fit-content; /* Ô tag vừa vặn với chữ */
+    margin-bottom: 15px;
+}
+
+.pnt-description {
+    font-size: 0.95rem;
+    flex-grow: 1; /* Đẩy tên tác giả xuống dưới cùng */
+    color: rgba(var(--text-primary-rgb), 0.8); /* Chữ mờ hơn 1 chút */
+
+    /* GIỚI HẠN 3 DÒNG (Rất quan trọng) */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.pnt-author {
+    font-weight: 500;
+    font-size: 1rem;
+    color: rgb(var(--text-primary-rgb));
+    margin: 0; /* Xóa margin đáy của <p> */
+}
+
+/* Lớp bọc các nút điều khiển
+  - Nằm ở góc phải dưới (bottom-right)
+  - Nằm bên trên tất cả các lớp khác (z-index: 4)
+*/
+.pnt-controls {
+    position: absolute;
+    
+    bottom: 30px; /* Thay vì 'top: 76px;' */
+    right: 30px; 
+    
+    z-index: 4; /* Nằm trên cả Tiêu đề */
+    display: flex;
+    gap: 10px;
+}
+
+/* Tùy chỉnh nút bấm
+  - Nền đen mờ, chữ trắng (hoạt động tốt trên cả 2 nền Sáng/Tối)
+  - Bo tròn (border-radius: 50%)
+*/
+.pnt-control-btn {
+    background-color: rgba(0, 0, 0, 0.25);
+    color: #ffffff;
+    border: none;
+    border-radius: 50%; /* Bo tròn */
+    width: 38px;
+    height: 38px;
+    
+    /* Căn icon vào giữa */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+
+    transition: background-color 0.2s ease;
+}
+
+.pnt-control-btn:hover {
+    background-color: rgba(0, 0, 0, 0.5); /* Đậm hơn khi hover */
+    color: #ffffff;
+}
+
+.pnt-control-btn:focus {
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.4);
+}
+
+/* (CSS cho Tiêu đề) */
+.pnt-main-title {
+    position: absolute; /* Ghim */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 4; /* Nằm trên gradient (2) và content (3) */
+    font-weight: 700;
+    color: rgb(var(--text-primary-rgb));
+    
+    /* 56px (topbar) + 20px (hở) = 76px */
+    padding: 76px 30px 20px 30px; 
+    margin: 0;
+    
+    /* Thêm lớp mờ nhẹ để chữ dễ đọc hơn */
+    text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    
+    /* Ngăn người dùng vô tình chọn chữ khi bấm nút */
+    pointer-events: none; 
+}
+
+
+.pnt-content {
+    position: relative;
+    z-index: 3; /* Nằm trên gradient (2) */
+    display: flex;
+    gap: 24px;
+    
+    /* Tính toán padding-top:
+      76px (từ .pnt-main-title) 
+      + 40px (chiều cao h4 ~) 
+      + 20px (padding-bottom của h4) 
+      = ~136px
+    */
+    padding: 136px 30px 60px 30px; /* T, R/L, B (Tăng B lên 60px để né nút) */
+}
+
+.pnt-cover img {
+    /* XÓA: height: 100%; */
+
+    /* THÊM: Chiều cao cố định */
+    height: 290px; 
+
+    width: auto;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* ... (.pnt-info, .pnt-title, ... giữ nguyên) ... */
+
+.pnt-controls {
+    position: absolute; /* "Ghim" các nút */
+    
+    /* Đặt ở góc dưới bên phải */
+    bottom: 30px;
+    right: 30px;
+    
+    z-index: 4;
+    display: flex;
+    gap: 10px;
+}
+
+/*
+  Khi body có class .hero-page,
+  chúng ta TẮT padding-top của .main-content
+*/
+body.hero-page .main-content {
+    padding-top: 0;
+}
+
+/*
+  Làm cho topbar trong suốt VÀ
+  thêm một lớp bóng mờ (gradient) phía trên
+  để các icon/chữ trắng dễ đọc hơn.
+*/
+body.hero-page .navbar {
+    background: linear-gradient(
+        to bottom, 
+        rgba(0,0,0,0.4) 0%,   /* Đậm ở trên cùng */
+        rgba(0,0,0,0) 100% /* Trong suốt ở dưới */
+    ) !important;
+    border-bottom: none !important;
+}
+
+/*
+  Vì .main-content (chứa background) đã dính sát top (padding: 0),
+  chúng ta cần đảm bảo nội dung BÊN TRONG nó
+  (tiêu đề, nút) bị đẩy xuống 
+  để không bị icon topbar đè lên.
+*/
+body.hero-page .pnt-main-title {
+    /* 56px (chiều cao topbar) + 20px (khoảng hở) = 76px */
+    padding-top: 76px;
+}
+
+body.hero-page .pnt-controls {
+    /* Căn chỉnh vị trí của các nút */
+    top: 76px;
+    right: 30px;
+}
+
+/* Biến thẻ link <a> thành một khối
+   và bỏ mọi định dạng link
+*/
+.pnt-slide-link {
+    display: block;
+    text-decoration: none; /* Bỏ gạch chân */
+    color: inherit; /* Lấy màu chữ từ cha */
+}
+
+/* (Tùy chọn) Thêm hiệu ứng khi di chuột vào slide */
+.pnt-slide-link:hover .pnt-cover img {
+    transform: scale(1.03);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+.pnt-slide-link:hover .pnt-title {
+    text-decoration: underline;
+}
+
+.book-actions-bar {
+    display: flex;
+    flex-wrap: wrap; /* Tự xuống dòng trên điện thoại */
+    gap: 15px; /* Khoảng cách giữa các nút */
+}
