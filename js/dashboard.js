@@ -13,8 +13,8 @@ export async function getSession() {
     }
 
     if (!data.session) {
-        console.log('Chưa đăng nhập. Đang chuyển về index.html');
-        window.location.replace('/index.html'); 
+        console.log('Chưa đăng nhập. Đang chuyển về auth.html');
+        window.location.replace('auth.html'); 
         return null;
     }
     
@@ -61,7 +61,7 @@ export async function handleSignOut() {
     if (error) {
         console.error('Lỗi đăng xuất:', error);
     } else {
-        window.location.replace('/index.html');
+        window.location.replace('auth.html');
     }
 }
 

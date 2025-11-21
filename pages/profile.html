@@ -16,9 +16,103 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.css">
 </head>
 <body>
-    <div id="topbar-placeholder"></div>
+    <nav class="navbar navbar-light bg-light fixed-top">
+        <div class="container-fluid d-flex align-items-center">
+            <button class="navbar-toggler" type="button" id="sidebarToggleBtn">
+                <span class="toggler-icon top-bar"></span>
+                <span class="toggler-icon middle-bar"></span>
+                <span class="toggler-icon bottom-bar"></span>
+            </button>
 
-    <div id="sidebar-placeholder"></div>
+            <a class="navbar-brand" href="#">
+                <span>l</span><span>i</span><span>b</span><sup class="copyright">©</sup> <span class="text-danger"><span>B</span><span>o</span><span>o</span><span>k</span><span>s</span></span>
+            </a>
+
+            <div class="ms-auto d-flex align-items-center justify-content-end" id="topbar-right-section">
+                <a href="#" class="text-body" id="mobileSearchIcon">
+                    <i class="fas fa-search fa-lg"></i>
+                </a>
+                <div class="search-form-wrapper dropdown flex-grow-1 mx-3" id="searchFormWrapper">
+                    <form class="search-form" role="search">
+                        <input class="form-control" type="search" placeholder="Tìm kiếm sách..." aria-label="Search" id="searchInput" autocomplete="off">
+                    </form>
+                    <div class="dropdown-menu p-3" id="searchDropdown">
+                        <h6>Lịch sử tìm kiếm</h6>
+                        <ul class="list-unstyled mb-0">
+                            <li><a class="dropdown-item" href="#">Sách lập trình C++</a></li>
+                            <li><a class="dropdown-item" href="#">Tài liệu Node.js</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="dropdown me-3">
+                    <a href="#" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="/assets/images/logo.gif" alt="User Avatar" class="topbar-avatar" id="topbar-avatar-img">
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                        <li><a class="dropdown-item" href="#" id="lang-toggle"><i class="fas fa-globe me-2"></i> English</a></li>
+                        <li><a class="dropdown-item" href="#" id="theme-toggle"><i class="fas fa-moon me-2"></i> Sáng / Tối</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#" id="logout-button" data-lang-key="logout"><i class="fas fa-sign-out-alt me-2"></i> Đăng xuất</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <div class="search-overlay" id="searchOverlay"></div>
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <a class="navbar-brand" href="#">
+                lib<sup class="copyright">©</sup> <span class="text-danger">Books</span>
+            </a>
+            <button type="button" class="btn-close" id="sidebarCloseBtn">
+                <span class="toggler-icon top-bar"></span>
+                <span class="toggler-icon middle-bar"></span>
+                <span class="toggler-icon bottom-bar"></span>
+            </button>
+        </div>
+        <ul class="list-unstyled components">
+            <li><a href="#" id="sidebar-home" data-lang-key="home"><i class="fas fa-home"></i> Home</a></li>
+            <li>
+                <a href="#followSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle" id="sidebar-follow" data-lang-key="follow">
+                    <i class="fas fa-book-reader"></i> Follow
+                </a>
+                <ul class="collapse list-unstyled" id="followSubmenu">
+                    <li><a href="#" id="sidebar-reading-history" data-lang-key="readingHistory">Reading history</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#titlesSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle" id="sidebar-titles" data-lang-key="titles">
+                    <i class="fas fa-book"></i> Titles
+                </a>
+                <ul class="collapse list-unstyled" id="titlesSubmenu">
+                    <li><a href="#" id="sidebar-all-books" data-lang-key="allBooks">All Books</a></li>
+                    <li><a href="#" id="sidebar-adv-search" data-lang-key="advSearch">Advance search</a></li>
+                    <li><a href="#" id="sidebar-recent-add" data-lang-key="recentAdd">Recently Added</a></li>
+                    <li><a href="#" id="sidebar-random" data-lang-key="random">Random</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#libSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle" id="sidebar-lib" data-lang-key="lib">
+                    <i class="fas fa-university"></i> Lib
+                </a>
+                <ul class="collapse list-unstyled" id="libSubmenu">
+                    <li><a href="#" id="sidebar-guidelines" data-lang-key="guidelines">Guidelines</a></li>
+                    <li><a href="#" id="sidebar-announce" data-lang-key="announcement">Announcement</a></li>
+                    <li><a href="#" id="sidebar-about" data-lang-key="aboutUs">About us</a></li>
+                    <li><a href="#" id="sidebar-contact" data-lang-key="contact">Contact</a></li>
+                    <li><a href="#" id="sidebar-advertise" data-lang-key="advertise">Advertise</a></li>
+                </ul>
+            </li>
+        </ul>
+        <div class="sidebar-footer">
+            <a href="#" class="me-3"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="me-3"><i class="fab fa-github"></i></a>
+            <a href="#"><i class="fab fa-discord"></i></a>
+        </div>
+    </nav>
 
     <div class="main-content">
         <div class="profile-header">
@@ -151,9 +245,8 @@
                                 </div>
                                 
                                 <div class="mb-3">
-                                    <label for="document-thumbnail-file" class="form-label" data-lang-key="documentThumbnail">Ảnh bìa (tùy chọn)</label>
-                                    <input type="file" class="form-control" id="document-thumbnail-file" accept="image/png, image/jpeg, image/gif">
-                                    <div class="form-text" data-lang-key="documentThumbnailHelp">Tải lên ảnh bìa cho cuốn sách (Tối đa 2MB).</div>
+                                    <label for="document-thumbnail" class="form-label" data-lang-key="documentThumbnail">URL ảnh bìa (tùy chọn)</label>
+                                    <input type="url" class="form-control" id="document-thumbnail" placeholder="https://example.com/image.jpg">
                                 </div>
                                 
                                 <div class="mb-3">

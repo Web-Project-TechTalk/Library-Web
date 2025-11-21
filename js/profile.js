@@ -45,8 +45,46 @@ document.addEventListener('DOMContentLoaded', async function () {
     const topbarRightSection = document.getElementById('topbar-right-section');
     
     const DESKTOP_BREAKPOINT = 992;
+
+    // === Sidebar & Search Logic ===
+    const hideSidebar = () => {
+        sidebar.classList.remove('active');
+        sidebarOverlay.classList.remove('active');
+    };
+    const toggleSidebar = () => {
+        if (sidebar.classList.contains('active')) { hideSidebar(); } 
+        else {
+            sidebar.classList.add('active');
+            if (window.innerWidth < DESKTOP_BREAKPOINT) { sidebarOverlay.classList.add('active'); }
+        }
+    };
+    if (window.innerWidth >= DESKTOP_BREAKPOINT) { sidebar.classList.add('active'); }
+    sidebarToggleBtn.addEventListener('click', toggleSidebar);
+    sidebarCloseBtn.addEventListener('click', hideSidebar);
+    sidebarOverlay.addEventListener('click', hideSidebar);
+    
+    const showSearch = () => {
+        searchOverlay.classList.add('active');
+        searchFormWrapper.classList.add('active');
+        body.classList.add('search-active');
+        const dropdownInstance = bootstrap.Dropdown.getOrCreateInstance(searchInput);
+        dropdownInstance.show();
+    };
+    const hideSearch = () => {
+        searchOverlay.classList.remove('active');
+        searchFormWrapper.classList.remove('active');
+        body.classList.remove('search-active');
+        const dropdownInstance = bootstrap.Dropdown.getInstance(searchInput);
+        if (dropdownInstance) { dropdownInstance.hide(); }
+    };
+    searchInput.addEventListener('focus', showSearch);
+    searchOverlay.addEventListener('click', hideSearch);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && searchOverlay.classList.contains('active')) { hideSearch(); }});
+    mobileSearchIcon.addEventListener('click', (e) => { e.preventDefault(); showSearch(); searchInput.focus(); });
+    topbarRightSection.addEventListener('click', (e) => { if (e.target === topbarRightSection && body.classList.contains('search-active')) { hideSearch(); }});
     
     // === KẾT THÚC LOGIC UI ===
+
 
     // === 3. LOGIC RIÊNG CỦA TRANG PROFILE  ===
 
@@ -512,94 +550,58 @@ async function handleDocumentUpload(event) {
         return;
     }
     
-    // --- Lấy dữ liệu từ form ---
+    // Lấy dữ liệu từ form
     const title = document.getElementById('document-title').value;
     const author = document.getElementById('document-author').value;
     const year = parseInt(document.getElementById('document-year').value);
     const description = document.getElementById('document-description').value;
+    const thumbnail = document.getElementById('document-thumbnail').value;
+    const fileInput = document.getElementById('document-file');
+    const file = fileInput.files[0];
     
-    // Lấy file tài liệu
-    const docFileInput = document.getElementById('document-file');
-    const docFile = docFileInput.files[0];
-    
-    // Lấy file ảnh bìa (input mới)
-    const thumbnailInput = document.getElementById('document-thumbnail-file');
-    const thumbnailFile = thumbnailInput.files[0];
-    
-    let thumbnailUrl = null; // Biến này sẽ lưu URL ảnh bìa sau khi upload
-
-    // --- Kiểm tra file ---
-    if (!docFile) {
+    if (!file) {
         statusDiv.className = 'alert alert-danger';
-        statusDiv.textContent = 'Vui lòng chọn file tài liệu (PDF, DOCX...).';
+        statusDiv.textContent = 'Vui lòng chọn file tài liệu.';
         return;
     }
-    if (docFile.size > 10 * 1024 * 1024) { // 10MB
+    
+    // Kiểm tra kích thước file (tối đa 10MB)
+    if (file.size > 10 * 1024 * 1024) {
         statusDiv.className = 'alert alert-danger';
-        statusDiv.textContent = 'File tài liệu quá lớn. Tối đa là 10MB.';
-        return;
-    }
-    // Kiểm tra ảnh bìa (nếu có)
-    if (thumbnailFile && thumbnailFile.size > 2 * 1024 * 1024) { // 2MB
-        statusDiv.className = 'alert alert-danger';
-        statusDiv.textContent = 'File ảnh bìa quá lớn. Tối đa là 2MB.';
+        statusDiv.textContent = 'File quá lớn. Kích thước tối đa là 10MB.';
         return;
     }
     
     // Vô hiệu hóa nút và hiển thị trạng thái
     submitButton.disabled = true;
     submitButton.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> Đang tải lên...';
+    statusDiv.className = 'alert alert-info';
+    statusDiv.textContent = 'Đang tải lên tài liệu...';
     
     try {
-        // --- 0. (MỚI) Upload ảnh bìa (nếu người dùng chọn) ---
-        if (thumbnailFile) {
-            statusDiv.className = 'alert alert-info';
-            statusDiv.textContent = 'Đang tải lên ảnh bìa...';
-            
-            const fileExt = thumbnailFile.name.split('.').pop();
-            // Lưu ảnh bìa vào một thư mục riêng cho gọn gàng
-            const thumbnailPath = `thumbnails/${currentUser.id}/${Date.now()}-thumbnail.${fileExt}`;
-            
-            const { data: thumbUploadData, error: thumbUploadError } = await supabase.storage
-                .from('sach-files') // Dùng chung bucket 'sach-files'
-                .upload(thumbnailPath, thumbnailFile);
-                
-            if (thumbUploadError) throw thumbUploadError;
-            
-            // Lấy URL public của ảnh bìa vừa upload
-            const { data: thumbUrlData } = supabase.storage
-                .from('sach-files')
-                .getPublicUrl(thumbUploadData.path);
-            
-            thumbnailUrl = thumbUrlData.publicUrl; // Lưu URL vào biến
-        }
-
-        // --- 1. Upload file tài liệu chính ---
-        statusDiv.className = 'alert alert-info';
-        statusDiv.textContent = 'Đang tải lên tài liệu...';
+        // 1. Upload file lên storage
+        const fileExt = file.name.split('.').pop();
+        const fileName = `documents/${currentUser.id}/${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
         
-        const docFileExt = docFile.name.split('.').pop();
-        const docFileName = `documents/${currentUser.id}/${Date.now()}-${Math.random().toString(36).substring(7)}.${docFileExt}`;
-        
-        const { data: docUploadData, error: docUploadError } = await supabase.storage
+        const { data: uploadData, error: uploadError } = await supabase.storage
             .from('sach-files')
-            .upload(docFileName, docFile);
+            .upload(fileName, file);
             
-        if (docUploadError) throw docUploadError;
+        if (uploadError) throw uploadError;
         
-        // --- 2. Lấy URL public của file tài liệu ---
-        const { data: docUrlData } = supabase.storage
+        // 2. Lấy URL public của file
+        const { data: urlData } = supabase.storage
             .from('sach-files')
-            .getPublicUrl(docUploadData.path);
+            .getPublicUrl(uploadData.path);
         
-        // --- 3. Thêm bản ghi vào bảng documents ---
+        // 3. Thêm bản ghi vào bảng documents
         const newDocument = {
             user_id: currentUser.id,
             title: title,
             author_name: author,
             publication_year: year,
             description: description,
-            thumbnail_url: thumbnailUrl // <-- SỬ DỤNG BIẾN ĐÃ UPLOAD
+            thumbnail_url: thumbnail || null
         };
         
         const { data: docData, error: docError } = await supabase
@@ -609,12 +611,12 @@ async function handleDocumentUpload(event) {
             
         if (docError) throw docError;
         
-        // --- 4. Thêm bản ghi vào bảng attachments ---
+        // 4. Thêm bản ghi vào bảng attachments
         const newAttachment = {
             document_id: docData[0].document_id,
-            file_path: docUploadData.path, // Path của file tài liệu
-            file_type: docFile.type,
-            file_name: docFile.name
+            file_path: uploadData.path,
+            file_type: file.type,
+            file_name: file.name
         };
         
         const { error: attachmentError } = await supabase
@@ -623,10 +625,14 @@ async function handleDocumentUpload(event) {
             
         if (attachmentError) throw attachmentError;
         
-        // --- 5. Thành công ---
+        // 5. Thành công
         statusDiv.className = 'alert alert-success';
         statusDiv.textContent = 'Tải lên tài liệu thành công!';
+        
+        // Reset form
         document.getElementById('upload-form').reset();
+        
+        // Tải lại danh sách tài liệu
         loadUploadedDocuments();
         
     } catch (error) {
@@ -634,6 +640,7 @@ async function handleDocumentUpload(event) {
         statusDiv.className = 'alert alert-danger';
         statusDiv.textContent = `Lỗi: ${error.message}`;
     } finally {
+        // Bật lại nút
         submitButton.disabled = false;
         submitButton.innerHTML = '<i class="fas fa-upload me-2"></i> Tải lên Tài liệu';
     }
