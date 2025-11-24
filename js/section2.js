@@ -1,4 +1,5 @@
 // js/section2.js
+
 document.addEventListener('DOMContentLoaded', () => {
 
     const bookData = [

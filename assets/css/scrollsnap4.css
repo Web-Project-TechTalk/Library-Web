@@ -96,3 +96,35 @@
         width: 100px;
     }
 }
+/* SECTION 4 – HOVER TRẮNG SÁNG + NÂNG CARD ĐẸP NHƯ SECTION 3 */
+#section4 .book-card:hover .book-title,
+#section4 .book-card:hover .book-author,
+#section4 .book-card:hover small,
+#section4 .book-card:hover .text-secondary {
+    color: #ffffff !important;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.9) !important;
+    transition: color 0.35s ease !important;
+}
+
+/* Nền tối mịn khi hover */
+#section4 .book-cover-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.72);
+    border-radius: 12px;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+}
+#section4 .book-card:hover .book-cover-wrapper::after {
+    opacity: 1;
+}
+
+/* Nâng card lên nhẹ */
+#section4 .book-card {
+    transition: transform 0.4s ease;
+}
+#section4 .book-card:hover {
+    transform: translateY(-12px);
+}
