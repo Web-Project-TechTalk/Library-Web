@@ -109,55 +109,5 @@
         height: 150px;
     }
 }
-/* ==================== SECTION 3 – HOVER TRẮNG SÁNG 100% (BẮN PHÁT ĂN THẬT) ==================== */
-#section3 .book-card {
-    position: relative;
-    transition: transform 0.4s ease;
-    border-radius: 12px;
-    overflow: hidden;
-}
 
-#section3 .book-card:hover {
-    transform: translateY(-12px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-}
-
-/* Nền tối cực mạnh khi hover */
-#section3 .book-cover-wrapper {
-    position: relative;
-}
-#section3 .book-cover-wrapper::after {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: linear-gradient(135deg, rgba(0,0,0,0.75), rgba(0,0,0,0.6));
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    border-radius: 12px;
-    pointer-events: none;
-}
-#section3 .book-card:hover .book-cover-wrapper::after {
-    opacity: 1;
-}
-
-/* BẮN PHÁT ĂN THẬT – CHỮ TRẮNG SÁNG KHÔNG THỂ NÀO KHÔNG ĐỌC ĐƯỢC */
-#section3 .book-card .book-title,
-#section3 .book-card .book-author,
-#section3 .book-card small {
-    transition: color 0.4s ease !important;
-}
-
-#section3 .book-card:hover .book-title,
-#section3 .book-card:hover .book-author,
-#section3 .book-card:hover small,
-#section3 .book-card:hover .book-info * {
-    color: #ffffff !important;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.9) !important;
-}
-
-/* Badge thể loại vẫn nổi bật */
-#section3 .badge {
-    z-index: 10;
-    font-size: 0.85rem;
-}
 
