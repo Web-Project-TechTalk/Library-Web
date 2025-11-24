@@ -95,8 +95,9 @@ document.addEventListener('DOMContentLoaded', () => {
 async function checkUserSession() {
     const { data } = await supabase.auth.getSession();
     if (data.session) {
-        // CHỈNH SỬA: Chuyển hướng đến trang chủ
-        window.location.replace('/index.html'); 
+        // Nếu có session, chuyển đến trang chính (ví dụ: index.html hoặc dashboard.html)
+        // Giả sử trang chính là /index.html
+        window.location.replace('profile.html');
     }
 }
 
@@ -127,8 +128,7 @@ async function handleLogin(event, form, button, statusDiv) {
         statusDiv.style.color = 'green';
         statusDiv.textContent = 'Đăng nhập thành công! Đang chuyển hướng...';
         // Chuyển hướng đến trang chính
-        sessionStorage.removeItem('isRedirecting');
-        window.location.replace('/index.html');
+        window.location.replace('profile.html'); // Hoặc dashboard.html
     }
 }
 
@@ -161,7 +161,7 @@ async function handleRegister(event, form, button, statusDiv) {
         email: email,
         password: password,
         options: {
-            emailRedirectTo: 'http://127.0.0.1:5503/pages/register-success.html',
+            emailRedirectTo: 'http://127.0.0.1:5500/pages/register-success.html',
             // Phần quan trọng để trigger SQL 'handle_new_user' (nếu có)
             data: {
                 full_name: full_name,
@@ -211,7 +211,7 @@ async function handleForgotPassword(event, form, button, statusDiv) {
 
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
         // QUAN TRỌNG: Đây là trang bạn sẽ tạo ở Bước 3
-        redirectTo: 'http://127.0.0.1:5503/pages/reset-password.html', // Sửa lại URL của bạn
+        redirectTo: 'http://127.0.0.1:5500/pages/reset-password.html', // Sửa lại URL của bạn
     });
 
     if (error) {

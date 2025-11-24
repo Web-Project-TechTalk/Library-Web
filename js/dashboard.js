@@ -7,26 +7,16 @@ let userProfile = null;
 export async function getSession() {
     const { data, error } = await supabase.auth.getSession();
     
-    // Lấy cờ từ sessionStorage
-    const isRedirecting = sessionStorage.getItem('isRedirecting');
-
     if (error) {
         console.error('Lỗi lấy session:', error);
         return null;
     }
 
     if (!data.session) {
-        // Chỉ chuyển hướng nếu chưa ở trong quá trình chuyển hướng
-        if (!isRedirecting) {
-            console.log('Chưa đăng nhập. Đang chuyển về auth.html');
-            sessionStorage.setItem('isRedirecting', 'true'); // Đặt cờ
-            window.location.replace('/pages/auth.html');
-        }
+        console.log('Chưa đăng nhập. Đang chuyển về auth.html');
+        window.location.replace('auth.html'); 
         return null;
     }
-    
-    // Nếu có session, xóa cờ để cho phép điều hướng mới
-    sessionStorage.removeItem('isRedirecting'); 
     
     currentUser = data.session.user;
     return data.session;
@@ -71,8 +61,7 @@ export async function handleSignOut() {
     if (error) {
         console.error('Lỗi đăng xuất:', error);
     } else {
-        sessionStorage.removeItem('isRedirecting');
-        window.location.replace('/index.html');
+        window.location.replace('auth.html');
     }
 }
 
