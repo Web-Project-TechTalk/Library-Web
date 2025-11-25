@@ -52,7 +52,7 @@ const translations = {
         contact: 'Liên hệ',
         advertise: 'Quảng cáo',
         // Action Buttons (Từ profile.js)
-        uploadBtn: 'Tải lên',
+        uploadBtn: 'Kết bạn',
         followBtn: 'Theo dõi',
         reportBtn: 'Báo cáo',
         signOutBtn: 'Đăng xuất',
@@ -145,7 +145,7 @@ const translations = {
         contact: 'Contact',
         advertise: 'Advertise',
         // Action Buttons
-        uploadBtn: 'Upload',
+        uploadBtn: 'Add Friend',
         followBtn: 'Follow',
         reportBtn: 'Report',
         signOutBtn: 'Sign Out',
@@ -437,6 +437,91 @@ function initializeDynamicElementsLogic() {
     }
 }
 
+// Khóa dùng để lưu trạng thái vào sessionStorage
+const COLLAPSE_STATE_KEY = 'sidebarCollapseState';
+
+/**
+ * Hàm 1: Highlight mục sidebar tương ứng với trang hiện tại
+ */
+function highlightSidebarLink() {
+    // Lấy đường dẫn hiện tại và chuẩn hóa (ví dụ: '/pages/dashboard.html')
+    const currentPath = window.location.pathname.replace(/\/$/, '') || '/index.html'; 
+
+    // Lấy tất cả các liên kết trong sidebar
+    const sidebarLinks = document.querySelectorAll('#sidebar .components a');
+
+    sidebarLinks.forEach(link => {
+        const linkHref = (link.getAttribute('href') || '').replace(/\/$/, '');
+
+        // Kiểm tra nếu đường dẫn khớp với href của liên kết
+        if (linkHref && currentPath.endsWith(linkHref)) {
+            
+            // 1. Thêm class highlight vào thẻ <li> cha
+            let listItem = link.closest('li');
+            if (listItem) {
+                listItem.classList.add('active-orange');
+            }
+
+            // 2. Mở submenu cha nếu link là con (Đảm bảo trang active luôn hiển thị)
+            let parentSubmenu = link.closest('.collapse');
+            if (parentSubmenu) {
+                // Thêm class 'show' để mở
+                parentSubmenu.classList.add('show');
+                // Cập nhật thuộc tính của nút toggle cha
+                parentSubmenu.previousElementSibling.setAttribute('aria-expanded', 'true');
+            }
+        }
+    });
+}
+
+
+/**
+ * Hàm 2: Lưu trạng thái mở/đóng của các submenu vào sessionStorage
+ */
+function saveSidebarCollapseState() {
+    const openSubmenus = [];
+    // Lấy tất cả các submenu có class 'collapse'
+    const submenus = document.querySelectorAll('.sidebar .collapse');
+
+    submenus.forEach(submenu => {
+        // Nếu submenu đang mở (có class 'show')
+        if (submenu.classList.contains('show') && submenu.id) {
+            // Lưu ID của submenu đó
+            openSubmenus.push(submenu.id);
+        }
+    });
+
+    sessionStorage.setItem(COLLAPSE_STATE_KEY, JSON.stringify(openSubmenus));
+}
+
+/**
+ * Hàm 3: Khôi phục trạng thái mở/đóng của các submenu từ sessionStorage khi tải trang
+ */
+function restoreSidebarCollapseState() {
+    const savedState = sessionStorage.getItem(COLLAPSE_STATE_KEY);
+
+    if (savedState) {
+        try {
+            const openSubmenus = JSON.parse(savedState);
+            
+            openSubmenus.forEach(id => {
+                const submenu = document.getElementById(id);
+                if (submenu) {
+                    // Thêm class 'show' để mở submenu khi tải trang
+                    submenu.classList.add('show');
+                    // Cập nhật aria-expanded cho thẻ a cha
+                    const parentToggle = submenu.previousElementSibling;
+                    if (parentToggle && parentToggle.classList.contains('dropdown-toggle')) {
+                        parentToggle.setAttribute('aria-expanded', 'true');
+                    }
+                }
+            });
+        } catch (e) {
+            console.error("Error parsing sidebar collapse state:", e);
+        }
+    }
+}
+
 // === 7. LOGIC CHẠY KHI DOM TẢI XONG ===
 // (Chỉ chạy loadComponent)
 document.addEventListener('DOMContentLoaded', () => {
@@ -446,17 +531,49 @@ document.addEventListener('DOMContentLoaded', () => {
         // Tải sidebar sau khi topbar tải xong
         loadComponent('sidebar-placeholder', '/components/sidebar.html', () => {
 
-            // Cả hai đã tải xong, GÁN TẤT CẢ SỰ KIỆN
+            // === BẮT ĐẦU VỊ TRÍ MỚI CHO LOGIC SIDEBAR ===
+
+            // 1. Khôi phục trạng thái mở/đóng đã lưu từ lần chuyển trang trước
+            restoreSidebarCollapseState();
+
+            // 2. Highlight link đang active và đảm bảo submenu cha được mở
+            highlightSidebarLink(); 
+            
+            // 3. Đăng ký listener để tự động lưu trạng thái MỚI nhất mỗi khi submenu mở/đóng
+            const submenus = document.querySelectorAll('.sidebar .collapse');
+            submenus.forEach(submenu => {
+                // Lắng nghe sự kiện của Bootstrap khi submenu mở và đóng
+                submenu.addEventListener('shown.bs.collapse', saveSidebarCollapseState);
+                submenu.addEventListener('hidden.bs.collapse', saveSidebarCollapseState);
+            });
+
+            // GÁN TẤT CẢ CÁC SỰ KIỆN KHÁC CỦA TOPBAR VÀ SIDEBAR (Logic đã có sẵn ở đây)
             initializeDynamicElementsLogic();
 
             // Cập nhật lại UI (quan trọng)
-            // Vì component mới tải, cần chạy lại 2 hàm này
-            // để áp dụng đúng icon và ngôn ngữ cho các nút vừa tải
             let currentLang = localStorage.getItem('language') || 'vi';
             let isDarkMode = localStorage.getItem('theme') === 'dark';
 
             applyTheme(isDarkMode);
             updateLanguageUI(currentLang);
+            
+            // === KẾT THÚC VỊ TRÍ MỚI CHO LOGIC SIDEBAR ===
         });
     });
+
+    // 1. Highlight link đang active và đảm bảo submenu cha được mở
+    highlightSidebarLink(); 
+
+    // 2. Khôi phục trạng thái mở/đóng đã lưu từ lần chuyển trang trước
+    restoreSidebarCollapseState();
+    
+    // 3. Đăng ký listener để tự động lưu trạng thái MỚI nhất mỗi khi submenu mở/đóng
+    const submenus = document.querySelectorAll('.sidebar .collapse');
+    submenus.forEach(submenu => {
+        // Lắng nghe sự kiện của Bootstrap khi submenu mở (shown.bs.collapse) và đóng (hidden.bs.collapse)
+        submenu.addEventListener('shown.bs.collapse', saveSidebarCollapseState);
+        submenu.addEventListener('hidden.bs.collapse', saveSidebarCollapseState);
+    });
+
+    highlightSidebarLink();
 });

@@ -497,7 +497,8 @@ body.dark-theme .search-form .form-control::placeholder {
     background-color: var(--bg-tertiary);
     /* border-radius bị xóa để banner vuông vức với các cạnh */
     overflow: hidden;
-    margin-bottom: 70px;
+    margin-bottom: 40px;
+    margin-top: 65px;
 }
 
 .profile-banner img {
@@ -530,6 +531,25 @@ body.dark-theme .search-form .form-control::placeholder {
 /* Tạo padding cho nội dung bên dưới banner */
 .profile-body {
     padding: 20px 40px; /* Thêm lại padding cho các nội dung bên dưới */
+}
+
+/* --- BỔ SUNG: Hiệu ứng con trỏ chuột cho khu vực bấm để đổi ảnh --- */
+#clickable-avatar,
+#clickable-banner {
+    cursor: pointer;
+    /* (Tùy chọn: Thêm hiệu ứng hover nhẹ để đẹp hơn) */
+}
+
+/* Hiệu ứng khi di chuột qua Avatar */
+#clickable-avatar:hover img {
+    opacity: 0.85;
+    transition: opacity 0.2s ease-in-out;
+}
+
+/* Hiệu ứng khi di chuột qua Banner */
+#clickable-banner:hover img {
+    filter: brightness(0.85);
+    transition: filter 0.2s ease-in-out;
 }
 
 /* --- 15. Topbar Avatar --- */
@@ -818,4 +838,37 @@ img {
     -khtml-user-drag: none;
     -moz-user-drag: none;
     -o-user-drag: none;
+}
+
+.sidebar ul.components li a:hover,
+.sidebar ul.components li.active-orange > a, /* Thẻ li chứa liên kết đang hoạt động */
+.sidebar ul.components li a.active-orange { /* Hoặc thẻ a trực tiếp */
+    /* Màu nền */
+    background: #FF8C00 !important; /* Màu cam đậm */
+    /* Màu chữ */
+    color: #ffffff !important;
+    /* Có thể thêm border hoặc box-shadow nếu cần */
+    border-radius: 5px; /* Bo góc nhẹ */
+}
+
+/* Đảm bảo style cho thẻ con (submenu) cũng nhất quán */
+.sidebar ul.collapse li a:hover,
+.sidebar ul.collapse li a.active-orange {
+    background: #FFA07A !important; /* Màu cam nhạt hơn cho submenu */
+    color: #000000 !important;
+}
+
+/* Style cho mục sidebar đang được chọn/đang hoạt động */
+.sidebar ul.components li.active-orange > a {
+    /* Màu nền */
+    background: #FF8C00 !important; /* Màu cam đậm */
+    /* Màu chữ */
+    color: #ffffff !important;
+    border-radius: 5px;
+}
+
+/* Style cho các liên kết submenu con đang được chọn/hoạt động */
+.sidebar ul.collapse li.active-orange a {
+    background: #FFA07A !important; /* Màu cam nhạt hơn */
+    color: #000000 !important;
 }

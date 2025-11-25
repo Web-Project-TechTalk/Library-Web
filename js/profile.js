@@ -142,7 +142,11 @@ document.addEventListener('DOMContentLoaded', async function () {
     backgroundCroppieInstance = new Croppie(bgCropperUI, {
         viewport: { width: 800, height: 200 }, // Khung chữ nhật (tỷ lệ 4:1)
         boundary: { width: '100%', height: 350 }, // Chiều cao khớp CSS
-        enableExif: true
+        enableExif: true,
+        enableOrientation: true,
+        enableResize: false, 
+        mouseWheelZoom: false,
+        showZoomer: true
     });
 
     // Bắt sự kiện khi CHỌN file background
@@ -150,18 +154,35 @@ document.addEventListener('DOMContentLoaded', async function () {
         if (this.files && this.files[0]) {
             const reader = new FileReader();
             reader.onload = function (event) {
-                backgroundCroppieInstance.bind({ url: event.target.result });
-                backgroundModal.show();
+                // Lưu URL để bind lại sau
+                backgroundCroppieInstance.data = { url: event.target.result }; 
+                
+                // Chỉ mở modal, chưa cần bind phức tạp ở đây
+                backgroundModal.show(); 
             };
             reader.readAsDataURL(this.files[0]);
         }
     });
 
-    // Bắt sự kiện khi MODAL BACKGROUND MỞ XONG (sửa lỗi zoom)
     bgCropperModalEl.addEventListener('shown.bs.modal', function () {
-        backgroundCroppieInstance.bind({
-            url: backgroundCroppieInstance.bind(tempUrl)
-        });
+        if (!backgroundCroppieInstance.data || !backgroundCroppieInstance.data.url) return;
+        
+        // BIND ẢNH VÀO CROPPIE LẦN 2 (khi modal đã hiện)
+        backgroundCroppieInstance.bind({ url: backgroundCroppieInstance.data.url, zoom: 0.0001 }) // Thử zoom nhỏ nhất
+            .then(() => {
+                // LẤY GIÁ TRỊ ZOOM HIỆN TẠI (ĐÃ FIT)
+                const zoomLevel = backgroundCroppieInstance.get().zoom;
+                
+                // KHÓA MIN/MAX ZOOM GẦN NHAU
+                backgroundCroppieInstance.setOptions({
+                    minZoom: zoomLevel,
+                    maxZoom: zoomLevel + 0.0001 // Thêm một chút để thanh trượt không biến mất
+                });
+            })
+            .catch(error => {
+                console.error('Lỗi khi bind ảnh nền:', error);
+                // Xử lý lỗi nếu Croppie không thể bind
+            });
     });
 
     // Bắt sự kiện khi BẤM LƯU ảnh background
@@ -199,7 +220,13 @@ document.addEventListener('DOMContentLoaded', async function () {
     croppieInstance = new Croppie(cropperUI, {
         viewport: { width: 200, height: 200, type: 'circle' }, // Khung cắt hình tròn 200x200
         boundary: { width: '100%', height: 350 }, // Vùng chứa
-        enableExif: true
+        enableExif: true,
+        enableOrientation: true, // Cho phép xoay (giúp ảnh cố định hơn)
+        enableResize: false, // Tắt thay đổi kích thước thủ công
+        mouseWheelZoom: false, // Tắt zoom bằng chuột cuộn
+        minZoom: 0, // Đặt zoom tối thiểu là 0 (mức fit)
+        maxZoom: 1.0, 
+        showZoomer: true // Hiển thị thanh trượt zoom
     });
 
     // Bắt sự kiện khi người dùng CHỌN 1 file
@@ -276,6 +303,30 @@ document.addEventListener('DOMContentLoaded', async function () {
         console.log("Dự phòng: Đang tải lại profile...");
         const { data } = await supabase.from('users').select('username, full_name, avatar_url').eq('user_id', session.user.id).single();
         if (data) fillProfileData(data);
+    }
+
+    // --- Bổ sung: Logic kích hoạt Input khi click vào Avatar/Banner ---
+    const clickableAvatar = document.getElementById('clickable-avatar');
+    const clickableBanner = document.getElementById('clickable-banner');
+    const avatarFileInput = document.getElementById('avatar-file-input');
+    const backgroundFileInput = document.getElementById('background-file-input');
+
+    // Gán sự kiện click cho Avatar (mở dialog chọn ảnh đại diện)
+    if (clickableAvatar && avatarFileInput) {
+        clickableAvatar.addEventListener('click', (e) => {
+            e.preventDefault();
+            // Kích hoạt input file
+            avatarFileInput.click();
+        });
+    }
+
+    // Gán sự kiện click cho Banner (mở dialog chọn ảnh bìa)
+    if (clickableBanner && backgroundFileInput) {
+        clickableBanner.addEventListener('click', (e) => {
+            e.preventDefault();
+            // Kích hoạt input file
+            backgroundFileInput.click();
+        });
     }
 }); // <-- Khối DOMContentLoaded DUY NHẤT kết thúc tại đây
 

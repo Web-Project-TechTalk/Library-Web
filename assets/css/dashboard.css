@@ -305,3 +305,36 @@ body.hero-page .pnt-controls {
     flex-wrap: wrap; /* Tự xuống dòng trên điện thoại */
     gap: 15px; /* Khoảng cách giữa các nút */
 }
+
+.sidebar ul.components li a:hover,
+.sidebar ul.components li.active-orange > a, /* Thẻ li chứa liên kết đang hoạt động */
+.sidebar ul.components li a.active-orange { /* Hoặc thẻ a trực tiếp */
+    /* Màu nền */
+    background: #FF8C00 !important; /* Màu cam đậm */
+    /* Màu chữ */
+    color: #ffffff !important;
+    /* Có thể thêm border hoặc box-shadow nếu cần */
+    border-radius: 5px; /* Bo góc nhẹ */
+}
+
+/* Đảm bảo style cho thẻ con (submenu) cũng nhất quán */
+.sidebar ul.collapse li a:hover,
+.sidebar ul.collapse li a.active-orange {
+    background: #FFA07A !important; /* Màu cam nhạt hơn cho submenu */
+    color: #000000 !important;
+}
+
+/* Style cho mục sidebar đang được chọn/đang hoạt động */
+.sidebar ul.components li.active-orange > a {
+    /* Màu nền */
+    background: #FF8C00 !important; /* Màu cam đậm */
+    /* Màu chữ */
+    color: #ffffff !important;
+    border-radius: 5px;
+}
+
+/* Style cho các liên kết submenu con đang được chọn/hoạt động */
+.sidebar ul.collapse li.active-orange a {
+    background: #FFA07A !important; /* Màu cam nhạt hơn */
+    color: #000000 !important;
+}
