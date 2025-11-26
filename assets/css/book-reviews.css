@@ -1,0 +1,206 @@
+/* file: book-reviews.css */
+
+/* -------------------------------------- */
+/* CSS cho phần Đánh giá (Rating) */
+/* -------------------------------------- */
+
+/* Khung chung */
+.review-summary-box {
+    border: 1px solid #dee2e6;
+    background-color: #f8f9fa !important;
+}
+
+.avg-rating-display {
+    line-height: 1;
+}
+
+/* Các ngôi sao đánh giá */
+.rating-input {
+    cursor: pointer;
+    font-size: 1.8rem; /* Kích thước lớn hơn cho sao */
+}
+
+.rating-star {
+    transition: color 0.2s, transform 0.1s;
+    color: #ced4da; /* Màu xám nhạt mặc định */
+}
+
+/* Hiệu ứng khi hover/đánh giá (dùng JS để thêm class 'rated' hoặc 'hover-active') */
+.rating-star.hover-active,
+.rating-star.rated {
+    color: #ffc107; /* Màu vàng cam */
+}
+
+.rating-star:hover {
+    transform: scale(1.1); /* Hiệu ứng phóng to nhẹ khi hover */
+}
+
+
+/* -------------------------------------- */
+/* CSS cho phần Bình luận (Comments) */
+/* -------------------------------------- */
+
+.comment-form-container {
+    border-radius: 8px;
+}
+
+.comment-item {
+    background-color: #ffffff;
+    border-radius: 8px !important;
+    border: 1px solid #e9ecef;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.comment-item img {
+    border: 1px solid #ced4da;
+    object-fit: cover;
+}
+
+.comment-rating {
+    font-size: 0.9rem;
+}
+
+/* Trả lời bình luận (Reply) */
+.replies {
+    margin-top: 10px;
+}
+
+.replies .bg-light {
+    border-radius: 6px !important;
+    padding: 10px;
+}
+
+.replies .badge {
+    font-weight: normal;
+    font-size: 0.75rem;
+    padding: 0.3em 0.6em;
+}
+
+/* Thanh bên (border-start) cho phần trả lời */
+.border-info {
+    border-color: #0dcaf0 !important; /* Thay đổi màu viền cho nổi bật */
+}
+
+/* -------------------------------------- */
+/* CSS Tùy chỉnh chung cho REPLY FORM (TINH CHỈNH BORDER-RADIUS) */
+/* -------------------------------------- */
+
+/* Khung nhập liệu chính (Thay thế cho .reply-form) */
+.reply-input-group {
+    /* Đặt bo góc lớn hơn cho toàn bộ nhóm nhập liệu */
+    border-radius: 20px; 
+    overflow: hidden; /* Cần thiết để các phần tử con không phá vỡ bo góc */
+    border: 1px solid #ced4da; /* Thêm viền nhẹ */
+}
+
+/* Ẩn viền giữa textarea và button */
+.reply-input-group textarea {
+    border: none !important;
+    box-shadow: none !important;
+    resize: none; /* Không cho phép kéo giãn textarea */
+    padding-top: 8px; /* Tăng padding để đẹp hơn */
+    padding-bottom: 8px;
+    height: auto; /* Chiều cao tự động */
+}
+
+.reply-input-group .btn-submit-reply {
+    /* Loại bỏ bo góc mặc định của Bootstrap, thay bằng bo góc của container */
+    border-radius: 0 !important; 
+    border: none !important;
+    padding-left: 15px;
+    padding-right: 15px;
+    /* Dùng màu primary của Bootstrap */
+    background-color: var(--bs-primary);
+    color: white;
+}
+
+/* Phần @[Tên người dùng] */
+.reply-to-badge {
+    font-size: 0.8rem;
+    padding: 0.25em 0.7em;
+}
+
+
+/* -------------------------------------- */
+/* CSS Tùy chỉnh cho DARK MODE */
+/* -------------------------------------- */
+
+/* Khi body có class .dark-mode */
+.dark-mode .comment-item {
+    background-color: #343a40 !important; /* Đổi nền trắng sang xám đậm */
+    border-color: #495057 !important; /* Đổi viền xám nhạt sang viền đậm hơn */
+    box-shadow: 0 1px 3px rgba(0,0,0,0.5); /* Tạo bóng rõ hơn trên nền tối */
+}
+
+/* Đảm bảo chữ trong bình luận là màu sáng */
+.dark-mode .comment-item p,
+.dark-mode .comment-item span {
+    color: #f8f9fa !important; /* Màu chữ sáng (light gray) */
+}
+
+/* Các chữ nhỏ, chữ mờ (text-muted) */
+.dark-mode .text-muted {
+    color: #adb5bd !important; /* Màu xám nhạt hơn */
+}
+
+/* Container chứa form bình luận (nền trắng) */
+.dark-mode .comment-form-container {
+    background-color: #343a40 !important; /* Đổi nền trắng sang xám đậm */
+    border-color: #495057 !important; /* Viền đậm hơn */
+}
+
+/* Ô textarea nhập nội dung bình luận */
+.dark-mode #comment-textarea {
+    background-color: #495057; /* Nền tối cho input */
+    color: #f8f9fa; /* Chữ sáng */
+    border-color: #6c757d;
+}
+
+/* Placeholder text trong textarea */
+.dark-mode #comment-textarea::placeholder {
+    color: #adb5bd; /* Màu chữ gợi ý nhạt */
+    opacity: 1; 
+}
+
+/* Phần reply/trả lời (bg-light) */
+.dark-mode .replies .bg-light {
+    background-color: #495057 !important; /* Nền tối hơn cho phần trả lời */
+    border-color: #6c757d;
+}
+
+/* Tên người dùng trong comment (text-primary, text-success, text-danger) */
+.dark-mode .text-primary {
+    color: #8ab4f8 !important; /* Màu xanh nhạt hơn */
+}
+.dark-mode .text-success {
+    color: #69c469 !important; /* Màu xanh lá nhạt hơn */
+}
+.dark-mode .text-danger {
+    color: #f7756f !important; /* Màu đỏ nhạt hơn */
+}
+
+/* CSS Tùy chỉnh cho REPLY FORM (Tối ưu cho Dark Mode) */
+
+/* Khung nhập liệu chính */
+.dark-mode .reply-input-group {
+    border-color: #6c757d; /* Viền xám đậm */
+    background-color: #495057; /* Nền xám đậm cho input group */
+}
+
+/* Phần @[Tên người dùng] trong form trả lời */
+.dark-mode .reply-to-badge {
+    background-color: #5a6268 !important; /* Xám đậm hơn một chút so với nền */
+    color: #f8f9fa !important; 
+}
+
+/* Ô textarea nhập trả lời */
+.dark-mode .reply-input-group textarea {
+    background-color: #495057; /* Nền tối cho input */
+    color: #f8f9fa; /* Chữ sáng */
+}
+
+/* Nút Gửi (btn-primary) */
+.dark-mode .reply-input-group .btn-submit-reply {
+    background-color: #0d6efd; /* Giữ màu xanh */
+    color: #ffffff;
+}
