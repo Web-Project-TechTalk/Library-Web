@@ -1,12 +1,16 @@
 // file: reviews.js
 
 // Khởi tạo một chút tương tác cho phần đánh giá sao (Rating) và Bình luận
-document.addEventListener('DOMContentLoaded', () => {
+function initializeReviews() {
     // === [ KHAI BÁO CÁC PHẦN TỬ CHUNG ] ===
     const ratingInput = document.querySelector('.rating-input');
+    // Kiểm tra nếu không có phần tử rating, thoát khỏi hàm
+    if (!ratingInput) return;
+    
     const stars = ratingInput.querySelectorAll('.rating-star');
     const ratingText = document.getElementById('rating-text');
-    let currentRating = 0; // Đánh giá hiện tại
+    // Lấy rating ban đầu (0) hoặc từ data-rating nếu có
+    let currentRating = parseInt(ratingInput.dataset.rating || 0); 
     
     // Khai báo các phần tử cho chức năng BÌNH LUẬN
     const submitBtn = document.getElementById('submit-comment-btn');
@@ -17,12 +21,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const USER_NAME = "Bạn (Người Học)";
     const USER_AVATAR = "https://placehold.co/40x40/0d6efd/ffffff?text=YOU"; 
 
-    // Cập nhật text theo số sao (GIỮ NGUYÊN)
+    // Cập nhật text theo số sao (LẤY TỪ GLOBAL TRANSLATIONS)
     const ratingLabels = {
-        0: 'Chưa đánh giá', 1: 'Rất tệ', 2: 'Tệ', 3: 'Trung bình', 4: 'Tốt', 5: 'Rất tuyệt vời'
+        0: window.getTranslation('notRated'), 
+        1: window.getTranslation('ratingLabel1'),
+        2: window.getTranslation('ratingLabel2'),
+        3: window.getTranslation('ratingLabel3'),
+        4: window.getTranslation('ratingLabel4'),
+        5: window.getTranslation('ratingLabel5')
     };
 
-    /** Hàm cập nhật trạng thái icon sao (GIỮ NGUYÊN) */
+    /** Hàm cập nhật trạng thái icon sao */
     function updateStars(rating, className = 'rated') {
         stars.forEach(s => {
             s.classList.remove('fas', 'far', 'rated', 'hover-active');
@@ -40,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ratingText.textContent = ratingLabels[rating];
     }
 
-    // Xử lý Hover và Click cho Rating (GIỮ NGUYÊN)
+    // Xử lý Hover và Click cho Rating
     stars.forEach(star => {
         star.addEventListener('mouseover', function() {
             updateStars(parseInt(this.dataset.value), 'hover-active'); 
@@ -54,6 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ratingInput.dataset.rating = currentRating;
         });
     });
+    // Khởi tạo ban đầu với text đã dịch
     updateStars(currentRating, 'rated');
     
     // === [ CHỨC NĂNG GỬI BÌNH LUẬN MỚI ] ===
@@ -92,15 +102,15 @@ document.addEventListener('DOMContentLoaded', () => {
                             <span class="fw-bold text-primary">${USER_NAME}</span>
                             <div class="comment-rating">${starHtml}</div>
                         </div>
-                        <p class="text-muted small mb-1">Vừa đăng</p>
+                        <p class="text-muted small mb-1">${window.getTranslation('justPosted')}</p>
                         <p class="mt-2 mb-2">${content}</p>
 
                         <div class="comment-actions small text-muted">
                             <a href="#" class="me-3 btn-like">
                                 <i class="far fa-heart me-1 like-icon"></i>
-                                Thích (<span class="like-count-text">0</span>)
+                                ${window.getTranslation('likeBtnText')} (<span class="like-count-text">0</span>)
                             </a>
-                            <a href="#" class="me-3 btn-reply">Trả lời</a>
+                            <a href="#" class="me-3 btn-reply">${window.getTranslation('replyBtnText')}</a>
                         </div>
                         <div class="reply-form-container mt-2" style="display: none;"></div>
                     </div>
@@ -110,29 +120,34 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     // Xử lý sự kiện khi click nút "Gửi bình luận"
-    submitBtn.addEventListener('click', () => {
-        const commentContent = commentTextarea.value.trim();
-        const userRating = currentRating;
-        
-        if (commentContent.length < 5) {
-            alert('Bình luận cần ít nhất 5 ký tự nhé!');
-            return;
-        }
-        
-        if (userRating === 0) {
-            alert('Bạn vui lòng chọn số sao đánh giá trước khi gửi nhé!');
-            return;
-        }
-        
-        // 1. Thêm bình luận mới và gắn sự kiện
-        appendNewComment(commentContent, userRating);
-        
-        // 2. Reset trạng thái sau khi gửi
-        commentTextarea.value = '';
-        currentRating = 0;
-        updateStars(currentRating, 'rated');
-        ratingInput.dataset.rating = currentRating;
-    });
+    if (submitBtn) {
+        submitBtn.addEventListener('click', () => {
+            const commentContent = commentTextarea.value.trim();
+            const userRating = currentRating;
+            
+            // Dùng bản dịch cho alert
+            if (commentContent.length < 5) {
+                alert(window.getTranslation('commentLengthAlert'));
+                return;
+            }
+            
+            // Dùng bản dịch cho alert
+            if (userRating === 0) {
+                alert(window.getTranslation('ratingMissingAlert'));
+                return;
+            }
+            
+            // 1. Thêm bình luận mới và gắn sự kiện
+            appendNewComment(commentContent, userRating);
+            
+            // 2. Reset trạng thái sau khi gửi
+            commentTextarea.value = '';
+            currentRating = 0;
+            updateStars(currentRating, 'rated');
+            ratingInput.dataset.rating = currentRating;
+        });
+    }
+
 
     // === [ CHỨC NĂNG THÍCH (LIKE) ] ===
 
@@ -165,23 +180,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /** Tạo form trả lời HTML */
     function createReplyFormHtml(parentName) {
-        // ĐÃ CẬP NHẬT: Thay đổi cấu trúc để dễ dàng bo tròn hoàn toàn
+        // Lấy bản dịch
+        const repNameBadge = window.getTranslation('repNameBadge');
+        const repNameText = window.getTranslation('repNameText');
+        const replyPlaceholder = window.getTranslation('replyPlaceholder');
+        const sendBtn = window.getTranslation('sendBtn');
+        
         return `
             <div class="reply-form-content">
                 <div class="d-flex align-items-center mb-1">
                     <span class="badge bg-secondary text-white rounded-pill me-2 reply-to-badge">
-                        @${parentName}
+                        ${repNameBadge}${parentName}
                     </span>
-                    <span class="text-muted small">Đang trả lời...</span>
+                    <span class="text-muted small">${repNameText}</span>
                 </div>
                 
                 <div class="input-group reply-input-group shadow-sm">
                     <textarea class="form-control form-control-sm border-end-0" 
                               rows="1" 
-                              placeholder="Viết trả lời..."></textarea>
+                              placeholder="${replyPlaceholder}"></textarea>
                               
                     <button class="btn btn-sm btn-primary btn-submit-reply" type="button">
-                        Gửi
+                        ${sendBtn}
                     </button>
                 </div>
             </div>
@@ -219,24 +239,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /** Xử lý sự kiện Gửi Trả lời */
     function handleSubmitReply(parentComment, parentName) {
-        const replyTextarea = parentComment.querySelector('.reply-form-content textarea'); // Cập nhật selector
+        const replyTextarea = parentComment.querySelector('.reply-form-content textarea');
         const replyContent = replyTextarea.value.trim();
         const replyFormContainer = parentComment.querySelector('.reply-form-container');
         
+        // Dùng bản dịch cho alert
         if (replyContent.length < 3) {
-            alert('Nội dung trả lời quá ngắn.');
+            alert(window.getTranslation('replyLengthAlert'));
             return;
         }
 
-        // 1. Tạo HTML cho trả lời mới
+        // 1. Tạo HTML cho trả lời mới (Dùng bản dịch)
         const newReplyHtml = `
             <div class="d-flex align-items-start mb-2 bg-light p-3 rounded">
                 <img src="${USER_AVATAR}" alt="Avatar Reply" class="rounded-circle me-3" style="width: 30px; height: 30px; object-fit: cover;">
                 <div>
                     <span class="fw-bold text-primary">${USER_NAME}</span>
-                    <p class="text-muted small mb-1">Vừa trả lời</p>
+                    <p class="text-muted small mb-1">${window.getTranslation('justReplied')}</p>
                     <p class="mt-1 mb-0">
-                        <span class="badge bg-secondary me-2">@${parentName}</span>
+                        <span class="badge bg-secondary me-2">${window.getTranslation('repNameBadge')}${parentName}</span>
                         ${replyContent}
                     </p>
                 </div>
@@ -272,16 +293,61 @@ document.addEventListener('DOMContentLoaded', () => {
         // Gắn sự kiện cho nút Thích
         const likeBtn = commentElement.querySelector('.btn-like');
         if (likeBtn) {
+            // Cập nhật text "Thích" cho các comment tĩnh
+            likeBtn.innerHTML = likeBtn.innerHTML.replace('Thích', window.getTranslation('likeBtnText'));
             likeBtn.addEventListener('click', handleLikeClick);
         }
 
         // Gắn sự kiện cho nút Trả lời
         const replyBtn = commentElement.querySelector('.btn-reply');
         if (replyBtn) {
+            // Cập nhật text "Trả lời" cho các comment tĩnh
+            replyBtn.textContent = window.getTranslation('replyBtnText');
             replyBtn.addEventListener('click', handleReplyClick);
         }
     }
     
     // Gắn sự kiện cho TẤT CẢ các bình luận hiện có khi trang tải xong
     document.querySelectorAll('#comments-list-container .comment-item').forEach(attachCommentEventListeners);
-});
+    
+    // *** Cập nhật các chuỗi text tĩnh trong comment template (Ví dụ: @Tên người dùng)
+    document.querySelectorAll('.replies .badge.bg-secondary').forEach(badge => {
+        // Chỉ thay thế nếu nội dung là @
+        if (badge.textContent.startsWith('@')) {
+             const name = badge.textContent.substring(1);
+             badge.textContent = `${window.getTranslation('repNameBadge')}${name}`;
+        }
+    });
+}
+
+// Chạy logic khi DOM tải xong
+document.addEventListener('DOMContentLoaded', initializeReviews);
+
+// *** EXPOSE HÀM NÀY ĐỂ app-ui.js CÓ THỂ GỌI LẠI KHI ĐỔI NGÔN NGỮ ***
+window.reInitializeReviewsLogic = function() {
+    // Gỡ listener DOMContentLoaded cũ nếu có
+    document.removeEventListener('DOMContentLoaded', initializeReviews);
+    
+    // Chạy lại logic
+    initializeReviews();
+    
+    // Cập nhật lại sao để hiển thị label đúng
+    const ratingInput = document.querySelector('.rating-input');
+    if (ratingInput) {
+        // Lấy lại rating hiện tại
+        let currentRating = parseInt(ratingInput.dataset.rating || 0);
+        const ratingText = document.getElementById('rating-text');
+        
+        // Tạo lại ratingLabels bằng bản dịch mới
+        const newRatingLabels = {
+            0: window.getTranslation('notRated'), 
+            1: window.getTranslation('ratingLabel1'),
+            2: window.getTranslation('ratingLabel2'),
+            3: window.getTranslation('ratingLabel3'),
+            4: window.getTranslation('ratingLabel4'),
+            5: window.getTranslation('ratingLabel5')
+        };
+        // Cập nhật text đánh giá hiện tại 
+        ratingText.textContent = newRatingLabels[currentRating];
+    }
+};

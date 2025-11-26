@@ -30,187 +30,89 @@ const translations = {
         searchPlaceholder: 'Tìm kiếm sách...',
         themeToggle: ' Sáng / Tối',
         logout: 'Đăng xuất',
-        profile: 'Trang cá nhân', // Key mới bạn thêm ở topbar
+        profile: 'Trang cá nhân',
         // Profile Tabs (Từ profile.js)
         infoTab: 'Thông tin',
         uploadTab: 'Tải lên',
         activityTab: 'Hoạt động',
         favoritesTab: 'Yêu thích',
-        // Sidebar (Từ profile.js)
-        home: 'Trang chủ',
-        follow: 'Theo dõi',
-        readingHistory: 'Lịch sử đọc',
-        titles: 'Đầu sách',
-        allBooks: 'Tất cả sách',
-        advSearch: 'Tìm kiếm nâng cao',
-        recentAdd: 'Mới thêm gần đây',
-        random: 'Ngẫu nhiên',
-        lib: 'Thư viện',
-        guidelines: 'Hướng dẫn',
-        announcement: 'Thông báo',
-        aboutUs: 'Về chúng tôi',
-        contact: 'Liên hệ',
-        advertise: 'Quảng cáo',
-        // Action Buttons (Từ profile.js)
-        uploadBtn: 'Kết bạn',
-        followBtn: 'Theo dõi',
-        reportBtn: 'Báo cáo',
-        signOutBtn: 'Đăng xuất',
+        
+        // === MỚI: Thêm key cho book.html (Page Content) ===
+        bookTitle: 'Sách',
+        readBtn: 'Đọc',
+        downloadBtn: 'Tải về',
+        detailInfoTitle: 'Thông tin chi tiết',
+        loadingDescription: 'Đang tải mô tả...',
+        reviewsSummaryTitle: 'Đánh giá về sách',
+        userRatingPrompt: 'Bạn đánh giá cuốn sách này thế nào?',
+        writeCommentTitle: 'Viết bình luận của bạn',
+        commentPlaceholder: 'Chia sẻ cảm nghĩ của bạn về cuốn sách...',
+        submitCommentBtn: 'Gửi bình luận',
+        readerCommentsTitle: 'Bình luận từ độc giả', 
+        
+        // === MỚI: Thêm key cho reviews.js (Internal/Alerts) ===
+        notRated: 'Chưa đánh giá',
+        ratingLabel1: 'Rất tệ',
+        ratingLabel2: 'Tệ',
+        ratingLabel3: 'Trung bình',
+        ratingLabel4: 'Tốt',
+        ratingLabel5: 'Rất tuyệt vời',
+        commentLengthAlert: 'Bình luận cần ít nhất 5 ký tự nhé!',
+        ratingMissingAlert: 'Bạn vui lòng chọn số sao đánh giá trước khi gửi nhé!',
+        justPosted: 'Vừa đăng',
+        justReplied: 'Vừa trả lời',
+        likeBtnText: 'Thích',
+        replyBtnText: 'Trả lời',
+        repNameBadge: '@',
+        repNameText: 'Đang trả lời...',
+        replyPlaceholder: 'Viết trả lời...',
+        sendBtn: 'Gửi',
+        replyLengthAlert: 'Nội dung trả lời quá ngắn.',
 
-        // === MỚI: Thêm key cho auth.html ===
-        loginTitle: 'Đăng nhập',
-        registerTitle: 'Đăng ký',
-        emailLabel: 'Địa chỉ email',
-        passwordLabel: 'Mật khẩu',
-        forgotPassword: 'Quên mật khẩu?',
-        loginButton: 'Đăng nhập',
-        registerButton: 'Tạo tài khoản',
-        fullNameLabel: 'Họ và tên',
-        usernameLabel: 'Tên đăng nhập',
-        confirmPasswordLabel: 'Xác nhận mật khẩu',
-
-        // === MỚI: Thêm key cho register-success.html ===
-        regSuccessTitle: 'Đăng ký thành công!',
-        regSuccessMessage: 'Cảm ơn bạn đã tham gia cộng đồng của chúng tôi.\nBạn bây giờ có thể quay về trang đăng nhập để bắt đầu.',
-        backToLogin: 'Quay về Đăng nhập',
-
-        // === MỚI: Thêm key cho profile.html (tab Info) ===
-        settingsInfoTitle: 'Cài đặt Thông tin',
-        settingsInfoSubtitle: 'Đây là cách người khác nhìn thấy bạn.',
-        usernameHelpText: 'Bạn không thể thay đổi tên đăng nhập.',
-        fullNamePlaceholder: 'Tên của bạn...',
-        avatarLinkLabel: 'Link ảnh đại diện:',
-        avatarChangeLabel: 'Thay đổi avatar:',
-        backgroundChangeLabel: 'Thay đổi ảnh bìa:',
-        updateProfileButton: 'Cập nhật Profile',
-
-        phoneLabel: 'Số điện thoại',
-        ageLabel: 'Tuổi',
-        securityTab: 'Bảo mật',
-        changePasswordTitle: 'Đổi mật khẩu',
-        newPasswordLabel: 'Mật khẩu mới',
-        confirmNewPasswordLabel: 'Xác nhận mật khẩu mới',
-        changePasswordButton: 'Lưu Mật Khẩu Mới',
-        passwordMismatchError: 'Mật khẩu mới và xác nhận không khớp!',
-        passwordTooShortError: 'Mật khẩu phải dài ít nhất 6 ký tự.',
-
-        //Đổi Email
-        changeEmailTitle: 'Đổi Email',
-        changeEmailSubtitle: 'Chúng tôi sẽ gửi link xác nhận đến cả email cũ và mới của bạn.',
-        newEmailLabel: 'Email mới',
-        confirmNewEmailLabel: 'Xác nhận email mới',
-        changeEmailButton: 'Gửi Yêu cầu Đổi Email',
-        emailMismatchError: 'Email và xác nhận không khớp!',
-        emailChangeSuccess: 'Yêu cầu thành công! Vui lòng kiểm tra email (cả cũ và mới) để xác nhận thay đổi.',
-
-        emailChangeSuccessTitle: 'Xác Nhận Đổi Email Thành Công!',
-        emailChangeSuccessMsg: 'Hãy chắc chắn bạn đã xác nhận cả hai email của mình.\nVui lòng quay về trang đăng nhập để đăng nhập lại với email mới.',
-        uploadTitle: "Tải lên Tài liệu",
-        uploadSubtitle: "Chọn file tài liệu để tải lên thư viện.",
-        documentTitle: "Tiêu đề tài liệu",
-        documentAuthor: "Tác giả",
-        documentYear: "Năm xuất bản",
-        documentDescription: "Mô tả",
-        documentThumbnail: "Ảnh bìa (tùy chọn)",
-        documentFile: "Chọn file tài liệu",
-        documentFileHelp: "Hỗ trợ: PDF, DOC, DOCX, TXT, EPUB, MOBI (Tối đa 10MB)",
-        uploadSubmit: "Tải lên Tài liệu",
-        uploadedDocuments: "Tài liệu đã tải lên",
-        loadingDocuments: "Đang tải danh sách tài liệu..."
     },
     en: {
-        // Topbar & Menu
-        searchPlaceholder: 'Search for books...',
-        themeToggle: ' Dark / Light',
-        logout: 'Sign Out',
-        profile: 'Profile', // Key mới bạn thêm ở topbar
-        // Profile Tabs
+        // Topbar & Menu (Từ profile.js)
+        searchPlaceholder: 'Search books...',
+        themeToggle: ' Light / Dark',
+        logout: 'Sign out',
+        profile: 'Profile Page',
+        // Profile Tabs (Từ profile.js)
         infoTab: 'Info',
-        uploadTab: 'Upload',
+        uploadTab: 'Uploads',
         activityTab: 'Activity',
         favoritesTab: 'Favorites',
-        // Sidebar
-        home: 'Home',
-        follow: 'Follow',
-        readingHistory: 'Reading History',
-        titles: 'Titles',
-        allBooks: 'All Books',
-        advSearch: 'Advance Search',
-        recentAdd: 'Recently Added',
-        random: 'Random',
-        lib: 'Lib',
-        guidelines: 'Guidelines',
-        announcement: 'Announcement',
-        aboutUs: 'About Us',
-        contact: 'Contact',
-        advertise: 'Advertise',
-        // Action Buttons
-        uploadBtn: 'Add Friend',
-        followBtn: 'Follow',
-        reportBtn: 'Report',
-        signOutBtn: 'Sign Out',
+        
+        // === MỚI: Thêm key cho book.html (Page Content) ===
+        bookTitle: 'Book',
+        readBtn: 'Read',
+        downloadBtn: 'Download',
+        detailInfoTitle: 'Details',
+        loadingDescription: 'Loading description...',
+        reviewsSummaryTitle: 'Book Reviews',
+        userRatingPrompt: 'How would you rate this book?',
+        writeCommentTitle: 'Write Your Comment',
+        commentPlaceholder: 'Share your thoughts about the book...',
+        submitCommentBtn: 'Post Comment',
+        readerCommentsTitle: 'Reader Comments',
 
-        // === MỚI: Thêm key cho auth.html ===
-        loginTitle: 'Login',
-        registerTitle: 'Register',
-        emailLabel: 'Email address',
-        passwordLabel: 'Password',
-        forgotPassword: 'Forgot password?',
-        loginButton: 'Login',
-        registerButton: 'Create Account',
-        fullNameLabel: 'Full Name',
-        usernameLabel: 'Username',
-        confirmPasswordLabel: 'Confirm Password',
-
-        // === MỚI: Thêm key cho register-success.html ===
-        regSuccessTitle: 'Registration Successful!',
-        regSuccessMessage: 'Thank you for joining our community.\nYou can now return to the login page to get started.',
-        backToLogin: 'Back to Login',
-
-        // === MỚI: Thêm key cho profile.html (tab Info) ===
-        settingsInfoTitle: 'Info Settings',
-        settingsInfoSubtitle: 'This is how other users see you.',
-        usernameHelpText: 'You cannot change your username.',
-        fullNamePlaceholder: 'Your name...',
-        avatarLinkLabel: 'Avatar URL:',
-        avatarChangeLabel: 'Change avatar:',
-        backgroundChangeLabel: 'Change background:',
-        updateProfileButton: 'Update Profile',
-
-        phoneLabel: 'Phone Number',
-        ageLabel: 'Age',
-        securityTab: 'Security',
-        changePasswordTitle: 'Change Password',
-        newPasswordLabel: 'New Password',
-        confirmNewPasswordLabel: 'Confirm New Password',
-        changePasswordButton: 'Save New Password',
-        passwordMismatchError: 'New password and confirmation do not match!',
-        passwordTooShortError: 'Password must be at least 6 characters long.',
-
-        //Đổi Email
-        changeEmailTitle: 'Change Email',
-        changeEmailSubtitle: 'We will send confirmation links to both your old and new email addresses.',
-        newEmailLabel: 'New Email',
-        confirmNewEmailLabel: 'Confirm New Email',
-        changeEmailButton: 'Send Change Email Request',
-        emailMismatchError: 'Email and confirmation do not match!',
-        emailChangeSuccess: 'Request sent! Please check both your old and new email inboxes to confirm the change.',
-
-        emailChangeSuccessTitle: 'Email Changed Successfully!',
-        emailChangeSuccessMsg: 'Your email has been updated.\nPlease return to the login page to sign in with your new email.',
-        // === THÊM MỚI: Key cho upload tab ===
-        uploadTitle: "Upload Documents",
-        uploadSubtitle: "Select document files to upload to the library.",
-        documentTitle: "Document Title",
-        documentAuthor: "Author",
-        documentYear: "Publication Year",
-        documentDescription: "Description",
-        documentThumbnail: "Thumbnail URL (optional)",
-        documentFile: "Choose Document File",
-        documentFileHelp: "Supported: PDF, DOC, DOCX, TXT, EPUB, MOBI (Max 10MB)",
-        uploadSubmit: "Upload Document",
-        uploadedDocuments: "Uploaded Documents",
-        loadingDocuments: "Loading documents list..."
+        // === MỚI: Thêm key cho reviews.js (Internal/Alerts) ===
+        notRated: 'Not rated yet',
+        ratingLabel1: 'Terrible',
+        ratingLabel2: 'Bad',
+        ratingLabel3: 'Average',
+        ratingLabel4: 'Good',
+        ratingLabel5: 'Excellent',
+        commentLengthAlert: 'Comment requires at least 5 characters!',
+        ratingMissingAlert: 'Please select a star rating before posting!',
+        justPosted: 'Just posted',
+        justReplied: 'Just replied',
+        likeBtnText: 'Like',
+        replyBtnText: 'Reply',
+        repNameBadge: '@',
+        repNameText: 'Replying...',
+        replyPlaceholder: 'Write a reply...',
+        sendBtn: 'Send',
+        replyLengthAlert: 'Reply content is too short.',
     }
 };
 
@@ -264,6 +166,12 @@ function updateLanguageUI(lang) {
     }
 }
 
+// Thêm hàm lấy bản dịch cho reviews.js và các module khác
+function getTranslation(key) {
+    const lang = localStorage.getItem('language') || 'vi';
+    return translations[lang] ? translations[lang][key] : key;
+}
+
 // === 4. LOGIC CHẠY NGAY KHI TẢI SCRIPT ===
 // (Đọc cài đặt và áp dụng ngay lập tức)
 
@@ -276,6 +184,9 @@ let isDarkMode = (localStorage.getItem('theme') === 'dark') ||
 applyTheme(isDarkMode);
 updateLanguageUI(currentLang);
 
+// *** QUAN TRỌNG: Expose hàm dịch cho các script khác (reviews.js) ***
+window.getTranslation = getTranslation;
+window.translations = translations; // Expose full object for easier access
 
 // === 5. HÀM TẢI COMPONENT (Giữ nguyên) ===
 /**
@@ -400,6 +311,11 @@ function initializeDynamicElementsLogic() {
             // Gọi hàm updateLanguageUI (đã được định nghĩa ở ngoài)
             updateLanguageUI(currentLang);
             console.log('Đã đổi ngôn ngữ sang:', currentLang);
+            
+            // *** QUAN TRỌNG: Kích hoạt lại logic cần dịch trong reviews.js sau khi đổi ngôn ngữ ***
+            if (typeof window.reInitializeReviewsLogic === 'function') {
+                window.reInitializeReviewsLogic();
+            }
         });
     }
 
@@ -427,12 +343,8 @@ function initializeDynamicElementsLogic() {
             e.preventDefault();
             //
             // === LOGIC ĐĂNG XUẤT CỦA BẠN SẼ Ở ĐÂY ===
-            // (Ví dụ: gọi hàm handleSignOut() từ dashboard.js)
             //
             console.log('Nút Đăng xuất đã được bấm!');
-            // Ví dụ: 
-            // import { handleSignOut } from '/js/dashboard.js';
-            // handleSignOut();
         });
     }
 }

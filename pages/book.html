@@ -24,7 +24,7 @@
 
         <div class="popular-new-titles-section position-relative">
 
-            <h4 class="pnt-main-title" id="book-page-main-title">Sách</h4>
+            <h4 class="pnt-main-title" id="book-page-main-title" data-lang-key="bookTitle">Sách</h4>
 
             <div id="book-hero-wrapper">
             </div>
@@ -33,11 +33,11 @@
         <div class="container-fluid" style="padding: 20px;">
             <div class="book-actions-bar">
                 <button class="btn btn-outline-dark btn-lg" id="btn-read">
-                    <i class="fas fa-book-open me-2"></i> Đọc
+                    <i class="fas fa-book-open me-2"></i> <span data-lang-key="readBtn">Đọc</span>
                 </button>
 
                 <button class="btn btn-outline-dark btn-lg" id="btn-download">
-                    <i class="fas fa-download me-2"></i> Tải về
+                    <i class="fas fa-download me-2"></i> <span data-lang-key="downloadBtn">Tải về</span>
                 </button>
                 <button class="btn btn-outline-danger btn-lg">
                     <i class="fas fa-heart"></i>
@@ -46,12 +46,12 @@
 
             <hr class="my-4">
 
-            <h4 class="mb-3">Thông tin chi tiết</h4>
-            <p id="book-detail-description">Đang tải mô tả...</p>
+            <h4 class="mb-3" data-lang-key="detailInfoTitle">Thông tin chi tiết</h4>
+            <p id="book-detail-description" data-lang-key="loadingDescription">Đang tải mô tả...</p>
 
             <div id="book-reviews-section" class="mt-5">
                 <div class="review-summary-box p-4 mb-4 rounded-3 shadow-sm bg-light">
-                    <h5 class="mb-3">Đánh giá về sách</h5>
+                    <h5 class="mb-3" data-lang-key="reviewsSummaryTitle">Đánh giá về sách</h5>
                     <div class="d-flex align-items-center mb-3">
                         <div class="avg-rating-display me-3">
                             <span class="fs-1 fw-bold text-danger">4.5</span>/5
@@ -67,7 +67,7 @@
                     </div>
 
                     <div class="user-rating-area mt-4">
-                        <p class="mb-2 fw-medium">Bạn đánh giá cuốn sách này thế nào?</p>
+                        <p class="mb-2 fw-medium" data-lang-key="userRatingPrompt">Bạn đánh giá cuốn sách này thế nào?</p>
                         <div class="rating-input d-flex align-items-center" data-rating="0">
                             <i class="far fa-star rating-star" data-value="1"></i>
                             <i class="far fa-star rating-star" data-value="2"></i>
@@ -79,14 +79,16 @@
                     </div>
                 </div>
 
-                <h5 class="mb-3">Viết bình luận của bạn</h5>
+                <h5 class="mb-3" data-lang-key="writeCommentTitle">Viết bình luận của bạn</h5>
                 <div class="comment-form-container mb-5 p-4 rounded-3 shadow-sm bg-white border">
-                    <textarea class="form-control" rows="3" placeholder="Chia sẻ cảm nghĩ của bạn về cuốn sách..." id="comment-textarea"></textarea>
-                    <button class="btn btn-primary mt-2 float-end" id="submit-comment-btn">Gửi bình luận</button>
+                    <textarea class="form-control" rows="3" data-lang-key-placeholder="commentPlaceholder" id="comment-textarea"></textarea>
+                    <button class="btn btn-primary mt-2 float-end" id="submit-comment-btn" data-lang-key="submitCommentBtn">Gửi bình luận</button>
                     <div class="clearfix"></div>
                 </div>
 
-                <h5 class="mb-4">Bình luận từ độc giả (15)</h5>
+                <h5 class="mb-4">
+                    <span data-lang-key="readerCommentsTitle">Bình luận từ độc giả</span> (<span id="comment-count">15</span>)
+                </h5>
                 <div id="comments-list-container">
                     <div class="comment-item mb-4 p-3 border-bottom bg-white rounded" data-comment-id="static-1">
                         <div class="d-flex align-items-start">

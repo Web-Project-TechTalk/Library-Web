@@ -123,84 +123,162 @@
 
 /* -------------------------------------- */
 /* CSS Tùy chỉnh cho DARK MODE */
+/* (ĐÃ CẬP NHẬT: Dùng selector .dark-theme) */
 /* -------------------------------------- */
 
-/* Khi body có class .dark-mode */
-.dark-mode .comment-item {
-    background-color: #343a40 !important; /* Đổi nền trắng sang xám đậm */
-    border-color: #495057 !important; /* Đổi viền xám nhạt sang viền đậm hơn */
+/* Khi body có class .dark-theme */
+.dark-theme body {
+    /* Nền chung của trang (nếu body không có nền) */
+    background-color: #121212 !important; /* Thường là màu đen hoặc xám rất đậm */
+    color: #f8f9fa; /* Màu chữ sáng chung */
+}
+
+/* Nền của phần nội dung chính (main-content) */
+.dark-theme .main-content {
+    background-color: #121212;
+}
+
+/* Tiêu đề trang (Sách) */
+.dark-theme .pnt-main-title {
+    color: #ffffff;
+}
+
+/* Khung tóm tắt đánh giá (review-summary-box) */
+.dark-theme .review-summary-box {
+    background-color: #212529 !important; /* Xám đậm hơn */
+    border-color: #343a40 !important;
+    color: #f8f9fa;
+}
+
+/* Tiêu đề trong review-summary-box */
+.dark-theme .review-summary-box h5,
+.dark-theme .review-summary-box p,
+.dark-theme .review-summary-box span {
+    color: #f8f9fa !important;
+}
+
+/* Chữ mờ trong review-summary-box */
+.dark-theme .review-summary-box .text-muted {
+    color: #adb5bd !important;
+}
+
+/* Các nút hành động (Đọc, Tải về, Thích) */
+.dark-theme .book-actions-bar .btn-outline-dark {
+    /* Nút Đọc, Tải về */
+    background-color: transparent;
+    color: #adb5bd; /* Viền và chữ màu xám sáng */
+    border-color: #6c757d;
+}
+
+.dark-theme .book-actions-bar .btn-outline-dark:hover {
+    background-color: #343a40; /* Nền hover tối hơn */
+    color: #ffffff;
+    border-color: #ffffff;
+}
+
+.dark-theme .book-actions-bar .btn-outline-danger {
+    /* Nút Thích */
+    background-color: transparent;
+    color: #dc3545; /* Màu đỏ của nút */
+    border-color: #dc3545;
+}
+.dark-theme .book-actions-bar .btn-outline-danger:hover {
+    background-color: #dc3545;
+    color: #ffffff;
+}
+
+/* Tiêu đề Thông tin chi tiết */
+.dark-theme h4 {
+    color: #f8f9fa;
+}
+
+/* Mô tả sách */
+.dark-theme #book-detail-description {
+    color: #adb5bd;
+}
+
+/* Đường kẻ phân cách */
+.dark-theme hr {
+    border-top: 1px solid #495057;
+}
+
+/* === Quy tắc cũ (ĐÃ ĐỔI TỪ .dark-mode sang .dark-theme) === */
+
+.dark-theme .comment-item {
+    background-color: #212529 !important; /* Đổi nền trắng sang xám đậm */
+    border-color: #343a40 !important; /* Đổi viền xám nhạt sang viền đậm hơn */
     box-shadow: 0 1px 3px rgba(0,0,0,0.5); /* Tạo bóng rõ hơn trên nền tối */
 }
 
 /* Đảm bảo chữ trong bình luận là màu sáng */
-.dark-mode .comment-item p,
-.dark-mode .comment-item span {
+.dark-theme .comment-item p,
+.dark-theme .comment-item span {
     color: #f8f9fa !important; /* Màu chữ sáng (light gray) */
 }
 
 /* Các chữ nhỏ, chữ mờ (text-muted) */
-.dark-mode .text-muted {
+.dark-theme .text-muted {
     color: #adb5bd !important; /* Màu xám nhạt hơn */
 }
 
 /* Container chứa form bình luận (nền trắng) */
-.dark-mode .comment-form-container {
-    background-color: #343a40 !important; /* Đổi nền trắng sang xám đậm */
+.dark-theme .comment-form-container {
+    background-color: #212529 !important; /* Đổi nền trắng sang xám đậm */
     border-color: #495057 !important; /* Viền đậm hơn */
 }
 
 /* Ô textarea nhập nội dung bình luận */
-.dark-mode #comment-textarea {
+.dark-theme #comment-textarea {
     background-color: #495057; /* Nền tối cho input */
     color: #f8f9fa; /* Chữ sáng */
     border-color: #6c757d;
 }
 
 /* Placeholder text trong textarea */
-.dark-mode #comment-textarea::placeholder {
+.dark-theme #comment-textarea::placeholder {
     color: #adb5bd; /* Màu chữ gợi ý nhạt */
     opacity: 1; 
 }
 
 /* Phần reply/trả lời (bg-light) */
-.dark-mode .replies .bg-light {
+.dark-theme .replies .bg-light {
     background-color: #495057 !important; /* Nền tối hơn cho phần trả lời */
     border-color: #6c757d;
 }
 
 /* Tên người dùng trong comment (text-primary, text-success, text-danger) */
-.dark-mode .text-primary {
+.dark-theme .text-primary {
     color: #8ab4f8 !important; /* Màu xanh nhạt hơn */
 }
-.dark-mode .text-success {
+.dark-theme .text-success {
     color: #69c469 !important; /* Màu xanh lá nhạt hơn */
 }
-.dark-mode .text-danger {
+.dark-theme .text-danger {
     color: #f7756f !important; /* Màu đỏ nhạt hơn */
 }
 
 /* CSS Tùy chỉnh cho REPLY FORM (Tối ưu cho Dark Mode) */
 
 /* Khung nhập liệu chính */
-.dark-mode .reply-input-group {
+.dark-theme .reply-input-group {
     border-color: #6c757d; /* Viền xám đậm */
     background-color: #495057; /* Nền xám đậm cho input group */
 }
 
 /* Phần @[Tên người dùng] trong form trả lời */
-.dark-mode .reply-to-badge {
+.dark-theme .reply-to-badge {
     background-color: #5a6268 !important; /* Xám đậm hơn một chút so với nền */
     color: #f8f9fa !important; 
 }
 
 /* Ô textarea nhập trả lời */
-.dark-mode .reply-input-group textarea {
+.dark-theme .reply-input-group textarea {
     background-color: #495057; /* Nền tối cho input */
     color: #f8f9fa; /* Chữ sáng */
 }
 
 /* Nút Gửi (btn-primary) */
-.dark-mode .reply-input-group .btn-submit-reply {
+.dark-theme .reply-input-group .btn-submit-reply {
     background-color: #0d6efd; /* Giữ màu xanh */
     color: #ffffff;
 }
