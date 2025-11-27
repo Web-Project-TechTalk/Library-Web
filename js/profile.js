@@ -8,7 +8,7 @@ import {
     incrementViewCount,      
     incrementDownloadCount   
 } from './dashboard.js';
-import 'https://cdnjs.cloudflare.com/ajax/libs/croppie/6.5/croppie.min.js';
+import 'https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js';
 
 getCurrentUser();
 let croppieInstance = null;
@@ -21,7 +21,7 @@ let croppedBackgroundBlob = null;
 
 document.addEventListener('DOMContentLoaded', async function () {
 
-    // LOGIC XÁC THỰC & HEADER  
+    // === 1. LOGIC XÁC THỰC & HEADER (TỪ DASHBOARD.JS) ===
     const session = await getSession(); // Bảo vệ trang
     let profileData = null;
     initializeUploadForm();
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         profileData = await setupHeader(session.user);
     }
         
-    // Khai báo biến 
+    // === Khai báo biến ===
     const body = document.body;
     const sidebar = document.getElementById('sidebar');
     const sidebarToggleBtn = document.getElementById('sidebarToggleBtn');
@@ -46,10 +46,11 @@ document.addEventListener('DOMContentLoaded', async function () {
     
     const DESKTOP_BREAKPOINT = 992;
     
+    // === KẾT THÚC LOGIC UI ===
 
-    // OGIC RIÊNG CỦA TRANG PROFILE  
+    // === 3. LOGIC RIÊNG CỦA TRANG PROFILE  ===
 
-    // LOGIC ĐỔI EMAIL 
+    // === THAY THẾ LOGIC ĐỔI EMAIL ===
 
     const statusDiv = document.getElementById('email-status');
     const sendGroup = document.getElementById('email-otp-send-group');
@@ -80,7 +81,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             loadUserFavorites(); // Tải sách yêu thích khi bấm tab
         });
     }
-    //  THÊM MỚI LOGIC ĐỔI EMAIL 
+    // === THÊM MỚI LOGIC ĐỔI EMAIL (2-LINK) ===
     const emailChangeForm = document.getElementById('email-change-form');
 
     if (emailChangeForm) {
@@ -98,7 +99,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 { mismatch: 'Email và xác nhận không khớp!', success: 'Yêu cầu thành công! Vui lòng kiểm tra email (cả cũ và mới) để xác nhận thay đổi.', sending: 'Đang gửi...' } : 
                 { mismatch: 'Email and confirmation do not match!', success: 'Request sent! Please check both your old and new email inboxes to confirm the change.', sending: 'Sending...' };
 
-            //  Kiểm tra email khớp
+            // 1. Kiểm tra email khớp
             if (newEmail !== confirmEmail) {
                 statusDiv.className = 'alert alert-danger';
                 statusDiv.textContent = trans.mismatch;
@@ -110,7 +111,8 @@ document.addEventListener('DOMContentLoaded', async function () {
             statusDiv.className = 'alert alert-info';
             statusDiv.textContent = trans.sending;
 
-            // Gọi Supabase updateUser
+            // 2. Gọi Supabase updateUser
+            // Vì "Secure Email Change" đã BẬT, Supabase sẽ tự động
             // gửi link đến cả 2 email
             const { error } = await supabase.auth.updateUser({
                 email: newEmail
@@ -138,7 +140,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         passwordChangeForm.addEventListener('submit', handleChangePassword);
     }
 
-    // Khởi tạo Background Croppie 
+    // === THÊM MỚI: Khởi tạo Background Croppie ===
     const bgCropperModalEl = document.getElementById('background-cropper-modal');
     const bgFileInput = document.getElementById('background-file-input');
     const bgCropperUI = document.getElementById('background-cropper-ui');
@@ -147,7 +149,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     // Khởi tạo Modal Background
     backgroundModal = new bootstrap.Modal(bgCropperModalEl);
 
-    // Khởi tạo Croppie cho Background 
+    // Khởi tạo Croppie cho Background (hình chữ nhật)
     backgroundCroppieInstance = new Croppie(bgCropperUI, {
         viewport: { width: 800, height: 200 }, // Khung chữ nhật (tỷ lệ 4:1)
         boundary: { width: '100%', height: 350 }, // Chiều cao khớp CSS
@@ -176,10 +178,10 @@ document.addEventListener('DOMContentLoaded', async function () {
     bgCropperModalEl.addEventListener('shown.bs.modal', function () {
         if (!backgroundCroppieInstance.data || !backgroundCroppieInstance.data.url) return;
         
-        // BIND ẢNH VÀO CROPPIE LẦN 2 
+        // BIND ẢNH VÀO CROPPIE LẦN 2 (khi modal đã hiện)
         backgroundCroppieInstance.bind({ url: backgroundCroppieInstance.data.url, zoom: 0.0001 }) // Thử zoom nhỏ nhất
             .then(() => {
-                // LẤY GIÁ TRỊ ZOOM HIỆN TẠI 
+                // LẤY GIÁ TRỊ ZOOM HIỆN TẠI (ĐÃ FIT)
                 const zoomLevel = backgroundCroppieInstance.get().zoom;
                 
                 // KHÓA MIN/MAX ZOOM GẦN NHAU
@@ -198,13 +200,15 @@ document.addEventListener('DOMContentLoaded', async function () {
     bgCropSaveButton.addEventListener('click', function (e) {
         backgroundCroppieInstance.result({
             type: 'blob',
+            // === Cắt background ở độ phân giải cao hơn ===
             size: { width: 1600, height: 400 }, 
-            format: 'jpeg', 
-            quality: 0.9 
-                }).then(function (blob) {
+            format: 'jpeg', // jpeg tốt cho ảnh có nhiều màu sắc, dung lượng nhỏ
+            quality: 0.9 // Chất lượng 90% vẫn đủ tốt và file không quá nặng
+        }).then(function (blob) {
             croppedBackgroundBlob = blob; // Lưu blob
             backgroundModal.hide();
             
+            // Hiển thị preview ảnh bìa ngay lập tức
             const previewUrl = URL.createObjectURL(blob);
             const bannerImg = document.querySelector('.profile-banner img');
             if (bannerImg) bannerImg.src = previewUrl;
@@ -213,7 +217,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         });
     });
 
-    //   Khởi tạo modal và Croppie 
+    //  THÊM MỚI: Khởi tạo modal và Croppie 
     const cropperModalEl = document.getElementById('avatar-cropper-modal');
     const fileInput = document.getElementById('avatar-file-input');
     const cropperUI = document.getElementById('cropper-ui');
@@ -231,7 +235,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         enableResize: false, // Tắt thay đổi kích thước thủ công
         mouseWheelZoom: false, // Tắt zoom bằng chuột cuộn
         minZoom: 0, // Đặt zoom tối thiểu là 0 (mức fit)
-        maxZoom: 0, 
+        maxZoom: 1.0, 
         showZoomer: true // Hiển thị thanh trượt zoom
     });
 
@@ -265,7 +269,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     cropSaveButton.addEventListener('click', function (e) {
         croppieInstance.result({
             type: 'blob', 
-            // === THAY ĐỔI: Cắt avatar ở độ phân giải cao hơn ===
+            // === Cắt avatar ở độ phân giải cao hơn ===
             // Cắt ra ảnh 500x500px (thay vì 200x200px của viewport)
             size: { width: 500, height: 500 }, 
             format: 'png', // png tốt cho ảnh có ít chi tiết, background trong suốt
@@ -277,12 +281,12 @@ document.addEventListener('DOMContentLoaded', async function () {
             // ĐÓNG Modal
             avatarModal.hide();
             
-            // THAY ĐỔI: Hiển thị ảnh vừa cắt (xem trước)
+            // Hiển thị ảnh vừa cắt 
             const previewUrl = URL.createObjectURL(blob);
             document.getElementById('display-avatar-img').src = previewUrl;
             document.getElementById('topbar-avatar-img').src = previewUrl;
             
-            // Xóa file gốc trong input (vì ta đã có file cắt)
+            // Xóa file gốc trong input 
             fileInput.value = '';
         });
     });
@@ -293,7 +297,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         updateButton.addEventListener('click', updateProfile);
     }
     
-    // Gán sự kiện cho các nút Đăng xuất (trong profile.html )
+    // Gán sự kiện cho các nút Đăng xuất 
     const signOutBtnDesktop = document.getElementById('btn-signout-desktop');
     const signOutBtnMobile = document.getElementById('btn-signout-mobile');
     if (signOutBtnDesktop) signOutBtnDesktop.addEventListener('click', handleSignOut);
@@ -301,7 +305,6 @@ document.addEventListener('DOMContentLoaded', async function () {
 
 
     // Tải thông tin chi tiết vào form VÀ khu vực hiển thị
-    // (Sử dụng data đã fetch từ setupHeader)
     if (profileData) {
         fillProfileData(profileData);
     } else if (session) {
@@ -311,7 +314,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         if (data) fillProfileData(data);
     }
 
-    //   Logic kích hoạt Input khi click vào Avatar/Banner 
+    //  Bổ sung: Logic kích hoạt Input khi click vào Avatar/Banner 
     const clickableAvatar = document.getElementById('clickable-avatar');
     const clickableBanner = document.getElementById('clickable-banner');
     const avatarFileInput = document.getElementById('avatar-file-input');
@@ -326,7 +329,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         });
     }
 
-    // Gán sự kiện click cho Banner 
+    // Gán sự kiện click cho Banner (mở dialog chọn ảnh bìa)
     if (clickableBanner && backgroundFileInput) {
         clickableBanner.addEventListener('click', (e) => {
             e.preventDefault();
@@ -338,7 +341,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 }); //  Khối DOMContentLoaded DUY NHẤT kết thúc tại đây
 
 function fillProfileData(data) {
-    //  Điền form "Cài đặt thông tin" 
+    // 1. Điền form "Cài đặt thông tin" 
     const inputUsername = document.getElementById('profile-username');
     const inputFullname = document.getElementById('profile-fullname');
     const inputAvatar = document.getElementById('profile-avatar');
@@ -347,13 +350,13 @@ function fillProfileData(data) {
     if (inputFullname) inputFullname.value = data.full_name || ''; 
     if (inputAvatar) inputAvatar.value = data.avatar_url || ''; 
 
-    // ĐIỀN PHONE VÀ AGE 
+    // === THÊM MỚI: ĐIỀN PHONE VÀ AGE ===
     const inputPhone = document.getElementById('profile-phone');
     const inputAge = document.getElementById('profile-age');
     if (inputPhone) inputPhone.value = data.phone || '';
     if (inputAge) inputAge.value = data.age || '';
 
-    //  Điền khu vực hiển thị tĩnh (bên trên/bên trái) 
+    // 2. Điền khu vực hiển thị tĩnh (bên trên/bên trái) 
     const displayUsername = document.getElementById('display-username');
     const displayRealname = document.getElementById('display-realname');
     const displayAvatarImg = document.getElementById('display-avatar-img');
@@ -386,7 +389,7 @@ async function updateProfile() {
         let newAvatarUrl = null;
         let newBackgroundUrl = null; //  Thêm biến cho background
 
-        //   XỬ LÝ UPLOAD AVATAR 
+        //  1. XỬ LÝ UPLOAD AVATAR (nếu có) 
         if (croppedImageBlob) {
             statusDiv.textContent = 'Đang tải ảnh đại diện...';
             const fileExt = 'png';
@@ -403,7 +406,7 @@ async function updateProfile() {
             newAvatarUrl = urlData.publicUrl;
         }
         
-        //   XỬ LÝ UPLOAD BACKGROUND 
+        //  2. XỬ LÝ UPLOAD BACKGROUND (nếu có) 
         if (croppedBackgroundBlob) {
             statusDiv.textContent = 'Đang tải ảnh bìa...';
             const fileExt = 'jpeg';
@@ -421,13 +424,13 @@ async function updateProfile() {
             newBackgroundUrl = urlData.publicUrl;
         }
 
-        //  CHUẨN BỊ DỮ LIỆU UPDATE BẢNG 'users' 
+        //  3. CHUẨN BỊ DỮ LIỆU UPDATE BẢNG 'users' 
         statusDiv.textContent = 'Đang cập nhật thông tin...';
 
         const updates = {
             full_name: document.getElementById('profile-fullname').value,
             username: document.getElementById('profile-username').value,
-            // ===  LẤY PHONE VÀ AGE ===
+            // === THÊM MỚI: LẤY PHONE VÀ AGE ===
             phone: document.getElementById('profile-phone').value,
             age: document.getElementById('profile-age').value
         };
@@ -436,10 +439,11 @@ async function updateProfile() {
             updates.avatar_url = newAvatarUrl;
         }
         if (newBackgroundUrl) {
+            // TÊN CỘT NÀY PHẢI KHỚP VỚI DATABASE CỦA BẠN
             updates.background_url = newBackgroundUrl; 
         }
 
-        // GỌI UPDATE BẢNG 'users' 
+        //  4. GỌI UPDATE BẢNG 'users' 
         const { error } = await supabase
             .from('users')
             .update(updates)
@@ -447,10 +451,11 @@ async function updateProfile() {
 
         if (error) throw error; 
 
-        //  THÀNH CÔNG 
+        //  5. THÀNH CÔNG 
         statusDiv.className = 'alert alert-success';
         statusDiv.textContent = 'Cập nhật profile thành công!';
 
+        // === ĐỒNG BỘ GIAO DIỆN ===
         // (Đồng bộ Username, Fullname, Avatar...)
         const displayRealname = document.getElementById('display-realname');
         if(displayRealname) displayRealname.textContent = updates.full_name || 'Chưa cập nhật tên';
@@ -484,7 +489,9 @@ async function updateProfile() {
     }
 }
 
-// HÀM XỬ LÝ ĐỔI MẬT KHẨU 
+// Tên file: js/profile.js
+
+// === THÊM MỚI: HÀM XỬ LÝ ĐỔI MẬT KHẨU ===
 async function handleChangePassword(event) {
     event.preventDefault(); // Ngăn form tải lại trang
     
@@ -493,27 +500,27 @@ async function handleChangePassword(event) {
     const confirmPassword = document.getElementById('confirm-new-password').value;
     const changeButton = document.getElementById('change-password-button');
     
-    // Lấy key dịch từ localStorage 
+    // Lấy key dịch từ localStorage (nếu không có app-ui.js, dùng text cứng)
     const lang = localStorage.getItem('language') || 'vi';
     const translations = (lang === 'vi') ? 
         { mismatch: 'Mật khẩu mới và xác nhận không khớp!', short: 'Mật khẩu phải dài ít nhất 6 ký tự.' } : 
         { mismatch: 'New password and confirmation do not match!', short: 'Password must be at least 6 characters long.' };
 
-    //  Kiểm tra mật khẩu khớp
+    // 1. Kiểm tra mật khẩu khớp
     if (newPassword !== confirmPassword) {
         statusDiv.className = 'alert alert-danger';
         statusDiv.textContent = translations.mismatch;
         return;
     }
     
-    //  Kiểm tra độ dài (Supabase yêu cầu 6)
+    // 2. Kiểm tra độ dài (Supabase yêu cầu 6)
     if (newPassword.length < 6) {
         statusDiv.className = 'alert alert-danger';
         statusDiv.textContent = translations.short;
         return;
     }
 
-    // Vô hiệu hóa nút và gọi Supabase
+    // 3. Vô hiệu hóa nút và gọi Supabase
     statusDiv.className = 'alert alert-info';
     statusDiv.textContent = 'Đang cập nhật...';
     changeButton.disabled = true;
@@ -522,7 +529,7 @@ async function handleChangePassword(event) {
         password: newPassword
     });
 
-    //Xử lý kết quả
+    // 4. Xử lý kết quả
     if (error) {
         statusDiv.className = 'alert alert-danger';
         statusDiv.textContent = `Lỗi: ${error.message}`;
@@ -537,6 +544,7 @@ async function handleChangePassword(event) {
     
     changeButton.disabled = false; // Bật lại nút
 }
+// === THÊM MỚI: HÀM XỬ LÝ UPLOAD TÀI LIỆU ===
 
 // Khởi tạo sự kiện cho form upload
 function initializeUploadForm() {
@@ -550,6 +558,8 @@ function initializeUploadForm() {
     loadUploadedDocuments();
 }
 
+// Xử lý upload tài liệu
+// Sửa phần upload storage trong hàm handleDocumentUpload
 async function handleDocumentUpload(event) {
     event.preventDefault();
     
@@ -625,7 +635,7 @@ async function handleDocumentUpload(event) {
             thumbnailUrl = thumbUrlData.publicUrl; // Lưu URL vào biến
         }
 
-        //   Upload file tài liệu chính 
+        //  1. Upload file tài liệu chính 
         statusDiv.className = 'alert alert-info';
         statusDiv.textContent = 'Đang tải lên tài liệu...';
         
@@ -640,12 +650,12 @@ const docFileName = `${category}/${currentUser.id}-${Date.now()}.${docFileExt}`;
             
         if (docUploadError) throw docUploadError;
         
-        //   Lấy URL public của file tài liệu 
+        //  2. Lấy URL public của file tài liệu 
         const { data: docUrlData } = supabase.storage
             .from('sach-files')
             .getPublicUrl(docUploadData.path);
         
-        //  Thêm bản ghi vào bảng documents 
+        //  3. Thêm bản ghi vào bảng documents 
         const newDocument = {
             user_id: currentUser.id,
             title: title,
@@ -662,7 +672,7 @@ const docFileName = `${category}/${currentUser.id}-${Date.now()}.${docFileExt}`;
             
         if (docError) throw docError;
         
-        // Thêm bản ghi vào bảng attachments 
+        //  4. Thêm bản ghi vào bảng attachments 
         const newAttachment = {
             document_id: docData[0].document_id,
             file_path: docUploadData.path, // Path của file tài liệu
@@ -676,11 +686,17 @@ const docFileName = `${category}/${currentUser.id}-${Date.now()}.${docFileExt}`;
             
         if (attachmentError) throw attachmentError;
         
+        // //  5. Thành công 
+        // statusDiv.className = 'alert alert-success';
+        // statusDiv.textContent = 'Tải lên tài liệu thành công!';
+        // document.getElementById('upload-form').reset();
+        // loadUploadedDocuments();
+        //  5. Thành công 
         statusDiv.className = 'alert alert-success';
         statusDiv.textContent = 'Tải lên tài liệu thành công! Đang chuyển hướng...';
         document.getElementById('upload-form').reset();
         
-        //   CHUYỂN TAB SANG ACTIVITY 
+        //  LOGIC MỚI: CHUYỂN TAB SANG ACTIVITY 
         setTimeout(() => {
             // Xóa thông báo
             statusDiv.className = ''; 
@@ -692,10 +708,10 @@ const docFileName = `${category}/${currentUser.id}-${Date.now()}.${docFileExt}`;
                 const tab = new bootstrap.Tab(activityTabTrigger);
                 tab.show(); // Chuyển tab
                 
-                // Gọi hàm load lại dữ liệu 
+                // Gọi hàm load lại dữ liệu (dù sự kiện shown.bs.tab cũng sẽ gọi)
                 loadUserActivity(); 
             }
-        }, 1000); // Đợi 1 giây 
+        }, 1000); // Đợi 1 giây để người dùng thấy thông báo thành công
         
     } catch (error) {
         console.error('Lỗi upload:', error);
@@ -706,6 +722,8 @@ const docFileName = `${category}/${currentUser.id}-${Date.now()}.${docFileExt}`;
         submitButton.innerHTML = '<i class="fas fa-upload me-2"></i> Tải lên Tài liệu';
     }
 }
+// Tải danh sách tài liệu đã upload
+// Sửa phần lấy URL trong hàm loadUploadedDocuments
 async function loadUploadedDocuments() {
     const container = document.getElementById('uploaded-documents-list');
     const currentUser = getCurrentUser();
@@ -823,7 +841,7 @@ async function loadUploadedDocuments() {
 }
 
 
-// Xóa tài liệu đã upload 
+// Xóa tài liệu đã upload (GIỮ NGUYÊN)
 async function deleteUploadedDocument(documentId, title) {
     if (!confirm(`Bạn có chắc chắn muốn xóa tài liệu "${title}" không?`)) {
         return;
@@ -890,7 +908,7 @@ async function handleDownloadDocument(documentId) {
         }, 500);
     }
 }
-// HÀM LOAD HOẠT ĐỘNG 
+// === HÀM LOAD HOẠT ĐỘNG (SÁCH ĐÃ ĐĂNG) ===
 async function loadUserActivity() {
     const container = document.getElementById('activity-list');
     const currentUser = getCurrentUser();
@@ -942,7 +960,7 @@ async function loadUserActivity() {
         container.innerHTML = `<div class="alert alert-danger">Lỗi: ${error.message}</div>`;
     }
 }
-// HÀM LOAD DANH SÁCH YÊU THÍCH 
+// === HÀM LOAD DANH SÁCH YÊU THÍCH ===
 async function loadUserFavorites() {
     const container = document.getElementById('favorites-list');
     const currentUser = getCurrentUser();
@@ -950,6 +968,7 @@ async function loadUserFavorites() {
 
     try {
         // Join bảng favorites với documents
+        // Cú pháp: select(..., documents(*))
         const { data, error } = await supabase
             .from('favorites')
             .select(`
@@ -1004,7 +1023,7 @@ async function loadUserFavorites() {
     }
 }
 
-// HÀM BỎ YÊU THÍCH 
+// === HÀM XÓA YÊU THÍCH (Gắn vào window để gọi từ HTML) ===
 window.removeFavorite = async function(documentId) {
     const currentUser = getCurrentUser();
     if (!confirm('Bạn có muốn bỏ cuốn sách này khỏi danh sách yêu thích?')) return;
