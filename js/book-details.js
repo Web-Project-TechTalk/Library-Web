@@ -1,18 +1,26 @@
 // js/book-details.js
 
 import { supabase } from './supabase-client.js';
-// Import các hàm đếm từ dashboard.js (giống như profile.js đã làm)
-import { incrementViewCount, incrementDownloadCount } from './dashboard.js';
+import { 
+    incrementViewCount, 
+    incrementDownloadCount,
+    toggleFavorite,
+    checkFavoriteStatus,
+    getSession // Import hàm lấy session
+} from './dashboard.js';
 
-// Lấy ID sách từ URL
 const bookId = new URLSearchParams(window.location.search).get('id');
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+    // Gọi getSession() ngay khi vào trang để xác định người dùng
+    await getSession();
+
     if (!bookId) {
-        document.body.innerHTML = "<h1>Lỗi: Không tìm thấy ID sách.</h1>";
+        document.body.innerHTML = "<div class='container py-5 text-center'><h1>Lỗi: Không tìm thấy ID sách.</h1></div>";
         return;
     }
     
+    // Sau khi đã có session, mới tải chi tiết sách
     loadBookDetails(bookId);
 });
 
@@ -20,11 +28,40 @@ async function loadBookDetails(id) {
     const heroWrapper = document.getElementById('book-hero-wrapper');
     const descriptionEl = document.getElementById('book-detail-description');
     
-    // ▼▼▼ TÌM CẢ 2 NÚT ▼▼▼
     const readButton = document.getElementById('btn-read');
     const downloadButton = document.getElementById('btn-download');
+    const favoriteButton = document.getElementById('btn-favorite'); 
     
     try {
+        // Kiểm tra trạng thái Yêu thích
+        if (favoriteButton) {
+            // Lúc này getSession đã chạy xong, checkFavoriteStatus sẽ hoạt động đúng
+            const isFav = await checkFavoriteStatus(id);
+            updateFavoriteButtonUI(favoriteButton, isFav);
+
+            favoriteButton.onclick = async () => {
+                const btnIcon = favoriteButton.querySelector('i');
+                const originalClass = btnIcon.className;
+                
+                // Hiệu ứng loading nhỏ
+                btnIcon.className = 'fas fa-spinner fa-spin';
+                favoriteButton.disabled = true;
+                
+                const result = await toggleFavorite(id);
+                
+                favoriteButton.disabled = false;
+                
+                if (result) {
+                    const isAdded = (result.action === 'added');
+                    updateFavoriteButtonUI(favoriteButton, isAdded);
+                } else {
+                    // Nếu lỗi (ví dụ chưa đăng nhập thật), trả lại icon cũ
+                    btnIcon.className = originalClass;
+                }
+            };
+        }
+
+        // Tải thông tin sách từ Supabase
         const { data: book, error } = await supabase
             .from('documents')
             .select(`
@@ -37,16 +74,20 @@ async function loadBookDetails(id) {
         if (error) throw error;
         if (!book) throw new Error('Không tìm thấy sách');
 
-        // Cập nhật Tiêu đề trang (tab trình duyệt)
         document.title = `${book.title} - Thư Viện Số`;
-        descriptionEl.textContent = book.description || "Không có mô tả.";
+        
+        if (book.description) {
+            descriptionEl.innerHTML = book.description.replace(/\n/g, '<br>');
+        } else {
+            descriptionEl.textContent = "Không có mô tả.";
+        }
 
-        // Xây dựng Hero Section
-        const coverUrl = book.thumbnail_url || '/assets/images/placeholder-cover.jpg';
+        // Hero Section
+        const coverUrl = book.thumbnail_url || '/assets/images/default.jpg';
         
         const heroHtml = `
             <div class="pnt-slide-wrapper"> 
-                <img src="${coverUrl}" class="pnt-background" alt="Blurred Background" draggable="false">
+                <img src="${coverUrl}" class="pnt-background" alt="Background" draggable="false">
                 <div class="pnt-gradient-overlay"></div>
                 <div class="pnt-content">
                     <div class="pnt-cover">
@@ -58,55 +99,62 @@ async function loadBookDetails(id) {
                             <i class="fas fa-user-edit me-2"></i>
                             ${book.author_name || 'Không rõ'}
                         </p>
+                        <div class="d-flex gap-3 mt-3 text-white-50 small">
+                            <span><i class="fas fa-eye me-1"></i> ${book.view_count || 0} lượt xem</span>
+                            <span><i class="fas fa-download me-1"></i> ${book.download_count || 0} lượt tải</span>
+                            <span><i class="fas fa-calendar me-1"></i> ${book.publication_year || 'N/A'}</span>
+                        </div>
                     </div>
                 </div>
             </div>
         `;
         heroWrapper.innerHTML = heroHtml;
         
-        // 4. Gán sự kiện cho Nút Đọc và Tải về
+        // Xử lý file đính kèm
         if (book.attachments && book.attachments.length > 0) {
             const attachment = book.attachments[0];
-            
-            // Lấy URL public từ file_path
             const { data: urlData } = supabase.storage
                 .from('sach-files')
                 .getPublicUrl(attachment.file_path);
-            
             const publicUrl = urlData.publicUrl;
 
-            // GÁN SỰ KIỆN CHO NÚT ĐỌC
             readButton.onclick = () => {
-                // Tăng view count (không cần đợi)
                 incrementViewCount(book.document_id);
-                // Mở file trong tab mới
                 window.open(publicUrl, '_blank');
             };
             
-            // GÁN SỰ KIỆN CHO NÚT TẢI
             downloadButton.onclick = () => {
-                // Tăng download count (không cần đợi)
                 incrementDownloadCount(book.document_id);
-
-                // Tạo link ẩn và bấm vào để tải
                 const a = document.createElement('a');
                 a.href = publicUrl;
-                a.download = attachment.file_name; // Tên file gốc
+                a.download = attachment.file_name;
+                document.body.appendChild(a);
                 a.click();
+                document.body.removeChild(a);
             };
         } else {
-            // Nếu không có file, vô hiệu hóa cả 2 nút
             readButton.disabled = true;
-            readButton.textContent = "Không có file";
+            readButton.innerHTML = '<i class="fas fa-ban me-2"></i> Chưa có file';
             downloadButton.disabled = true;
-            downloadButton.textContent = "Không có file";
+            downloadButton.innerHTML = '<i class="fas fa-ban me-2"></i> Chưa có file';
         }
 
     } catch (error) {
         console.error('Lỗi khi tải chi tiết sách:', error.message);
-        descriptionEl.textContent = `Lỗi: ${error.message}`;
-        // Vô hiệu hóa nút nếu có lỗi
-        readButton.disabled = true;
-        downloadButton.disabled = true;
+        descriptionEl.innerHTML = `<div class="alert alert-danger">Lỗi: ${error.message}</div>`;
+        if (readButton) readButton.disabled = true;
+        if (downloadButton) downloadButton.disabled = true;
+    }
+}
+
+function updateFavoriteButtonUI(btn, isFav) {
+    if (isFav) {
+        btn.classList.remove('btn-outline-danger');
+        btn.classList.add('btn-danger');
+        btn.innerHTML = '<i class="fas fa-heart"></i> <span class="ms-1 fs-6">Đã thích</span>';
+    } else {
+        btn.classList.add('btn-outline-danger');
+        btn.classList.remove('btn-danger');
+        btn.innerHTML = '<i class="far fa-heart"></i> <span class="ms-1 fs-6">Yêu thích</span>';
     }
 }

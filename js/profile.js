@@ -8,7 +8,7 @@ import {
     incrementViewCount,      
     incrementDownloadCount   
 } from './dashboard.js';
-import 'https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js';
+import 'https://cdnjs.cloudflare.com/ajax/libs/croppie/6.5/croppie.min.js';
 
 getCurrentUser();
 let croppieInstance = null;
@@ -21,7 +21,7 @@ let croppedBackgroundBlob = null;
 
 document.addEventListener('DOMContentLoaded', async function () {
 
-    // === 1. LOGIC XÁC THỰC & HEADER (TỪ DASHBOARD.JS) ===
+    // LOGIC XÁC THỰC & HEADER  
     const session = await getSession(); // Bảo vệ trang
     let profileData = null;
     initializeUploadForm();
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         profileData = await setupHeader(session.user);
     }
         
-    // === Khai báo biến ===
+    // Khai báo biến 
     const body = document.body;
     const sidebar = document.getElementById('sidebar');
     const sidebarToggleBtn = document.getElementById('sidebarToggleBtn');
@@ -46,11 +46,10 @@ document.addEventListener('DOMContentLoaded', async function () {
     
     const DESKTOP_BREAKPOINT = 992;
     
-    // === KẾT THÚC LOGIC UI ===
 
-    // === 3. LOGIC RIÊNG CỦA TRANG PROFILE  ===
+    // OGIC RIÊNG CỦA TRANG PROFILE  
 
-    // === THAY THẾ LOGIC ĐỔI EMAIL ===
+    // LOGIC ĐỔI EMAIL 
 
     const statusDiv = document.getElementById('email-status');
     const sendGroup = document.getElementById('email-otp-send-group');
@@ -68,8 +67,20 @@ document.addEventListener('DOMContentLoaded', async function () {
         { sent: 'OTP đã được gửi! Vui lòng kiểm tra email.', invalid: 'OTP không hợp lệ hoặc đã hết hạn.', success: 'Đổi email thành công!', updating: 'Đang cập nhật...', sending: 'Đang gửi...' } : 
         { sent: 'OTP has been sent!', invalid: 'Invalid or expired OTP.', success: 'Email changed successfully!', updating: 'Updating...', sending: 'Sending...' };
 
+    const activityTabBtn = document.getElementById('activity-tab');
+    if (activityTabBtn) {
+        activityTabBtn.addEventListener('shown.bs.tab', () => {
+            loadUserActivity(); // Tải lại sách đã đăng khi bấm tab
+        });
+    }
 
-    // === THÊM MỚI LOGIC ĐỔI EMAIL (2-LINK) ===
+    const favoritesTabBtn = document.getElementById('favorites-tab');
+    if (favoritesTabBtn) {
+        favoritesTabBtn.addEventListener('shown.bs.tab', () => {
+            loadUserFavorites(); // Tải sách yêu thích khi bấm tab
+        });
+    }
+    //  THÊM MỚI LOGIC ĐỔI EMAIL 
     const emailChangeForm = document.getElementById('email-change-form');
 
     if (emailChangeForm) {
@@ -87,7 +98,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 { mismatch: 'Email và xác nhận không khớp!', success: 'Yêu cầu thành công! Vui lòng kiểm tra email (cả cũ và mới) để xác nhận thay đổi.', sending: 'Đang gửi...' } : 
                 { mismatch: 'Email and confirmation do not match!', success: 'Request sent! Please check both your old and new email inboxes to confirm the change.', sending: 'Sending...' };
 
-            // 1. Kiểm tra email khớp
+            //  Kiểm tra email khớp
             if (newEmail !== confirmEmail) {
                 statusDiv.className = 'alert alert-danger';
                 statusDiv.textContent = trans.mismatch;
@@ -99,8 +110,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             statusDiv.className = 'alert alert-info';
             statusDiv.textContent = trans.sending;
 
-            // 2. Gọi Supabase updateUser
-            // Vì "Secure Email Change" đã BẬT, Supabase sẽ tự động
+            // Gọi Supabase updateUser
             // gửi link đến cả 2 email
             const { error } = await supabase.auth.updateUser({
                 email: newEmail
@@ -128,7 +138,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         passwordChangeForm.addEventListener('submit', handleChangePassword);
     }
 
-    // === THÊM MỚI: Khởi tạo Background Croppie ===
+    // Khởi tạo Background Croppie 
     const bgCropperModalEl = document.getElementById('background-cropper-modal');
     const bgFileInput = document.getElementById('background-file-input');
     const bgCropperUI = document.getElementById('background-cropper-ui');
@@ -137,8 +147,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     // Khởi tạo Modal Background
     backgroundModal = new bootstrap.Modal(bgCropperModalEl);
 
-    // Khởi tạo Croppie cho Background (hình chữ nhật)
-    // Tỷ lệ viewport (ví dụ: 800x200) phải khớp với tỷ lệ ảnh bìa của bạn
+    // Khởi tạo Croppie cho Background 
     backgroundCroppieInstance = new Croppie(bgCropperUI, {
         viewport: { width: 800, height: 200 }, // Khung chữ nhật (tỷ lệ 4:1)
         boundary: { width: '100%', height: 350 }, // Chiều cao khớp CSS
@@ -167,10 +176,10 @@ document.addEventListener('DOMContentLoaded', async function () {
     bgCropperModalEl.addEventListener('shown.bs.modal', function () {
         if (!backgroundCroppieInstance.data || !backgroundCroppieInstance.data.url) return;
         
-        // BIND ẢNH VÀO CROPPIE LẦN 2 (khi modal đã hiện)
+        // BIND ẢNH VÀO CROPPIE LẦN 2 
         backgroundCroppieInstance.bind({ url: backgroundCroppieInstance.data.url, zoom: 0.0001 }) // Thử zoom nhỏ nhất
             .then(() => {
-                // LẤY GIÁ TRỊ ZOOM HIỆN TẠI (ĐÃ FIT)
+                // LẤY GIÁ TRỊ ZOOM HIỆN TẠI 
                 const zoomLevel = backgroundCroppieInstance.get().zoom;
                 
                 // KHÓA MIN/MAX ZOOM GẦN NHAU
@@ -189,16 +198,13 @@ document.addEventListener('DOMContentLoaded', async function () {
     bgCropSaveButton.addEventListener('click', function (e) {
         backgroundCroppieInstance.result({
             type: 'blob',
-            // === THAY ĐỔI: Cắt background ở độ phân giải cao hơn ===
-            // Viewport là 800x200. Cắt ra ảnh 1600x400 (gấp đôi) để sắc nét hơn
             size: { width: 1600, height: 400 }, 
-            format: 'jpeg', // jpeg tốt cho ảnh có nhiều màu sắc, dung lượng nhỏ
-            quality: 0.9 // Chất lượng 90% vẫn đủ tốt và file không quá nặng
-        }).then(function (blob) {
+            format: 'jpeg', 
+            quality: 0.9 
+                }).then(function (blob) {
             croppedBackgroundBlob = blob; // Lưu blob
             backgroundModal.hide();
             
-            // Hiển thị preview ảnh bìa ngay lập tức
             const previewUrl = URL.createObjectURL(blob);
             const bannerImg = document.querySelector('.profile-banner img');
             if (bannerImg) bannerImg.src = previewUrl;
@@ -207,7 +213,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         });
     });
 
-    // --- THÊM MỚI: Khởi tạo modal và Croppie ---
+    //   Khởi tạo modal và Croppie 
     const cropperModalEl = document.getElementById('avatar-cropper-modal');
     const fileInput = document.getElementById('avatar-file-input');
     const cropperUI = document.getElementById('cropper-ui');
@@ -225,7 +231,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         enableResize: false, // Tắt thay đổi kích thước thủ công
         mouseWheelZoom: false, // Tắt zoom bằng chuột cuộn
         minZoom: 0, // Đặt zoom tối thiểu là 0 (mức fit)
-        maxZoom: 1.0, 
+        maxZoom: 0, 
         showZoomer: true // Hiển thị thanh trượt zoom
     });
 
@@ -305,7 +311,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         if (data) fillProfileData(data);
     }
 
-    // --- Bổ sung: Logic kích hoạt Input khi click vào Avatar/Banner ---
+    //   Logic kích hoạt Input khi click vào Avatar/Banner 
     const clickableAvatar = document.getElementById('clickable-avatar');
     const clickableBanner = document.getElementById('clickable-banner');
     const avatarFileInput = document.getElementById('avatar-file-input');
@@ -320,7 +326,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         });
     }
 
-    // Gán sự kiện click cho Banner (mở dialog chọn ảnh bìa)
+    // Gán sự kiện click cho Banner 
     if (clickableBanner && backgroundFileInput) {
         clickableBanner.addEventListener('click', (e) => {
             e.preventDefault();
@@ -328,10 +334,11 @@ document.addEventListener('DOMContentLoaded', async function () {
             backgroundFileInput.click();
         });
     }
-}); // <-- Khối DOMContentLoaded DUY NHẤT kết thúc tại đây
+    
+}); //  Khối DOMContentLoaded DUY NHẤT kết thúc tại đây
 
 function fillProfileData(data) {
-    // 1. Điền form "Cài đặt thông tin" 
+    //  Điền form "Cài đặt thông tin" 
     const inputUsername = document.getElementById('profile-username');
     const inputFullname = document.getElementById('profile-fullname');
     const inputAvatar = document.getElementById('profile-avatar');
@@ -340,13 +347,13 @@ function fillProfileData(data) {
     if (inputFullname) inputFullname.value = data.full_name || ''; 
     if (inputAvatar) inputAvatar.value = data.avatar_url || ''; 
 
-    // === THÊM MỚI: ĐIỀN PHONE VÀ AGE ===
+    // ĐIỀN PHONE VÀ AGE 
     const inputPhone = document.getElementById('profile-phone');
     const inputAge = document.getElementById('profile-age');
     if (inputPhone) inputPhone.value = data.phone || '';
     if (inputAge) inputAge.value = data.age || '';
 
-    // 2. Điền khu vực hiển thị tĩnh (bên trên/bên trái) 
+    //  Điền khu vực hiển thị tĩnh (bên trên/bên trái) 
     const displayUsername = document.getElementById('display-username');
     const displayRealname = document.getElementById('display-realname');
     const displayAvatarImg = document.getElementById('display-avatar-img');
@@ -377,9 +384,9 @@ async function updateProfile() {
 
     try {
         let newAvatarUrl = null;
-        let newBackgroundUrl = null; // <-- Thêm biến cho background
+        let newBackgroundUrl = null; //  Thêm biến cho background
 
-        // --- 1. XỬ LÝ UPLOAD AVATAR (nếu có) ---
+        //   XỬ LÝ UPLOAD AVATAR 
         if (croppedImageBlob) {
             statusDiv.textContent = 'Đang tải ảnh đại diện...';
             const fileExt = 'png';
@@ -396,7 +403,7 @@ async function updateProfile() {
             newAvatarUrl = urlData.publicUrl;
         }
         
-        // --- 2. XỬ LÝ UPLOAD BACKGROUND (nếu có) ---
+        //   XỬ LÝ UPLOAD BACKGROUND 
         if (croppedBackgroundBlob) {
             statusDiv.textContent = 'Đang tải ảnh bìa...';
             const fileExt = 'jpeg';
@@ -414,13 +421,13 @@ async function updateProfile() {
             newBackgroundUrl = urlData.publicUrl;
         }
 
-        // --- 3. CHUẨN BỊ DỮ LIỆU UPDATE BẢNG 'users' ---
+        //  CHUẨN BỊ DỮ LIỆU UPDATE BẢNG 'users' 
         statusDiv.textContent = 'Đang cập nhật thông tin...';
 
         const updates = {
             full_name: document.getElementById('profile-fullname').value,
             username: document.getElementById('profile-username').value,
-            // === THÊM MỚI: LẤY PHONE VÀ AGE ===
+            // ===  LẤY PHONE VÀ AGE ===
             phone: document.getElementById('profile-phone').value,
             age: document.getElementById('profile-age').value
         };
@@ -429,11 +436,10 @@ async function updateProfile() {
             updates.avatar_url = newAvatarUrl;
         }
         if (newBackgroundUrl) {
-            // TÊN CỘT NÀY PHẢI KHỚP VỚI DATABASE CỦA BẠN
             updates.background_url = newBackgroundUrl; 
         }
 
-        // --- 4. GỌI UPDATE BẢNG 'users' ---
+        // GỌI UPDATE BẢNG 'users' 
         const { error } = await supabase
             .from('users')
             .update(updates)
@@ -441,11 +447,10 @@ async function updateProfile() {
 
         if (error) throw error; 
 
-        // --- 5. THÀNH CÔNG ---
+        //  THÀNH CÔNG 
         statusDiv.className = 'alert alert-success';
         statusDiv.textContent = 'Cập nhật profile thành công!';
 
-        // === ĐỒNG BỘ GIAO DIỆN ===
         // (Đồng bộ Username, Fullname, Avatar...)
         const displayRealname = document.getElementById('display-realname');
         if(displayRealname) displayRealname.textContent = updates.full_name || 'Chưa cập nhật tên';
@@ -467,7 +472,7 @@ async function updateProfile() {
         
         // Reset blobs
         croppedImageBlob = null;
-        croppedBackgroundBlob = null; // <-- Reset blob background
+        croppedBackgroundBlob = null; //  Reset blob background
 
     } catch (error) {
         statusDiv.className = 'alert alert-danger';
@@ -479,9 +484,7 @@ async function updateProfile() {
     }
 }
 
-// Tên file: js/profile.js
-
-// === THÊM MỚI: HÀM XỬ LÝ ĐỔI MẬT KHẨU ===
+// HÀM XỬ LÝ ĐỔI MẬT KHẨU 
 async function handleChangePassword(event) {
     event.preventDefault(); // Ngăn form tải lại trang
     
@@ -490,27 +493,27 @@ async function handleChangePassword(event) {
     const confirmPassword = document.getElementById('confirm-new-password').value;
     const changeButton = document.getElementById('change-password-button');
     
-    // Lấy key dịch từ localStorage (nếu không có app-ui.js, dùng text cứng)
+    // Lấy key dịch từ localStorage 
     const lang = localStorage.getItem('language') || 'vi';
     const translations = (lang === 'vi') ? 
         { mismatch: 'Mật khẩu mới và xác nhận không khớp!', short: 'Mật khẩu phải dài ít nhất 6 ký tự.' } : 
         { mismatch: 'New password and confirmation do not match!', short: 'Password must be at least 6 characters long.' };
 
-    // 1. Kiểm tra mật khẩu khớp
+    //  Kiểm tra mật khẩu khớp
     if (newPassword !== confirmPassword) {
         statusDiv.className = 'alert alert-danger';
         statusDiv.textContent = translations.mismatch;
         return;
     }
     
-    // 2. Kiểm tra độ dài (Supabase yêu cầu 6)
+    //  Kiểm tra độ dài (Supabase yêu cầu 6)
     if (newPassword.length < 6) {
         statusDiv.className = 'alert alert-danger';
         statusDiv.textContent = translations.short;
         return;
     }
 
-    // 3. Vô hiệu hóa nút và gọi Supabase
+    // Vô hiệu hóa nút và gọi Supabase
     statusDiv.className = 'alert alert-info';
     statusDiv.textContent = 'Đang cập nhật...';
     changeButton.disabled = true;
@@ -519,7 +522,7 @@ async function handleChangePassword(event) {
         password: newPassword
     });
 
-    // 4. Xử lý kết quả
+    //Xử lý kết quả
     if (error) {
         statusDiv.className = 'alert alert-danger';
         statusDiv.textContent = `Lỗi: ${error.message}`;
@@ -534,7 +537,6 @@ async function handleChangePassword(event) {
     
     changeButton.disabled = false; // Bật lại nút
 }
-// === THÊM MỚI: HÀM XỬ LÝ UPLOAD TÀI LIỆU ===
 
 // Khởi tạo sự kiện cho form upload
 function initializeUploadForm() {
@@ -548,8 +550,6 @@ function initializeUploadForm() {
     loadUploadedDocuments();
 }
 
-// Xử lý upload tài liệu
-// Sửa phần upload storage trong hàm handleDocumentUpload
 async function handleDocumentUpload(event) {
     event.preventDefault();
     
@@ -563,7 +563,7 @@ async function handleDocumentUpload(event) {
         return;
     }
     
-    // --- Lấy dữ liệu từ form ---
+    //  Lấy dữ liệu từ form 
     const title = document.getElementById('document-title').value;
     const author = document.getElementById('document-author').value;
     const year = parseInt(document.getElementById('document-year').value);
@@ -579,7 +579,7 @@ async function handleDocumentUpload(event) {
     
     let thumbnailUrl = null; // Biến này sẽ lưu URL ảnh bìa sau khi upload
 
-    // --- Kiểm tra file ---
+    //  Kiểm tra file 
     if (!docFile) {
         statusDiv.className = 'alert alert-danger';
         statusDiv.textContent = 'Vui lòng chọn file tài liệu (PDF, DOCX...).';
@@ -602,7 +602,7 @@ async function handleDocumentUpload(event) {
     submitButton.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> Đang tải lên...';
     
     try {
-        // --- 0. (MỚI) Upload ảnh bìa (nếu người dùng chọn) ---
+        //  0. (MỚI) Upload ảnh bìa (nếu người dùng chọn) 
         if (thumbnailFile) {
             statusDiv.className = 'alert alert-info';
             statusDiv.textContent = 'Đang tải lên ảnh bìa...';
@@ -625,7 +625,7 @@ async function handleDocumentUpload(event) {
             thumbnailUrl = thumbUrlData.publicUrl; // Lưu URL vào biến
         }
 
-        // --- 1. Upload file tài liệu chính ---
+        //   Upload file tài liệu chính 
         statusDiv.className = 'alert alert-info';
         statusDiv.textContent = 'Đang tải lên tài liệu...';
         
@@ -640,19 +640,19 @@ const docFileName = `${category}/${currentUser.id}-${Date.now()}.${docFileExt}`;
             
         if (docUploadError) throw docUploadError;
         
-        // --- 2. Lấy URL public của file tài liệu ---
+        //   Lấy URL public của file tài liệu 
         const { data: docUrlData } = supabase.storage
             .from('sach-files')
             .getPublicUrl(docUploadData.path);
         
-        // --- 3. Thêm bản ghi vào bảng documents ---
+        //  Thêm bản ghi vào bảng documents 
         const newDocument = {
             user_id: currentUser.id,
             title: title,
             author_name: author,
             publication_year: year,
             description: description,
-            thumbnail_url: thumbnailUrl // <-- SỬ DỤNG BIẾN ĐÃ UPLOAD
+            thumbnail_url: thumbnailUrl //  SỬ DỤNG BIẾN ĐÃ UPLOAD
         };
         
         const { data: docData, error: docError } = await supabase
@@ -662,7 +662,7 @@ const docFileName = `${category}/${currentUser.id}-${Date.now()}.${docFileExt}`;
             
         if (docError) throw docError;
         
-        // --- 4. Thêm bản ghi vào bảng attachments ---
+        // Thêm bản ghi vào bảng attachments 
         const newAttachment = {
             document_id: docData[0].document_id,
             file_path: docUploadData.path, // Path của file tài liệu
@@ -676,11 +676,26 @@ const docFileName = `${category}/${currentUser.id}-${Date.now()}.${docFileExt}`;
             
         if (attachmentError) throw attachmentError;
         
-        // --- 5. Thành công ---
         statusDiv.className = 'alert alert-success';
-        statusDiv.textContent = 'Tải lên tài liệu thành công!';
+        statusDiv.textContent = 'Tải lên tài liệu thành công! Đang chuyển hướng...';
         document.getElementById('upload-form').reset();
-        loadUploadedDocuments();
+        
+        //   CHUYỂN TAB SANG ACTIVITY 
+        setTimeout(() => {
+            // Xóa thông báo
+            statusDiv.className = ''; 
+            statusDiv.textContent = '';
+            
+            // Tìm nút tab Activity và kích hoạt nó
+            const activityTabTrigger = document.getElementById('activity-tab');
+            if (activityTabTrigger) {
+                const tab = new bootstrap.Tab(activityTabTrigger);
+                tab.show(); // Chuyển tab
+                
+                // Gọi hàm load lại dữ liệu 
+                loadUserActivity(); 
+            }
+        }, 1000); // Đợi 1 giây 
         
     } catch (error) {
         console.error('Lỗi upload:', error);
@@ -691,8 +706,6 @@ const docFileName = `${category}/${currentUser.id}-${Date.now()}.${docFileExt}`;
         submitButton.innerHTML = '<i class="fas fa-upload me-2"></i> Tải lên Tài liệu';
     }
 }
-// Tải danh sách tài liệu đã upload
-// Sửa phần lấy URL trong hàm loadUploadedDocuments
 async function loadUploadedDocuments() {
     const container = document.getElementById('uploaded-documents-list');
     const currentUser = getCurrentUser();
@@ -810,7 +823,7 @@ async function loadUploadedDocuments() {
 }
 
 
-// Xóa tài liệu đã upload (GIỮ NGUYÊN)
+// Xóa tài liệu đã upload 
 async function deleteUploadedDocument(documentId, title) {
     if (!confirm(`Bạn có chắc chắn muốn xóa tài liệu "${title}" không?`)) {
         return;
@@ -875,6 +888,141 @@ async function handleDownloadDocument(documentId) {
         setTimeout(() => {
             loadUploadedDocuments();
         }, 500);
+    }
+}
+// HÀM LOAD HOẠT ĐỘNG 
+async function loadUserActivity() {
+    const container = document.getElementById('activity-list');
+    const currentUser = getCurrentUser();
+    if (!currentUser || !container) return;
+
+    try {
+        // Lấy sách user đã đăng
+        const { data, error } = await supabase
+            .from('documents')
+            .select('*')
+            .eq('user_id', currentUser.id)
+            .order('created_at', { ascending: false });
+
+        if (error) throw error;
+
+        if (!data || data.length === 0) {
+            container.innerHTML = '<div class="col-12"><p class="text-muted">Bạn chưa đăng tải tài liệu nào.</p></div>';
+            return;
+        }
+
+        // Render HTML (Dùng thẻ Card cho đẹp)
+        container.innerHTML = data.map(doc => `
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="row g-0">
+                        <div class="col-4">
+                             <img src="${doc.thumbnail_url || '/assets/images/default.jpg'}" 
+                                  class="img-fluid rounded-start h-100" 
+                                  style="object-fit: cover;" alt="${doc.title}">
+                        </div>
+                        <div class="col-8">
+                            <div class="card-body p-2">
+                                <h6 class="card-title line-clamp-2 mb-1"><a href="/pages/book.html?id=${doc.document_id}" class="text-decoration-none text-dark">${doc.title}</a></h6>
+                                <p class="card-text small text-muted mb-1">${doc.author_name}</p>
+                                <div class="d-flex justify-content-between small text-secondary">
+                                    <span><i class="fas fa-eye"></i> ${doc.view_count}</span>
+                                    <span><i class="fas fa-download"></i> ${doc.download_count}</span>
+                                </div>
+                                <p class="card-text mt-2"><small class="text-muted">Đăng ngày: ${new Date(doc.created_at).toLocaleDateString('vi-VN')}</small></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+
+    } catch (error) {
+        console.error('Lỗi load activity:', error);
+        container.innerHTML = `<div class="alert alert-danger">Lỗi: ${error.message}</div>`;
+    }
+}
+// HÀM LOAD DANH SÁCH YÊU THÍCH 
+async function loadUserFavorites() {
+    const container = document.getElementById('favorites-list');
+    const currentUser = getCurrentUser();
+    if (!currentUser || !container) return;
+
+    try {
+        // Join bảng favorites với documents
+        const { data, error } = await supabase
+            .from('favorites')
+            .select(`
+                created_at,
+                documents (
+                    document_id,
+                    title,
+                    author_name,
+                    thumbnail_url,
+                    view_count
+                )
+            `)
+            .eq('user_id', currentUser.id)
+            .order('created_at', { ascending: false });
+
+        if (error) throw error;
+
+        if (!data || data.length === 0) {
+            container.innerHTML = '<div class="col-12"><p class="text-muted">Bạn chưa yêu thích cuốn sách nào.</p></div>';
+            return;
+        }
+
+        container.innerHTML = data.map(item => {
+            const book = item.documents; // Object documents lồng bên trong
+            if (!book) return ''; // Đề phòng sách gốc bị xóa
+            
+            return `
+            <div class="col-6 col-md-4 col-lg-3">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="position-relative">
+                        <img src="${book.thumbnail_url || '/assets/images/default.jpg'}" 
+                             class="card-img-top" alt="${book.title}" 
+                             style="height: 200px; object-fit: cover;">
+                        <button class="btn btn-sm btn-danger position-absolute top-0 end-0 m-2 rounded-circle shadow"
+                                onclick="removeFavorite('${book.document_id}')" title="Bỏ thích">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="card-body p-2 text-center">
+                        <h6 class="card-title text-truncate mb-1">
+                            <a href="/pages/book.html?id=${book.document_id}" class="text-decoration-none text-dark">${book.title}</a>
+                        </h6>
+                        <p class="small text-muted mb-0">${book.author_name}</p>
+                    </div>
+                </div>
+            </div>`;
+        }).join('');
+
+    } catch (error) {
+        console.error('Lỗi load favorites:', error);
+        container.innerHTML = `<div class="alert alert-danger">Lỗi: ${error.message}</div>`;
+    }
+}
+
+// HÀM BỎ YÊU THÍCH 
+window.removeFavorite = async function(documentId) {
+    const currentUser = getCurrentUser();
+    if (!confirm('Bạn có muốn bỏ cuốn sách này khỏi danh sách yêu thích?')) return;
+
+    try {
+        const { error } = await supabase
+            .from('favorites')
+            .delete()
+            .eq('user_id', currentUser.id)
+            .eq('document_id', documentId);
+
+        if (error) throw error;
+
+        // Reload lại danh sách sau khi xóa
+        loadUserFavorites();
+
+    } catch (error) {
+        alert('Lỗi khi xóa: ' + error.message);
     }
 }
 window.handleViewDocument = handleViewDocument;

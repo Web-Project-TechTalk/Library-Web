@@ -26,7 +26,6 @@
     <div class="main-content">
 
         <div class="popular-new-titles-section position-relative">
-
             <h4 class="pnt-main-title">Đầu sách Phổ biến</h4>
 
             <div class="pnt-controls">
@@ -41,21 +40,51 @@
             </div>
 
             <div id="popularNewTitlesCarousel" class="carousel slide" data-bs-ride="false">
-
                 <div class="carousel-inner">
+                    </div>
+            </div>
+        </div>
+
+        <div class="container-fluid py-4 px-lg-5">
+            <div class="row g-4">
+                
+                <div class="col-lg-9">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="mb-0 fw-bold border-start border-4 border-primary ps-3">Sách Mới Cập Nhật</h4>
+                        <a href="/pages/books.html" class="btn btn-sm btn-outline-primary rounded-pill">Xem tất cả</a>
+                    </div>
+                    
+                    <div id="new-books-row" class="row row-cols-2 row-cols-md-3 row-cols-xl-4 g-3">
+                        <div class="col-12 text-center py-5">
+                            <div class="spinner-border text-primary"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3">          
+                    <div class="card shadow-sm border-0 mb-4">
+                        <div class="card-body" id="most-viewed-list">
+                            <h5 class="card-title fw-bold mb-3">Xem nhiều nhất</h5>
+                            <div class="text-center"><div class="spinner-border spinner-border-sm"></div></div>
+                        </div>
+                    </div>
+
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body" id="popular-categories-list">
+                            <h5 class="card-title fw-bold mb-3">Thể loại phổ biến</h5>
+                            <div class="text-center"><div class="spinner-border spinner-border-sm"></div></div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
-        <div class="container-fluid" style="padding: 20px;">
-            <h4 class="mb-3">Sách Mới Cập Nhật</h4>
-            <p>Nội dung này (và các nội dung khác) vẫn có padding 20px
-                vì nó nằm trong một container-fluid riêng.</p>
-        </div>
+
     </div>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
     <script src="/js/app-ui.js" defer></script>
-
+    
     <script type="module" src="/js/dashboard-main.js"></script>
 
 </body>

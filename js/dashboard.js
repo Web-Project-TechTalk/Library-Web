@@ -3,7 +3,7 @@ import { supabase } from './supabase-client.js';
 let currentUser = null;
 let userProfile = null;
 
-// --- HÀM BẢO VỆ TRANG (ĐỂ EXPORT) ---
+//  HÀM BẢO VỆ TRANG (ĐỂ EXPORT) 
 export async function getSession() {
     const { data, error } = await supabase.auth.getSession();
     
@@ -32,7 +32,7 @@ export async function getSession() {
     return data.session;
 }
 
-// --- HÀM SETUP HEADER (ĐỂ EXPORT) ---
+//  HÀM SETUP HEADER (ĐỂ EXPORT) 
 export async function setupHeader(user) {
     const topbarAvatarImg = document.getElementById('topbar-avatar-img');
     const logoutButton = document.getElementById('logout-button');
@@ -91,32 +91,7 @@ export async function fetchDashboardStats() {
         supabase.rpc('get_popular_categories', { limit_count: 3 }),
         supabase.rpc('get_most_viewed_documents', { limit_count: 3 })
     ]);
-
-    // === 1. Xử lý Tác giả nổi bật ===
-    const { data: authors, error: authorError } = authorResult;
-    if (authorError) {
-        console.error('Lỗi tải tác giả:', authorError);
-    } else if (authors) {
-        console.log('Tác giả phổ biến nhất:', authors);
-        const authorList = document.getElementById('popular-authors-list');
-        if (authorList) {
-            authorList.innerHTML = '<h3>Tác giả nổi bật</h3>';
-            if (authors.length === 0) {
-                authorList.innerHTML += '<p>Chưa có dữ liệu</p>';
-            } else {
-                authors.forEach(author => {
-                    authorList.innerHTML += `
-                        <div class="stat-item">
-                            <img src="${author.avatar_url || 'https://via.placeholder.com/32'}" alt="avatar">
-                            <strong>${author.username}</strong>
-                            <span>(${author.average_rating} sao / ${author.total_ratings_received} lượt)</span>
-                        </div>`;
-                });
-            }
-        }
-    }
-
-    // === 2. Xử lý Thể loại phổ biến ===
+    //  Xử lý Thể loại phổ biến 
     const { data: categories, error: catError } = categoryResult;
     if (catError) {
         console.error('Lỗi tải thể loại:', catError);
@@ -135,7 +110,7 @@ export async function fetchDashboardStats() {
         }
     }
 
-    // === 3. Xử lý Sách xem nhiều nhất ===
+    //  3. Xử lý Sách xem nhiều nhất 
     const { data: docs, error: docError } = docResult;
     if (docError) {
         console.error('Lỗi tải sách xem nhiều:', docError);
@@ -167,7 +142,7 @@ export async function fetchDashboardStats() {
     }
 }
 
-// === HÀM TĂNG LƯỢT XEM ===
+//  HÀM TĂNG LƯỢT XEM 
 export async function incrementViewCount(documentId) {
     if (!documentId) {
         console.error('incrementViewCount: Thiếu documentId');
@@ -190,7 +165,7 @@ export async function incrementViewCount(documentId) {
     return true;
 }
 
-// === HÀM TĂNG LƯỢT TẢI ===
+// HÀM TĂNG LƯỢT TẢI 
 export async function incrementDownloadCount(documentId) {
     if (!documentId) {
         console.error('incrementDownloadCount: Thiếu documentId');
@@ -213,7 +188,7 @@ export async function incrementDownloadCount(documentId) {
     return true;
 }
 
-// === HÀM THÊM/XÓA YÊU THÍCH ===
+// HÀM THÊM/XÓA YÊU THÍCH 
 export async function toggleFavorite(documentId) {
     if (!currentUser) {
         console.error('toggleFavorite: Chưa đăng nhập');
@@ -273,7 +248,7 @@ export async function toggleFavorite(documentId) {
     }
 }
 
-// === HÀM KIỂM TRA TRẠNG THÁI YÊU THÍCH ===
+//  HÀM KIỂM TRA TRẠNG THÁI YÊU THÍCH 
 export async function checkFavoriteStatus(documentId) {
     if (!currentUser || !documentId) return false;
 
@@ -287,7 +262,7 @@ export async function checkFavoriteStatus(documentId) {
     return !error && data;
 }
 
-// === HÀM LẤY DANH SÁCH TÀI LIỆU XEM NHIỀU NHẤT (CHI TIẾT HƠN) ===
+//  HÀM LẤY DANH SÁCH TÀI LIỆU XEM NHIỀU NHẤT ===
 export async function getMostViewedDocuments(limit = 10) {
     const { data, error } = await supabase.rpc('get_most_viewed_documents', {
         limit_count: limit
@@ -301,7 +276,7 @@ export async function getMostViewedDocuments(limit = 10) {
     return data || [];
 }
 
-// === HÀM RENDER DANH SÁCH TÀI LIỆU XEM NHIỀU ===
+//  HÀM RENDER DANH SÁCH TÀI LIỆU XEM NHIỀU 
 export async function renderMostViewedDocuments(containerId, limit = 10) {
     const container = document.getElementById(containerId);
     if (!container) {
@@ -351,17 +326,16 @@ export async function renderMostViewedDocuments(containerId, limit = 10) {
     container.innerHTML = html;
 }
 
-// === HÀM XEM TÀI LIỆU (GỌI TỪ UI) ===
-// Hàm này được gọi khi user click vào nút "Xem chi tiết"
+//  HÀM XEM TÀI LIỆU 
+// Hàm này được gọi khi click nút "Xem chi tiết"
 window.viewDocument = async function(documentId) {
     // Tăng lượt xem
     await incrementViewCount(documentId);
     
-    // Chuyển đến trang chi tiết (hoặc mở modal)
     window.location.href = `document-detail.html?id=${documentId}`;
 }
 
-// === HÀM TẢI TÀI LIỆU (GỌI TỪ UI) ===
+//  HÀM TẢI TÀI LIỆU  
 window.downloadDocument = async function(documentId, fileUrl, fileName) {
     // Tăng lượt tải
     await incrementDownloadCount(documentId);
@@ -373,7 +347,7 @@ window.downloadDocument = async function(documentId, fileUrl, fileName) {
     link.click();
 }
 
-// === HÀM GLOBAL CHO PROFILE.JS SỬ DỤNG ===
+// HÀM GLOBAL CHO PROFILE.JS SỬ DỤNG 
 // Export để profile.js có thể import và dùng
 window.handleViewDocumentMetric = async function(documentId) {
     return await incrementViewCount(documentId);
@@ -383,7 +357,7 @@ window.handleDownloadDocumentMetric = async function(documentId) {
     return await incrementDownloadCount(documentId);
 }
 
-// === HÀM TOGGLE YÊU THÍCH (GỌI TỪ UI) ===
+//  HÀM TOGGLE YÊU THÍCH 
 window.toggleDocumentFavorite = async function(documentId, buttonElement) {
     const result = await toggleFavorite(documentId);
     

@@ -249,13 +249,22 @@
                         </div>
 
                         <div class="tab-pane fade" id="activity-tab-pane" role="tabpanel">
-                            <p class="pt-3">Đây là danh sách các file đã được upload.</p>
+                        <div class="pt-3">
+                            <h5 data-lang-key="activityTitle">Hoạt động của tôi</h5>
+                            <p class="text-secondary small">Danh sách các tài liệu bạn đã đóng góp cho cộng đồng.</p>
+                            <div id="activity-list" class="row g-3 mt-3">
+                                <div class="text-center py-5"><div class="spinner-border text-primary"></div></div>
+                            </div>
                         </div>
-                        <div class="tab-pane fade" id="activity-tab-pane" role="tabpanel">
-                            <p class="pt-3">Đây là lịch sử hoạt động của người dùng.</p>
-                        </div>
-                        <div class="tab-pane fade" id="activity-tab-pane" role="tabpanel">
-                            <p class="pt-3">Đây là danh sách các mục yêu thích.</p>
+                    </div>
+                        <div class="tab-pane fade" id="favorites-tab-pane" role="tabpanel">
+                            <div class="pt-3">
+                                <h5 data-lang-key="favoritesTitle">Sách yêu thích</h5>
+                                <p class="text-secondary small">Những cuốn sách bạn đã lưu lại.</p>
+                                <div id="favorites-list" class="row g-3 mt-3">
+                                    <div class="text-center py-5"><div class="spinner-border text-primary"></div></div>
+                                </div>
+                            </div>
                         </div>
                         <div class="tab-pane fade" id="security-tab-pane" role="tabpanel">
                             <h5 class="pt-3" data-lang-key="changeEmailTitle">Đổi Email</h5>
