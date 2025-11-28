@@ -37,18 +37,42 @@ const translations = {
         activityTab: 'Hoạt động',
         favoritesTab: 'Yêu thích',
         
+        // === MỚI: Sidebar (Từ sidebar.html) ===
+        home: 'Trang chủ',
+        follow: 'Theo dõi',
+        readingHistory: 'Lịch sử đọc', // <--- KEY MỚI
+        titles: 'Tiêu đề', // <--- KEY MỚI
+        allBooks: 'Tất cả sách', // <--- KEY MỚI
+        advSearch: 'Tìm kiếm nâng cao', // <--- KEY MỚI
+        recentAdd: 'Mới thêm gần đây', // <--- KEY MỚI
+        random: 'Ngẫu nhiên', // <--- KEY MỚI
+        lib: 'Thư viện', // <--- KEY MỚI
+        guidelines: 'Quy tắc & Hướng dẫn', // <--- KEY MỚI
+        announcement: 'Thông báo', // <--- KEY MỚI
+        aboutUs: 'Về chúng tôi', // <--- KEY MỚI
+        contact: 'Liên hệ', // <--- KEY MỚI
+        advertise: 'Quảng cáo', // <--- KEY MỚI
+        
         // === MỚI: Thêm key cho book.html (Page Content) ===
         bookTitle: 'Sách',
         readBtn: 'Đọc',
         downloadBtn: 'Tải về',
+        favoriteBtn: 'Yêu thích', // <-- KEY MỚI
         detailInfoTitle: 'Thông tin chi tiết',
         loadingDescription: 'Đang tải mô tả...',
         reviewsSummaryTitle: 'Đánh giá về sách',
+        avgRatingLabel: 'đánh giá', // <-- KEY MỚI
         userRatingPrompt: 'Bạn đánh giá cuốn sách này thế nào?',
+        notRatedDisplay: 'Chưa đánh giá', // <-- KEY MỚI
         writeCommentTitle: 'Viết bình luận của bạn',
         commentPlaceholder: 'Chia sẻ cảm nghĩ của bạn về cuốn sách...',
         submitCommentBtn: 'Gửi bình luận',
         readerCommentsTitle: 'Bình luận từ độc giả', 
+        
+        // === MỚI: Thêm key cho thời gian bình luận tĩnh (Tạm dịch) ===
+        postedDaysAgo: 'Đã đăng {n} ngày trước', // <-- KEY MỚI
+        postedWeeksAgo: 'Đã đăng {n} tuần trước', // <-- KEY MỚI
+        repliedDaysAgo: 'Đã trả lời {n} ngày trước', // <-- KEY MỚI
         
         // === MỚI: Thêm key cho reviews.js (Internal/Alerts) ===
         notRated: 'Chưa đánh giá',
@@ -82,18 +106,42 @@ const translations = {
         activityTab: 'Activity',
         favoritesTab: 'Favorites',
         
+        // === MỚI: Sidebar (Từ sidebar.html) ===
+        home: 'Home',
+        follow: 'Follow',
+        readingHistory: 'Reading history', // <--- KEY MỚI
+        titles: 'Titles', // <--- KEY MỚI
+        allBooks: 'All Books', // <--- KEY MỚI
+        advSearch: 'Advance search', // <--- KEY MỚI
+        recentAdd: 'Recently Added', // <--- KEY MỚI
+        random: 'Random', // <--- KEY MỚI
+        lib: 'Library', // <--- KEY MỚI
+        guidelines: 'Guidelines', // <--- KEY MỚI
+        announcement: 'Announcement', // <--- KEY MỚI
+        aboutUs: 'About us', // <--- KEY MỚI
+        contact: 'Contact', // <--- KEY MỚI
+        advertise: 'Advertise', // <--- KEY MỚI
+        
         // === MỚI: Thêm key cho book.html (Page Content) ===
         bookTitle: 'Book',
         readBtn: 'Read',
         downloadBtn: 'Download',
+        favoriteBtn: 'Favorite', // <-- KEY MỚI
         detailInfoTitle: 'Details',
         loadingDescription: 'Loading description...',
         reviewsSummaryTitle: 'Book Reviews',
+        avgRatingLabel: 'reviews', // <-- KEY MỚI
         userRatingPrompt: 'How would you rate this book?',
+        notRatedDisplay: 'Not rated yet', // <-- KEY MỚI
         writeCommentTitle: 'Write Your Comment',
         commentPlaceholder: 'Share your thoughts about the book...',
         submitCommentBtn: 'Post Comment',
         readerCommentsTitle: 'Reader Comments',
+
+        // === MỚI: Thêm key cho thời gian bình luận tĩnh (Tạm dịch) ===
+        postedDaysAgo: 'Posted {n} days ago', // <-- KEY MỚI
+        postedWeeksAgo: 'Posted {n} weeks ago', // <-- KEY MỚI
+        repliedDaysAgo: 'Replied {n} days ago', // <-- KEY MỚI
 
         // === MỚI: Thêm key cho reviews.js (Internal/Alerts) ===
         notRated: 'Not rated yet',
@@ -128,8 +176,31 @@ function updateLanguageUI(lang) {
     document.querySelectorAll('[data-lang-key]').forEach(el => {
         const key = el.dataset.langKey;
         if (langData[key]) {
+             // === LOGIC MỚI CHO CÁC CHUỖI ĐẶC BIỆT ===
+            if (key === 'avgRatingLabel') {
+                // Xử lý chuỗi đánh giá trung bình: (128) đánh giá / (128) reviews
+                // Lấy số từ data-rating-count hoặc từ text cũ
+                const number = el.dataset.ratingCount || el.textContent.match(/\d+/)?.[0];
+                if (number) {
+                     el.textContent = `(${number}) ${langData[key]}`;
+                     el.dataset.ratingCount = number; // Lưu lại số để lần sau dịch
+                } else {
+                     el.textContent = langData[key];
+                }
+            } 
+            else if (['postedDaysAgo', 'postedWeeksAgo', 'repliedDaysAgo'].includes(key)) {
+                // Xử lý chuỗi thời gian: Đã đăng 2 ngày trước
+                // Lấy số từ text cũ
+                const match = el.textContent.match(/\d+/);
+                const number = match ? match[0] : '...';
+                
+                // Thay thế {n} bằng số
+                el.textContent = langData[key].replace('{n}', number);
+            }
+            // === KẾT THÚC LOGIC CHUỖI ĐẶC BIỆT ===
+            
             // Xử lý xuống dòng cho <p> (nếu có \n)
-            if (el.tagName === 'P' && langData[key].includes('\n')) {
+            else if (el.tagName === 'P' && langData[key].includes('\n')) {
                 el.innerHTML = langData[key].replace(/\n/g, '<br>');
             } else {
                 el.textContent = langData[key];
