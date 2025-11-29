@@ -1,0 +1,44 @@
+/* assets/css/all-books.css - PHIÊN BẢN SÁCH NHỎ GỌN HƠN */
+.book-card {
+  transition: all 0.3s ease;
+  border: none !important;
+}
+.book-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.18) !important;
+}
+.book-card img {
+  height: 260px;            
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.book-card:hover img {
+  transform: scale(1.08);
+}
+.book-card .card-body {
+  padding: 0.8rem !important;   /* Thu gọn padding */
+}
+.book-card .card-title {
+  font-size: 0.92rem !important;   /* Chữ tiêu đề nhỏ hơn tí */
+  line-height: 1.3;
+  margin-bottom: 0.4rem !important;
+}
+.book-card .card-title a {
+  color: #212529;
+  text-decoration: none;
+  font-weight: 600;
+}
+.book-card .card-title a:hover {
+  color: #0d6efd !important;
+}
+.book-card small.text-muted {
+  font-size: 0.8rem;
+}
+.book-card .small.text-secondary {
+  font-size: 0.78rem;
+}
+#pagination .btn {
+  min-width: 40px;
+  font-size: 0.9rem;
+  padding: 0.35rem 0.7rem;
+}

@@ -42,7 +42,7 @@ const createBookCard = (book, section = '') => {
         </a>
     </div>`;
 };
-// Section 3 – Sách nổi bật – QUAN TRỌNG: gọi lại hàm kéo ngang sau khi đổ dữ liệu
+// Section 3 – Sách nổi bật – QUAN TRỌNG: 
 export const loadSection3 = async () => {
     const container = document.querySelector('#section3 .book-carousel');
     if (!container) return;
@@ -60,8 +60,8 @@ export const loadSection3 = async () => {
 
 };
 
-// Section 2 & 4 giữ nguyên (không cần kéo ngang phức tạp thì thôi)
-// ==================== SECTION 2 – SÁCH MỚI NHẤT (ĐẸP Y HỆT CŨ) ====================
+
+// ==================== SECTION 2 – SÁCH MỚI NHẤT  ====================
 export const loadSection2 = async () => {
     const container = document.querySelector('#section2 .book-carousel');
     if (!container) return;

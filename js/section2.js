@@ -30,13 +30,13 @@ document.addEventListener('DOMContentLoaded', () => {
             cover: '/assets/images/sach_2_placeholder.jpg',
             details: {
                 vi: {
-                    title: "Sách Mới Tiếp Theo",
-                    author_label: "Tác giả", author_value: "Tác giả 2",
-                    translator_label: "Dịch giả", translator_value: "Dịch giả 2",
-                    publisher_label: "Nhà xuất bản", publisher_value: "Nhà xuất bản 2",
-                    size_label: "Kích thước", size_value: "xx cm",
-                    pages_label: "Số trang", pages_value: "200",
-                    release_label: "Ngày phát hành", release_value: "2025"
+                    title: "Búp Sen Xanh",
+                    author_label: "Tác giả", author_value: "Sơn Tùng",
+                    translator_label: "Dịch giả", translator_value: "Không có",
+                    publisher_label: "Nhà xuất bản", publisher_value: "Nhà xuất bản Kim Đồng",
+                    size_label: "Kích thước", size_value: "20.5 x 12.5 cm",
+                    pages_label: "Số trang", pages_value: "364",
+                    release_label: "Ngày phát hành", release_value: "2023"
                 },
                 en: {
                     title: "Next New Book",
