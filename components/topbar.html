@@ -23,16 +23,9 @@
                     <i class="fas fa-search fa-lg"></i>
                 </a>
                 <div class="search-form-wrapper dropdown flex-grow-1 mx-3" id="searchFormWrapper">
-                    <form class="search-form" role="search">
-                        <input class="form-control" type="search" placeholder="Tìm kiếm sách..." aria-label="Search" id="searchInput" autocomplete="off">
-                    </form>
-                    <div class="dropdown-menu p-3" id="searchDropdown">
-                        <h6>Lịch sử tìm kiếm</h6>
-                        <ul class="list-unstyled mb-0">
-                            <li><a class="dropdown-item" href="#">Sách lập trình C++</a></li>
-                            <li><a class="dropdown-item" href="#">Tài liệu Node.js</a></li>
-                        </ul>
-                    </div>
+                    <a href="/pages/advance-search.html" class="btn btn-outline-dark w-100" id="searchInputLink" data-lang-key="advSearchBtn">
+                        <i class="fas fa-search me-2"></i> Tìm kiếm...
+                    </a>
                 </div>
 
                 <div class="dropdown me-3">
@@ -54,5 +47,6 @@
             </div>
         </div>
     </nav>
+    <script type="module" src="/js/topbar-search.js"></script>
 </body>
 </html>
