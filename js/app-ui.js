@@ -1,4 +1,4 @@
-// Tên file: /js/app-ui.js
+// Tên file: /js/app-ui-full.js (File đã được hợp nhất)
 
 // === 1. HÀM ÁP DỤNG SÁNG/TỐI ===
 function applyTheme(isDarkMode) {
@@ -23,7 +23,7 @@ function applyTheme(isDarkMode) {
     }
 }
 
-// === 2. BỘ TỪ ĐIỂN (Đưa ra ngoài) ===
+// === 2. BỘ TỪ ĐIỂN (Đầy đủ nhất) ===
 const translations = {
     vi: {
         // Topbar & Menu (Từ profile.js)
@@ -36,45 +36,43 @@ const translations = {
         uploadTab: 'Tải lên',
         activityTab: 'Hoạt động',
         favoritesTab: 'Yêu thích',
-        
-        // === MỚI: Sidebar (Từ sidebar.html) ===
+
+        // === Sidebar (Từ sidebar.html) ===
         home: 'Trang chủ',
         follow: 'Theo dõi',
-        readingHistory: 'Lịch sử đọc', // <--- KEY MỚI
-        titles: 'Tiêu đề', // <--- KEY MỚI
-        allBooks: 'Tất cả sách', // <--- KEY MỚI
-        advSearch: 'Tìm kiếm nâng cao', // <--- KEY MỚI
-        recentAdd: 'Mới thêm gần đây', // <--- KEY MỚI
-        random: 'Ngẫu nhiên', // <--- KEY MỚI
-        lib: 'Thư viện', // <--- KEY MỚI
-        guidelines: 'Quy tắc & Hướng dẫn', // <--- KEY MỚI
-        announcement: 'Thông báo', // <--- KEY MỚI
-        aboutUs: 'Về chúng tôi', // <--- KEY MỚI
-        contact: 'Liên hệ', // <--- KEY MỚI
-        advertise: 'Quảng cáo', // <--- KEY MỚI
-        
-        // === MỚI: Thêm key cho book.html (Page Content) ===
+        readingHistory: 'Lịch sử đọc',
+        titles: 'Tiêu đề',
+        allBooks: 'Tất cả sách',
+        advSearch: 'Tìm kiếm nâng cao',
+        recentAdd: 'Mới thêm gần đây',
+        random: 'Ngẫu nhiên',
+        lib: 'Thư viện',
+        guidelines: 'Quy tắc & Hướng dẫn',
+        announcement: 'Thông báo',
+        aboutUs: 'Về chúng tôi',
+        contact: 'Liên hệ',
+        advertise: 'Quảng cáo',
+
+        // === book.html (Page Content) ===
         bookTitle: 'Sách',
         readBtn: 'Đọc',
         downloadBtn: 'Tải về',
-        favoriteBtn: 'Yêu thích', // <-- KEY MỚI
+        favoriteBtn: 'Yêu thích',
         detailInfoTitle: 'Thông tin chi tiết',
         loadingDescription: 'Đang tải mô tả...',
         reviewsSummaryTitle: 'Đánh giá về sách',
-        avgRatingLabel: 'đánh giá', // <-- KEY MỚI
+        avgRatingLabel: 'đánh giá',
         userRatingPrompt: 'Bạn đánh giá cuốn sách này thế nào?',
-        notRatedDisplay: 'Chưa đánh giá', // <-- KEY MỚI
+        notRatedDisplay: 'Chưa đánh giá',
         writeCommentTitle: 'Viết bình luận của bạn',
         commentPlaceholder: 'Chia sẻ cảm nghĩ của bạn về cuốn sách...',
         submitCommentBtn: 'Gửi bình luận',
-        readerCommentsTitle: 'Bình luận từ độc giả', 
-        
-        // === MỚI: Thêm key cho thời gian bình luận tĩnh (Tạm dịch) ===
-        postedDaysAgo: 'Đã đăng {n} ngày trước', // <-- KEY MỚI
-        postedWeeksAgo: 'Đã đăng {n} tuần trước', // <-- KEY MỚI
-        repliedDaysAgo: 'Đã trả lời {n} ngày trước', // <-- KEY MỚI
-        
-        // === MỚI: Thêm key cho reviews.js (Internal/Alerts) ===
+        readerCommentsTitle: 'Bình luận từ độc giả',
+
+        // === reviews.js (Internal/Alerts & Time) ===
+        postedDaysAgo: 'Đã đăng {n} ngày trước',
+        postedWeeksAgo: 'Đã đăng {n} tuần trước',
+        repliedDaysAgo: 'Đã trả lời {n} ngày trước',
         notRated: 'Chưa đánh giá',
         ratingLabel1: 'Rất tệ',
         ratingLabel2: 'Tệ',
@@ -93,6 +91,38 @@ const translations = {
         sendBtn: 'Gửi',
         replyLengthAlert: 'Nội dung trả lời quá ngắn.',
 
+        // === advance-search.html ===
+        advSearchTitle: 'Tìm kiếm Nâng cao',
+        searchLabel: 'Tìm kiếm',
+        showFilters: 'Hiện bộ lọc',
+        hideFilters: 'Ẩn bộ lọc',
+        filtersTitle: 'Bộ lọc & Sắp xếp',
+        filterHint: 'Ấn "Hiện bộ lọc" để chọn thể loại và sắp xếp ở đây.',
+        filterHintSmall: 'Trường tìm kiếm, Sắp xếp theo.',
+        booksSectionTitle: 'Sách',
+        viewToggleHint: 'Thêm 2 nút ở đây để đổi dạng xem liệt kê sách theo dạng lưới hoặc hàng + mô tả',
+        paginationHint: '1 2 3 ... 100',
+        sortPlaceholder: 'Sắp xếp theo...',
+        categoryPlaceholder: 'Chọn thể loại...',
+        resultsTitle: 'Kết quả Tìm kiếm Sách', // KHÓA MỚI
+
+        // KHÓA LỌC THEO TRƯỜNG
+        searchFieldAll: 'Tìm kiếm: Tên sách & Tác giả',
+        searchFieldTitle: 'Tìm kiếm: Tên sách',
+        searchFieldAuthor: 'Tìm kiếm: Tên tác giả',
+
+        // KHÓA SẮP XẾP
+        sortByDate: 'Ngày thêm (Mới nhất)',
+        sortByViews: 'Lượt xem (Nhiều nhất)',
+        sortByRating: 'Đánh giá (Cao nhất)',
+        sortByTitleAsc: 'Tên sách (A-Z)',
+
+        // KHÓA PHÂN TRANG & THÔNG BÁO
+        paginationPrev: 'Trước',
+        paginationNext: 'Sau',
+        loadingResults: 'Đang tải kết quả...',
+        noResultsFound: 'Không tìm thấy sách nào phù hợp.',
+        errorLoadingBooks: 'Lỗi tải sách:',
     },
     en: {
         // Topbar & Menu (Từ profile.js)
@@ -105,45 +135,43 @@ const translations = {
         uploadTab: 'Uploads',
         activityTab: 'Activity',
         favoritesTab: 'Favorites',
-        
-        // === MỚI: Sidebar (Từ sidebar.html) ===
+
+        // === Sidebar (Từ sidebar.html) ===
         home: 'Home',
         follow: 'Follow',
-        readingHistory: 'Reading history', // <--- KEY MỚI
-        titles: 'Titles', // <--- KEY MỚI
-        allBooks: 'All Books', // <--- KEY MỚI
-        advSearch: 'Advance search', // <--- KEY MỚI
-        recentAdd: 'Recently Added', // <--- KEY MỚI
-        random: 'Random', // <--- KEY MỚI
-        lib: 'Library', // <--- KEY MỚI
-        guidelines: 'Guidelines', // <--- KEY MỚI
-        announcement: 'Announcement', // <--- KEY MỚI
-        aboutUs: 'About us', // <--- KEY MỚI
-        contact: 'Contact', // <--- KEY MỚI
-        advertise: 'Advertise', // <--- KEY MỚI
-        
-        // === MỚI: Thêm key cho book.html (Page Content) ===
+        readingHistory: 'Reading history',
+        titles: 'Titles',
+        allBooks: 'All Books',
+        advSearch: 'Advance search',
+        recentAdd: 'Recently Added',
+        random: 'Random',
+        lib: 'Library',
+        guidelines: 'Guidelines',
+        announcement: 'Announcement',
+        aboutUs: 'About us',
+        contact: 'Contact',
+        advertise: 'Advertise',
+
+        // === book.html (Page Content) ===
         bookTitle: 'Book',
         readBtn: 'Read',
         downloadBtn: 'Download',
-        favoriteBtn: 'Favorite', // <-- KEY MỚI
+        favoriteBtn: 'Favorite',
         detailInfoTitle: 'Details',
         loadingDescription: 'Loading description...',
         reviewsSummaryTitle: 'Book Reviews',
-        avgRatingLabel: 'reviews', // <-- KEY MỚI
+        avgRatingLabel: 'reviews',
         userRatingPrompt: 'How would you rate this book?',
-        notRatedDisplay: 'Not rated yet', // <-- KEY MỚI
+        notRatedDisplay: 'Not rated yet',
         writeCommentTitle: 'Write Your Comment',
         commentPlaceholder: 'Share your thoughts about the book...',
         submitCommentBtn: 'Post Comment',
         readerCommentsTitle: 'Reader Comments',
 
-        // === MỚI: Thêm key cho thời gian bình luận tĩnh (Tạm dịch) ===
-        postedDaysAgo: 'Posted {n} days ago', // <-- KEY MỚI
-        postedWeeksAgo: 'Posted {n} weeks ago', // <-- KEY MỚI
-        repliedDaysAgo: 'Replied {n} days ago', // <-- KEY MỚI
-
-        // === MỚI: Thêm key cho reviews.js (Internal/Alerts) ===
+        // === reviews.js (Internal/Alerts & Time) ===
+        postedDaysAgo: 'Posted {n} days ago',
+        postedWeeksAgo: 'Posted {n} weeks ago',
+        repliedDaysAgo: 'Replied {n} days ago',
         notRated: 'Not rated yet',
         ratingLabel1: 'Terrible',
         ratingLabel2: 'Bad',
@@ -161,11 +189,43 @@ const translations = {
         replyPlaceholder: 'Write a reply...',
         sendBtn: 'Send',
         replyLengthAlert: 'Reply content is too short.',
+
+        // === advance-search.html ===
+        advSearchTitle: 'Advanced Search',
+        searchLabel: 'Search',
+        showFilters: 'Show filters',
+        hideFilters: 'Hide filters',
+        filtersTitle: 'Filters & Sorting',
+        filterHint: 'Click "Show filters" to select categories and sorting options here.',
+        filterHintSmall: 'Search field, Sort by.',
+        booksSectionTitle: 'Books',
+        viewToggleHint: 'Add 2 buttons here to switch between book listing views (grid or row + description)',
+        paginationHint: '1 2 3 ... 100',
+        sortPlaceholder: 'Sort by...',
+        categoryPlaceholder: 'Select category...',
+        resultsTitle: 'Search Results',
+
+        // KHÓA LỌC THEO TRƯỜNG
+        searchFieldAll: 'Search: Title & Author',
+        searchFieldTitle: 'Search: Title only',
+        searchFieldAuthor: 'Search: Author only',
+
+        // KHÓA SẮP XẾP
+        sortByDate: 'Date Added (Newest)',
+        sortByViews: 'Views (Most)',
+        sortByRating: 'Rating (Highest)',
+        sortByTitleAsc: 'Title (A-Z)',
+
+        // KHÓA PHÂN TRANG & THÔNG BÁO
+        paginationPrev: 'Previous',
+        paginationNext: 'Next',
+        loadingResults: 'Loading results...',
+        noResultsFound: 'No matching books found.',
+        errorLoadingBooks: 'Error loading books:',
     }
 };
 
-// === 3. HÀM CẬP NHẬT NGÔN NGỮ (Đưa ra ngoài) ===
-// Hàm này sẽ tìm tất cả các element có [data-lang-key] và dịch chúng
+// === 3. HÀM CẬP NHẬT NGÔN NGỮ (Đầy đủ nhất) ===
 function updateLanguageUI(lang) {
     if (!translations[lang]) return;
 
@@ -176,7 +236,7 @@ function updateLanguageUI(lang) {
     document.querySelectorAll('[data-lang-key]').forEach(el => {
         const key = el.dataset.langKey;
         if (langData[key]) {
-             // === LOGIC MỚI CHO CÁC CHUỖI ĐẶC BIỆT ===
+            // === LOGIC MỚI CHO CÁC CHUỖI ĐẶC BIỆT (Từ app-ui.js) ===
             if (key === 'avgRatingLabel') {
                 // Xử lý chuỗi đánh giá trung bình: (128) đánh giá / (128) reviews
                 // Lấy số từ data-rating-count hoặc từ text cũ
@@ -187,18 +247,18 @@ function updateLanguageUI(lang) {
                 } else {
                      el.textContent = langData[key];
                 }
-            } 
+            }
             else if (['postedDaysAgo', 'postedWeeksAgo', 'repliedDaysAgo'].includes(key)) {
                 // Xử lý chuỗi thời gian: Đã đăng 2 ngày trước
                 // Lấy số từ text cũ
                 const match = el.textContent.match(/\d+/);
                 const number = match ? match[0] : '...';
-                
+
                 // Thay thế {n} bằng số
                 el.textContent = langData[key].replace('{n}', number);
             }
             // === KẾT THÚC LOGIC CHUỖI ĐẶC BIỆT ===
-            
+
             // Xử lý xuống dòng cho <p> (nếu có \n)
             else if (el.tagName === 'P' && langData[key].includes('\n')) {
                 el.innerHTML = langData[key].replace(/\n/g, '<br>');
@@ -233,7 +293,13 @@ function updateLanguageUI(lang) {
     if (themeToggle) {
         // Giữ icon, chỉ thay text
         const icon = themeToggle.querySelector('i');
-        themeToggle.innerHTML = icon.outerHTML + langData.themeToggle;
+        // Phải đảm bảo icon tồn tại, vì icon được thêm khi applyTheme() chạy
+        if (icon) {
+            themeToggle.innerHTML = icon.outerHTML + langData.themeToggle;
+        } else {
+             // Trường hợp icon chưa kịp load (hiếm), chỉ gán text
+             themeToggle.textContent = langData.themeToggle;
+        }
     }
 }
 
@@ -284,7 +350,7 @@ async function loadComponent(elementId, url, callback) {
     }
 }
 
-// === 6. HÀM GÁN SỰ KIỆN SAU KHI TẢI COMPONENT ===
+// === 6. HÀM GÁN SỰ KIỆN SAU KHI TẢI COMPONENT (Đầy đủ nhất) ===
 /**
  * Gán sự kiện cho Sidebar, Search và các nút Topbar.
  * Hàm này phải được gọi SAU KHI component đã tải xong.
@@ -322,6 +388,7 @@ function initializeDynamicElementsLogic() {
             }
         }
     };
+    // Khởi tạo trạng thái sidebar cho Desktop
     if (window.innerWidth >= DESKTOP_BREAKPOINT && sidebar) {
         sidebar.classList.add('active');
         body.classList.add('sidebar-is-active');
@@ -335,7 +402,7 @@ function initializeDynamicElementsLogic() {
         if (searchOverlay) searchOverlay.classList.add('active');
         if (searchFormWrapper) searchFormWrapper.classList.add('active');
         if (body) body.classList.add('search-active');
-        if (searchInput) {
+        if (searchInput && typeof bootstrap !== 'undefined' && bootstrap.Dropdown) { // Kiểm tra Bootstrap
             const dropdownInstance = bootstrap.Dropdown.getOrCreateInstance(searchInput);
             dropdownInstance.show();
         }
@@ -344,7 +411,7 @@ function initializeDynamicElementsLogic() {
         if (searchOverlay) searchOverlay.classList.remove('active');
         if (searchFormWrapper) searchFormWrapper.classList.remove('active');
         if (body) body.classList.remove('search-active');
-        if (searchInput) {
+        if (searchInput && typeof bootstrap !== 'undefined' && bootstrap.Dropdown) { // Kiểm tra Bootstrap
             const dropdownInstance = bootstrap.Dropdown.getInstance(searchInput);
             if (dropdownInstance) { dropdownInstance.hide(); }
         }
@@ -367,8 +434,8 @@ function initializeDynamicElementsLogic() {
         }
     });
 
-    // --- SỬA LỖI: GÁN SỰ KIỆN CHO CÁC NÚT TOPBAR ---
-    // (Vì các nút này chỉ tồn tại sau khi loadComponent)
+    // --- GÁN SỰ KIỆN CHO CÁC NÚT TOPBAR ---
+    // (Bị thiếu trong app-ui.js ban đầu, đã được lấy từ app-ui1.js)
 
     // 1. Nút Đổi Ngôn ngữ
     const langToggle = document.getElementById('lang-toggle');
@@ -382,7 +449,7 @@ function initializeDynamicElementsLogic() {
             // Gọi hàm updateLanguageUI (đã được định nghĩa ở ngoài)
             updateLanguageUI(currentLang);
             console.log('Đã đổi ngôn ngữ sang:', currentLang);
-            
+
             // *** QUAN TRỌNG: Kích hoạt lại logic cần dịch trong reviews.js sau khi đổi ngôn ngữ ***
             if (typeof window.reInitializeReviewsLogic === 'function') {
                 window.reInitializeReviewsLogic();
@@ -424,11 +491,11 @@ function initializeDynamicElementsLogic() {
 const COLLAPSE_STATE_KEY = 'sidebarCollapseState';
 
 /**
- * Hàm 1: Highlight mục sidebar tương ứng với trang hiện tại
+ * Hàm 1: Highlight mục sidebar tương ứng với trang hiện tại (Giữ nguyên)
  */
 function highlightSidebarLink() {
     // Lấy đường dẫn hiện tại và chuẩn hóa (ví dụ: '/pages/dashboard.html')
-    const currentPath = window.location.pathname.replace(/\/$/, '') || '/index.html'; 
+    const currentPath = window.location.pathname.replace(/\/$/, '') || '/index.html';
 
     // Lấy tất cả các liên kết trong sidebar
     const sidebarLinks = document.querySelectorAll('#sidebar .components a');
@@ -438,7 +505,7 @@ function highlightSidebarLink() {
 
         // Kiểm tra nếu đường dẫn khớp với href của liên kết
         if (linkHref && currentPath.endsWith(linkHref)) {
-            
+
             // 1. Thêm class highlight vào thẻ <li> cha
             let listItem = link.closest('li');
             if (listItem) {
@@ -459,7 +526,7 @@ function highlightSidebarLink() {
 
 
 /**
- * Hàm 2: Lưu trạng thái mở/đóng của các submenu vào sessionStorage
+ * Hàm 2: Lưu trạng thái mở/đóng của các submenu vào sessionStorage (Giữ nguyên)
  */
 function saveSidebarCollapseState() {
     const openSubmenus = [];
@@ -478,7 +545,7 @@ function saveSidebarCollapseState() {
 }
 
 /**
- * Hàm 3: Khôi phục trạng thái mở/đóng của các submenu từ sessionStorage khi tải trang
+ * Hàm 3: Khôi phục trạng thái mở/đóng của các submenu từ sessionStorage khi tải trang (Giữ nguyên)
  */
 function restoreSidebarCollapseState() {
     const savedState = sessionStorage.getItem(COLLAPSE_STATE_KEY);
@@ -486,7 +553,7 @@ function restoreSidebarCollapseState() {
     if (savedState) {
         try {
             const openSubmenus = JSON.parse(savedState);
-            
+
             openSubmenus.forEach(id => {
                 const submenu = document.getElementById(id);
                 if (submenu) {
@@ -505,8 +572,7 @@ function restoreSidebarCollapseState() {
     }
 }
 
-// === 7. LOGIC CHẠY KHI DOM TẢI XONG ===
-// (Chỉ chạy loadComponent)
+// === 7. LOGIC CHẠY KHI DOM TẢI XONG (Giữ nguyên, chỉ loại bỏ code thừa) ===
 document.addEventListener('DOMContentLoaded', () => {
 
     // Tải topbar trước
@@ -514,14 +580,12 @@ document.addEventListener('DOMContentLoaded', () => {
         // Tải sidebar sau khi topbar tải xong
         loadComponent('sidebar-placeholder', '/components/sidebar.html', () => {
 
-            // === BẮT ĐẦU VỊ TRÍ MỚI CHO LOGIC SIDEBAR ===
-
             // 1. Khôi phục trạng thái mở/đóng đã lưu từ lần chuyển trang trước
             restoreSidebarCollapseState();
 
             // 2. Highlight link đang active và đảm bảo submenu cha được mở
-            highlightSidebarLink(); 
-            
+            highlightSidebarLink();
+
             // 3. Đăng ký listener để tự động lưu trạng thái MỚI nhất mỗi khi submenu mở/đóng
             const submenus = document.querySelectorAll('.sidebar .collapse');
             submenus.forEach(submenu => {
@@ -530,33 +594,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 submenu.addEventListener('hidden.bs.collapse', saveSidebarCollapseState);
             });
 
-            // GÁN TẤT CẢ CÁC SỰ KIỆN KHÁC CỦA TOPBAR VÀ SIDEBAR (Logic đã có sẵn ở đây)
+            // GÁN TẤT CẢ CÁC SỰ KIỆN KHÁC CỦA TOPBAR VÀ SIDEBAR
             initializeDynamicElementsLogic();
 
-            // Cập nhật lại UI (quan trọng)
+            // Cập nhật lại UI (quan trọng vì component mới được load)
             let currentLang = localStorage.getItem('language') || 'vi';
-            let isDarkMode = localStorage.getItem('theme') === 'dark';
+            let isDarkMode = (localStorage.getItem('theme') === 'dark');
 
             applyTheme(isDarkMode);
             updateLanguageUI(currentLang);
-            
-            // === KẾT THÚC VỊ TRÍ MỚI CHO LOGIC SIDEBAR ===
         });
     });
 
-    // 1. Highlight link đang active và đảm bảo submenu cha được mở
-    highlightSidebarLink(); 
-
-    // 2. Khôi phục trạng thái mở/đóng đã lưu từ lần chuyển trang trước
-    restoreSidebarCollapseState();
-    
-    // 3. Đăng ký listener để tự động lưu trạng thái MỚI nhất mỗi khi submenu mở/đóng
-    const submenus = document.querySelectorAll('.sidebar .collapse');
-    submenus.forEach(submenu => {
-        // Lắng nghe sự kiện của Bootstrap khi submenu mở (shown.bs.collapse) và đóng (hidden.bs.collapse)
-        submenu.addEventListener('shown.bs.collapse', saveSidebarCollapseState);
-        submenu.addEventListener('hidden.bs.collapse', saveSidebarCollapseState);
-    });
-
-    highlightSidebarLink();
+    // *** Gỡ bỏ logic lặp lại bị đặt sai vị trí (1, 2, 3, highlightSidebarLink() cuối) ***
+    // Các dòng này sẽ chạy trước khi topbar và sidebar được tải, gây ra lỗi vì các phần tử chưa tồn tại.
+    // Logic đúng đã nằm trong callback của loadComponent.
 });
