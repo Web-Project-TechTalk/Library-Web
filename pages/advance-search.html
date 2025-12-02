@@ -255,6 +255,7 @@
 
         <div class="search-container">
             <div class="filter-box shadow-sm mb-4" id="filterBox">
+
                 <div class="row g-3">
 
                     <div class="col-md-6 col-lg-3">
@@ -269,7 +270,8 @@
 
                     <div class="col-md-6 col-lg-3">
                         <select class="form-select" id="sort-select-adv">
-                            <option value="" disabled selected data-lang-key="sortPlaceholder">Sắp xếp theo...</option>
+                            <option value="all" disabled selected data-lang-key="sortPlaceholder">Sắp xếp theo...
+                            </option>
                             <option value="date" data-lang-key="sortByDate">Ngày thêm (Mới nhất)</option>
                             <option value="views" data-lang-key="sortByViews">Lượt xem (Nhiều nhất)</option>
                             <option value="rating" data-lang-key="sortByRating">Đánh giá (Cao nhất)</option>
@@ -277,6 +279,67 @@
                         </select>
                     </div>
 
+                    <div class="col-md-6 col-lg-3">
+                        <select class="form-select" id="tag-select-adv">
+                            <option value="all" selected data-lang-key="tagPlaceholder">Tag-Thể loại</option>
+                            <option value="van-hoc" data-lang-key="tagLit">Văn học</option>
+                            <option value="khoa-hoc" data-lang-key="tagSciTech">Khoa học & Công nghệ</option>
+                            <option value="lich-su" data-lang-key="tagHistory">Lịch sử</option>
+                            <option value="kinh-doanh" data-lang-key="tagBusiness">Kinh doanh & Kinh tế</option>
+                            <option value="thieu-nhi" data-lang-key="tagKids">Thiếu nhi</option>
+                            <option value="tu-luc" data-lang-key="tagSelfHelp">Tự lực & Phát triển bản thân</option>
+                            <option value="truyen-tranh" data-lang-key="tagComics">Truyện tranh (Manga/Comic)</option>
+                            <option value="nau-an" data-lang-key="tagCooking">Nấu ăn & Ẩm thực</option>
+                            <option value="nghe-thuat" data-lang-key="tagArt">Nghệ thuật & Thiết kế</option>
+                            <option value="giao-khoa" data-lang-key="tagTextbook">Sách giáo khoa</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6 col-lg-3">
+                        <select class="form-select" id="language-select-adv">
+                            <option value="all" selected data-lang-key="langPlaceholder">Ngôn ngữ</option>
+                            <option value="vi" data-lang-key="langVi">Tiếng Việt</option>
+                            <option value="en" data-lang-key="langEn">Tiếng Anh</option>
+                            <option value="zh" data-lang-key="langZh">Tiếng Trung</option>
+                            <option value="fr" data-lang-key="langFr">Tiếng Pháp</option>
+                            <option value="de" data-lang-key="langDe">Tiếng Đức</option>
+                            <option value="ja" data-lang-key="langJa">Tiếng Nhật</option>
+                            <option value="ko" data-lang-key="langKo">Tiếng Hàn</option>
+                            <option value="es" data-lang-key="langEs">Tiếng Tây Ban Nha</option>
+                            <option value="ru" data-lang-key="langRu">Tiếng Nga</option>
+                            <option value="pt" data-lang-key="langPt">Tiếng Bồ Đào Nha</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6 col-lg-3">
+                        <div class="input-group">
+                            <span class="input-group-text bg-transparent border-end-0 border-dark"
+                                data-lang-key="yearLabel">
+                                Năm PH
+                            </span>
+                            <input type="number" class="form-control border-start-0 border-dark bg-transparent"
+                                id="year-input-adv" placeholder="VD: 2023" min="0" max="2026">
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-lg-3">
+                        <select class="form-select" id="rating-select-adv">
+                            <option value="0" selected data-lang-key="ratingPlaceholder">Đánh giá</option>
+                            <option value="10">10 ⭐</option>
+                            <option value="9">9 ⭐</option>
+                            <option value="8">8 ⭐</option>
+                            <option value="7">7 ⭐</option>
+                            <option value="6">6 ⭐</option>
+                            <option value="5">5 ⭐</option>
+                            <option value="4">4 ⭐</option>
+                            <option value="3">3 ⭐</option>
+                            <option value="2">2 ⭐</option>
+                            <option value="1">1 ⭐</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6 col-lg-3"></div>
+                    <div class="col-md-6 col-lg-3"></div>
                 </div>
 
                 <div id="filterHintOverlay">

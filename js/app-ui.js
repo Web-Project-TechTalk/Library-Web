@@ -117,12 +117,48 @@ const translations = {
         sortByRating: 'Đánh giá (Cao nhất)',
         sortByTitleAsc: 'Tên sách (A-Z)',
 
+        // --- Bộ lọc Tag/Thể loại (tag-select-adv) ---
+        tagPlaceholder: 'Tag-Thể loại',
+        tagLit: 'Văn học',
+        tagSciTech: 'Khoa học & Công nghệ',
+        tagHistory: 'Lịch sử',
+        tagBusiness: 'Kinh doanh & Kinh tế',
+        tagKids: 'Thiếu nhi',
+        tagSelfHelp: 'Tự lực & Phát triển bản thân',
+        tagComics: 'Truyện tranh (Manga/Comic)',
+        tagCooking: 'Nấu ăn & Ẩm thực',
+        tagArt: 'Nghệ thuật & Thiết kế',
+        tagTextbook: 'Sách giáo khoa',
+
+        // --- Bộ lọc Ngôn ngữ (language-select-adv) ---
+        langPlaceholder: 'Ngôn ngữ',
+        langVi: 'Tiếng Việt',
+        langEn: 'Tiếng Anh',
+        langZh: 'Tiếng Trung',
+        langFr: 'Tiếng Pháp',
+        langDe: 'Tiếng Đức',
+        langJa: 'Tiếng Nhật',
+        langKo: 'Tiếng Hàn',
+        langEs: 'Tiếng Tây Ban Nha',
+        langRu: 'Tiếng Nga',
+        langPt: 'Tiếng Bồ Đào Nha',
+
+        // --- Bộ lọc Năm PH ---
+        yearLabel: 'Năm PH',
+
+        // --- Bộ lọc Đánh giá (rating-select-adv) ---
+        ratingPlaceholder: 'Đánh giá',
+
         // KHÓA PHÂN TRANG & THÔNG BÁO
         paginationPrev: 'Trước',
         paginationNext: 'Sau',
         loadingResults: 'Đang tải kết quả...',
         noResultsFound: 'Không tìm thấy sách nào phù hợp.',
         errorLoadingBooks: 'Lỗi tải sách:',
+
+        // === recently-added.html ===
+        recentlyAddedTitle: 'Sách mới thêm',
+        latestBooksTitle: 'Danh sách Sách mới',
     },
     en: {
         // Topbar & Menu (Từ profile.js)
@@ -216,12 +252,49 @@ const translations = {
         sortByRating: 'Rating (Highest)',
         sortByTitleAsc: 'Title (A-Z)',
 
+        // --- Bộ lọc Tag/Thể loại (tag-select-adv) ---
+        tagPlaceholder: 'Tag-Category',
+        tagLit: 'Literature',
+        tagSciTech: 'Science & Technology',
+        tagHistory: 'History',
+        tagBusiness: 'Business & Economics',
+        tagKids: "Children's Books",
+        tagSelfHelp: 'Self-Help & Personal Dev.',
+        tagComics: 'Comics (Manga/Comic)',
+        tagCooking: 'Cooking & Food',
+        tagArt: 'Art & Design',
+        tagTextbook: 'Textbooks',
+
+        // --- Bộ lọc Ngôn ngữ (language-select-adv) ---
+        langPlaceholder: 'Language',
+        langVi: 'Vietnamese',
+        langEn: 'English',
+        langZh: 'Chinese',
+        langFr: 'French',
+        langDe: 'German',
+        langJa: 'Japanese',
+        langKo: 'Korean',
+        langEs: 'Spanish',
+        langRu: 'Russian',
+        langPt: 'Portuguese',
+
+        // --- Bộ lọc Năm PH ---
+        yearLabel: 'Pub. Year',
+
+        // --- Bộ lọc Đánh giá (rating-select-adv) ---
+        ratingPlaceholder: 'Rating',
+
         // KHÓA PHÂN TRANG & THÔNG BÁO
         paginationPrev: 'Previous',
         paginationNext: 'Next',
         loadingResults: 'Loading results...',
         noResultsFound: 'No matching books found.',
         errorLoadingBooks: 'Error loading books:',
+
+        // === recently-added.html ===
+        recentlyAddedTitle: 'Recently Added Books',
+        latestBooksTitle: 'New Books',
+
     }
 };
 
@@ -242,10 +315,10 @@ function updateLanguageUI(lang) {
                 // Lấy số từ data-rating-count hoặc từ text cũ
                 const number = el.dataset.ratingCount || el.textContent.match(/\d+/)?.[0];
                 if (number) {
-                     el.textContent = `(${number}) ${langData[key]}`;
-                     el.dataset.ratingCount = number; // Lưu lại số để lần sau dịch
+                    el.textContent = `(${number}) ${langData[key]}`;
+                    el.dataset.ratingCount = number; // Lưu lại số để lần sau dịch
                 } else {
-                     el.textContent = langData[key];
+                    el.textContent = langData[key];
                 }
             }
             else if (['postedDaysAgo', 'postedWeeksAgo', 'repliedDaysAgo'].includes(key)) {
@@ -297,8 +370,8 @@ function updateLanguageUI(lang) {
         if (icon) {
             themeToggle.innerHTML = icon.outerHTML + langData.themeToggle;
         } else {
-             // Trường hợp icon chưa kịp load (hiếm), chỉ gán text
-             themeToggle.textContent = langData.themeToggle;
+            // Trường hợp icon chưa kịp load (hiếm), chỉ gán text
+            themeToggle.textContent = langData.themeToggle;
         }
     }
 }
