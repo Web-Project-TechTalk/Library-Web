@@ -159,6 +159,22 @@ const translations = {
         // === recently-added.html ===
         recentlyAddedTitle: 'Sách mới thêm',
         latestBooksTitle: 'Danh sách Sách mới',
+        
+        // --- CÁC KHÓA MỚI CHO TRANG RANDOM.HTML ---
+        randomTitle: 'Sách Ngẫu nhiên',
+        selectQtyLabel: 'Chọn số lượng sách',
+        bookCount1: '1 cuốn sách',
+        bookCount5: '5 cuốn sách',
+        bookCount10: '10 cuốn sách',
+        bookCount20: '20 cuốn sách',
+        fetchRandomBtn: 'Tìm sách Ngẫu nhiên',
+        gridViewTitle: 'Dạng Lưới',
+        listViewTitle: 'Dạng Danh sách',
+        resultsTitleRandom: 'Kết quả Ngẫu nhiên', // Đổi tên khóa để tránh trùng với resultsTitle của advance-search
+        randomInitialHint: 'Chọn số lượng sách và nhấn **"Tìm sách Ngẫu nhiên"** để bắt đầu khám phá!',
+        randomSearching: 'Đang tải sách ngẫu nhiên...',
+        randomFetchBtnText: 'Tìm sách Ngẫu nhiên',
+        randomNoResults: 'Không tìm thấy sách ngẫu nhiên nào. Hãy thử lại!'
     },
     en: {
         // Topbar & Menu (Từ profile.js)
@@ -294,7 +310,22 @@ const translations = {
         // === recently-added.html ===
         recentlyAddedTitle: 'Recently Added Books',
         latestBooksTitle: 'New Books',
-
+        
+        // --- CÁC KHÓA MỚI CHO TRANG RANDOM.HTML ---
+        randomTitle: 'Random Books',
+        selectQtyLabel: 'Select book quantity',
+        bookCount1: '1 book',
+        bookCount5: '5 books',
+        bookCount10: '10 books',
+        bookCount20: '20 books',
+        fetchRandomBtn: 'Find Random Books',
+        gridViewTitle: 'Grid View',
+        listViewTitle: 'List View',
+        resultsTitleRandom: 'Random Results', // Đổi tên khóa để tránh trùng với resultsTitle của advance-search
+        randomInitialHint: 'Select the number of books and click **"Find Random Books"** to start exploring!',
+        randomSearching: 'Loading random books...',
+        randomFetchBtnText: 'Find Random Books',
+        randomNoResults: 'No random books found. Please try again!'
     }
 };
 
@@ -346,6 +377,14 @@ function updateLanguageUI(lang) {
         const key = el.dataset.langKeyPlaceholder;
         if (langData[key]) {
             el.placeholder = langData[key];
+        }
+    });
+    
+    // DỊCH TITLE (MỚI THÊM để dịch title của các nút icon)
+    document.querySelectorAll('[data-lang-key-title]').forEach(el => {
+        const key = el.dataset.langKeyTitle;
+        if (langData[key]) {
+            el.title = langData[key];
         }
     });
 
