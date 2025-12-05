@@ -9,27 +9,676 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <link rel="stylesheet" href="/assets/css/profile.css">
   <link rel="stylesheet" href="/assets/css/dashboard.css">
-  <link rel="stylesheet" href="../assets/css/all-books.css"> <!-- ĐÚNG ĐƯỜNG DẪN -->
+  <link rel="stylesheet" href="../assets/css/all-books.css">
 </head>
-<body class="hero-page">
+
+<body class="light-theme">
 
   <div id="topbar-placeholder"></div>
   <div id="sidebar-placeholder"></div>
+<br>
+  <div class="main-content container py-5">
 
-  <div class="main-content container-fluid py-4 px-lg-5">
-    <h2 class="fw-bold mb-4 border-start border-primary border-5 ps-3">
-      Tất cả sách <small class="text-muted ms-3" id="total-count">(đang tải...)</small>
-    </h2>
+    <!-- ==================== 6 TAB MỚI ==================== -->
+    <ul class="nav nav-tabs justify-content-center mb-5 fs-5" id="bookTabs" role="tablist">
 
-    <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-6 g-4" id="books-container">
-      <!-- Load bằng JS -->
-    </div>
+      <!-- TAB 1: TẤT CẢ SÁCH -->
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="tab-all-tab" data-bs-toggle="tab" data-bs-target="#tab-all" type="button">
+          Tất cả sách
+        </button>
+      </li>
 
-    <div class="text-center mt-5" id="pagination"></div>
+      <!-- TAB 2: THỂ LOẠI -->
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tab-category-tab" data-bs-toggle="tab" data-bs-target="#tab-category" type="button">
+          Thể Loại
+        </button>
+      </li>
+
+      <!-- TAB 3 -->
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tab-new-tab" data-bs-toggle="tab" data-bs-target="#tab-new" type="button">
+          Sách mới cập nhật
+        </button>
+      </li>
+
+      <!-- TAB 4 -->
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tab-recommend-tab" data-bs-toggle="tab" data-bs-target="#tab-recommend" type="button">
+          Recommended
+        </button>
+      </li>
+
+      <!-- TAB 5 -->
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tab-community-tab" data-bs-toggle="tab" data-bs-target="#tab-community" type="button">
+          Sách lẻ (cộng đồng)
+        </button>
+      </li>
+
+      <!-- TAB 6 -->
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tab-upcoming-tab" data-bs-toggle="tab" data-bs-target="#tab-upcoming" type="button">
+          Sắp phát hành
+        </button>
+      </li>
+
+    </ul>
+
+    <!-- ==================== TAB NỘI DUNG ==================== -->
+    <div class="tab-content mb-5" id="bookTabContent">
+
+      <!-- ==================== TAB 1: TẤT CẢ SÁCH ==================== -->
+      <div class="tab-pane fade show active" id="tab-all">
+
+        <h2 class="fw-bold mb-4 border-start border-primary border-5 ps-3">
+          Tất cả sách <small class="text-muted ms-3" id="total-count">(đang tải...)</small>
+        </h2>
+
+        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-6 g-4" id="books-container">
+          <!-- Load bằng JS -->
+        </div>
+
+        <div class="text-center mt-5" id="pagination"></div>
+
+      </div>
+
+      <!-- ==================== TAB 2: THỂ LOẠI ==================== -->
+      <div class="tab-pane fade" id="tab-category">
+
+        <div class="accordion" id="genresAccordion">
+
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" 
+                      data-bs-target="#collapse1" aria-expanded="true">
+                Văn học Việt Nam
+              </button>
+            </h2>
+            <div id="collapse1" class="accordion-collapse collapse show" data-bs-parent="#genresAccordion">
+              <div class="accordion-body">
+                <div class="row g-4">
+                  <div class="col-md-3 col-sm-6">
+                    <div class="book-card">
+                            <a href="/pages/book.html?id=45f63141-4b06-4622-ab9e-83e10f2c3341&t=1764941838228" class="text-decoration-none">
+                                <div class="book-cover-wrapper position-relative overflow-hidden rounded shadow-sm">
+                                    <img src="/assets/images/Toi-thay-hoa-vang-tren-co-xanh.jpg" alt="TTHVTCX" class="book-cover w-100" style="height: 400px; object-fit: cover;">
+                                </div>
+                                <div class="book-info mt-3 text-center">
+                                    <h6 class="book-title text-dark mb-1 line-clamp-2 fw-bold">Tôi Thấy Hoa Vàng Trên Cỏ xanh</h6>
+                                    <p class="book-author text-muted small mb-2">Nguyễn Nhật Ánh</p>
+                                    <small class="text-secondary"><i class="fas fa-eye me-1"></i> 20</small>
+                                </div>
+                            </a>
+                      </div>
+                    </div>
+                    <!-- Sách 2 -->
+                    <div class="col-md-3 col-sm-6">
+                        <div class="book-card">
+                            <a href="/pages/book.html?id=59d485dc-3d56-41e0-8654-6d2f79d15709&t=1764851209035" class="text-decoration-none">
+                                <div class="book-cover-wrapper position-relative overflow-hidden rounded shadow-sm">
+                                    <img src="/assets/images/de_men.jpg" alt="De men" class="book-cover w-100" style="height: 400px; object-fit: cover;">
+                                </div>
+                                <div class="book-info mt-3 text-center">
+                                    <h6 class="book-title text-dark mb-1 line-clamp-2 fw-bold">Dế Mèn Phiêu Lưu Ký</h6>
+                                    <p class="book-author text-muted small mb-2">Tô Hoài</p>
+                                    <small class="text-secondary"><i class="fas fa-eye me-1"></i> 14</small>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Sách 3 -->
+                      <div class="col-md-3 col-sm-6">
+                        <div class="book-card">
+                            <a href="/pages/book.html?id=59d485dc-3d56-41e0-8654-6d2f79d15709&t=1764851209035" class="text-decoration-none">
+                                <div class="book-cover-wrapper position-relative overflow-hidden rounded shadow-sm">
+                                    <img src="/assets/images/nhat_ky_trong_tu.jpg" alt="NKTT" class="book-cover w-100" style="height: 400px; object-fit: cover;">
+                                </div>
+                                <div class="book-info mt-3 text-center">
+                                    <h6 class="book-title text-dark mb-1 line-clamp-2 fw-bold">Nhật Ký Trong Tù</h6>
+                                    <p class="book-author text-muted small mb-2">Hồ Chí Minh</p>
+                                    <small class="text-secondary"><i class="fas fa-eye me-1"></i> 29</small>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- VĂN HÓA TÔN GIÁO -->
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" 
+                      data-bs-target="#collapse2" aria-expanded="true">
+                Văn Hóa - Tôn Giáo
+              </button>
+            </h2>
+            <div id="collapse2" class="accordion-collapse collapse show" data-bs-parent="#genresAccordion">
+              <div class="accordion-body">
+                <div class="row g-4">
+                  <div class="col-md-3 col-sm-6">
+                    <div class="book-card">
+                                <div class="book-cover-wrapper position-relative overflow-hidden rounded shadow-sm">
+                                    <img src="/assets/images/Ton-giao-hoc.jpg" alt="Bìa Sách" class="book-cover w-100" style="height: 400px; object-fit: cover;">
+                                </div>
+                                <div class="book-info mt-3 text-center">
+                                    <h6 class="book-title text-dark mb-1 line-clamp-2 fw-bold">Tôn Giáo Học</h6>
+                                    <p class="book-author text-muted small mb-2">Peter Connolly</p>
+                                    <small class="text-secondary"><i class="fas fa-eye me-1"></i> 4</small>
+                                </div>
+                            </a>
+                      </div>
+                    </div>
+                    <!-- Sách 2 -->
+                    <div class="col-md-3 col-sm-6">
+                        <div class="book-card">
+                                <div class="book-cover-wrapper position-relative overflow-hidden rounded shadow-sm">
+                                    <img src="/assets/images/the.jpg" alt="De men" class="book-cover w-100" style="height: 400px; object-fit: cover;">
+                                </div>
+                                <div class="book-info mt-3 text-center">
+                                    <h6 class="book-title text-dark mb-1 line-clamp-2 fw-bold">The Golden Bough</h6>
+                                    <p class="book-author text-muted small mb-2">J.D.Frazer</p>
+                                    <small class="text-secondary"><i class="fas fa-eye me-1"></i> 2</small>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Sách 3 -->
+                      <div class="col-md-3 col-sm-6">
+                        <div class="book-card">
+                                <div class="book-cover-wrapper position-relative overflow-hidden rounded shadow-sm">
+                                    <img src="/assets/images/Doi-thoai-voi-thuong-de.jpg" alt="NKTT" class="book-cover w-100" style="height: 400px; object-fit: cover;">
+                                </div>
+                                <div class="book-info mt-3 text-center">
+                                    <h6 class="book-title text-dark mb-1 line-clamp-2 fw-bold">Đối Thoại Với Thượng Đế</h6>
+                                    <p class="book-author text-muted small mb-2">Neale Donal Walsh</p>
+                                    <small class="text-secondary"><i class="fas fa-eye me-1"></i> 17</small>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--  KHÁM PHÁ -->
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" 
+                      data-bs-target="#collapse3" aria-expanded="true">
+                Khám Phá
+              </button>
+            </h2>
+            <div id="collapse3" class="accordion-collapse collapse show" data-bs-parent="#genresAccordion">
+              <div class="accordion-body">
+                <div class="row g-4">
+                  <div class="col-md-3 col-sm-6">
+                    <div class="book-card">
+                                <div class="book-cover-wrapper position-relative overflow-hidden rounded shadow-sm">
+                                    <img src="/assets/images/the-lost-city.jpg" alt="Bìa Sách" class="book-cover w-100" style="height: 400px; object-fit: cover;">
+                                </div>
+                                <div class="book-info mt-3 text-center">
+                                    <h6 class="book-title text-dark mb-1 line-clamp-2 fw-bold">The Lost City</h6>
+                                    <p class="book-author text-muted small mb-2">David Grann</p>
+                                    <small class="text-secondary"><i class="fas fa-eye me-1"></i> 9</small>
+                                </div>
+                            </a>
+                      </div>
+                    </div>
+                    <!-- Sách 2 -->
+                    <div class="col-md-3 col-sm-6">
+                        <div class="book-card">
+                                <div class="book-cover-wrapper position-relative overflow-hidden rounded shadow-sm">
+                                    <img src="/assets/images/islend.jpg" alt="De men" class="book-cover w-100" style="height: 400px; object-fit: cover;">
+                                </div>
+                                <div class="book-info mt-3 text-center">
+                                    <h6 class="book-title text-dark mb-1 line-clamp-2 fw-bold">Islend Of The Lost</h6>
+                                    <p class="book-author text-muted small mb-2">Joan Druett</p>
+                                    <small class="text-secondary"><i class="fas fa-eye me-1"></i> 13</small>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Sách 3 -->
+                      <div class="col-md-3 col-sm-6">
+                        <div class="book-card">
+                                <div class="book-cover-wrapper position-relative overflow-hidden rounded shadow-sm">
+                                    <img src="/assets/images/the-travle.jpg" alt="Bìa Sách" class="book-cover w-100" style="height: 400px; object-fit: cover;">
+                                </div>
+                                <div class="book-info mt-3 text-center">
+                                    <h6 class="book-title text-dark mb-1 line-clamp-2 fw-bold">The Travle Of Marco Polo</h6>
+                                    <p class="book-author text-muted small mb-2">Marco Polo</p>
+                                    <small class="text-secondary"><i class="fas fa-eye me-1"></i> 6</small>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Lịch sử chính trị -->
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" 
+                      data-bs-target="#collapse4" aria-expanded="true">
+                Lịch sử - Chính trị
+              </button>
+            </h2>
+            <div id="collapse4" class="accordion-collapse collapse show" data-bs-parent="#genresAccordion">
+              <div class="accordion-body">
+                <div class="row g-4">
+                  <div class="col-md-3 col-sm-6">
+                    <div class="book-card">
+                                <div class="book-cover-wrapper position-relative overflow-hidden rounded shadow-sm">
+                                    <img src="/assets/images/thoat-khoi.jpg" alt="Bìa Sách" class="book-cover w-100" style="height: 400px; object-fit: cover;">
+                                </div>
+                                <div class="book-info mt-3 text-center">
+                                    <h6 class="book-title text-dark mb-1 line-clamp-2 fw-bold">Thoát Khỏi Địa Ngục Khmer Đỏ</h6>
+                                    <p class="book-author text-muted small mb-2">Denise Affonco</p>
+                                    <small class="text-secondary"><i class="fas fa-eye me-1"></i> 136</small>
+                                </div>
+                            </a>
+                      </div>
+                    </div>
+                    <!-- Sách 2 -->
+                    <div class="col-md-3 col-sm-6">
+                        <div class="book-card">
+                                <div class="book-cover-wrapper position-relative overflow-hidden rounded shadow-sm">
+                                    <img src="/assets/images/nambo.jpg" alt="De men" class="book-cover w-100" style="height: 400px; object-fit: cover;">
+                                </div>
+                                <div class="book-info mt-3 text-center">
+                                    <h6 class="book-title text-dark mb-1 line-clamp-2 fw-bold">Nam Bộ Là Thành Đồng Của Tổ Quốc</h6>
+                                    <p class="book-author text-muted small mb-2">Hồ Chí Minh</p>
+                                    <small class="text-secondary"><i class="fas fa-eye me-1"></i>125</small>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Sách 3 -->
+                      <div class="col-md-3 col-sm-6">
+                        <div class="book-card">
+                                <div class="book-cover-wrapper position-relative overflow-hidden rounded shadow-sm">
+                                    <img src="/assets/images/CMT8.jpg" alt="Bìa Sách" class="book-cover w-100" style="height: 400px; object-fit: cover;">
+                                </div>
+                                <div class="book-info mt-3 text-center">
+                                    <h6 class="book-title text-dark mb-1 line-clamp-2 fw-bold">Cách Mạng Tháng 8</h6>
+                                    <p class="book-author text-muted small mb-2">Trường Chinh</p>
+                                    <small class="text-secondary"><i class="fas fa-eye me-1"></i> 170</small>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Y Học Sức Khỏe -->
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" 
+                      data-bs-target="#collapse5" aria-expanded="true">
+                Y Học Sức Khỏe
+              </button>
+            </h2>
+            <div id="collapse5" class="accordion-collapse collapse show" data-bs-parent="#genresAccordion">
+              <div class="accordion-body">
+                <div class="row g-4">
+                  <div class="col-md-3 col-sm-6">
+                    <div class="book-card">
+                                <div class="book-cover-wrapper position-relative overflow-hidden rounded shadow-sm">
+                                    <img src="/assets/images/Tuoi moi lon va van de ve tinh duc.jpg.png" alt="Bìa Sách" class="book-cover w-100" style="height: 400px; object-fit: cover;">
+                                </div>
+                                <div class="book-info mt-3 text-center">
+                                    <h6 class="book-title text-dark mb-1 line-clamp-2 fw-bold">Tuổi Mới Lớn và Vấn Đề Về Tình Dục</h6>
+                                    <p class="book-author text-muted small mb-2">Nhiều Tác Giả</p>
+                                    <small class="text-secondary"><i class="fas fa-eye me-1"></i> 46</small>
+                                </div>
+                            </a>
+                      </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Truyện Cười -->
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" 
+                      data-bs-target="#collapse6" aria-expanded="true">
+                Truyện Cười
+              </button>
+            </h2>
+            <div id="collapse6" class="accordion-collapse collapse show" data-bs-parent="#genresAccordion">
+              <div class="accordion-body">
+                <div class="row g-4">
+                  <div class="col-md-3 col-sm-6">
+                    <div class="book-card">
+                                <div class="book-cover-wrapper position-relative overflow-hidden rounded shadow-sm">
+                                    <img src="/assets/images/truyen-cuoi-dan-gian-viet-nam-pdf-epub-azw3-mobi.jpg" alt="Bìa Sách" class="book-cover w-100" style="height: 400px; object-fit: cover;">
+                                </div>
+                                <div class="book-info mt-3 text-center">
+                                    <h6 class="book-title text-dark mb-1 line-clamp-2 fw-bold">Truyện Cười Dân Gian Việt Nam</h6>
+                                    <p class="book-author text-muted small mb-2">Ngọc Hà</p>
+                                    <small class="text-secondary"><i class="fas fa-eye me-1"></i> 123</small>
+                                </div>
+                            </a>
+                      </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+                    <!-- Tiểu Thuyết -->
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" 
+                      data-bs-target="#collapse7" aria-expanded="true">
+                Tiểu Thuyết
+              </button>
+            </h2>
+            <div id="collapse7" class="accordion-collapse collapse show" data-bs-parent="#genresAccordion">
+              <div class="accordion-body">
+                <div class="row g-4">
+                  <div class="col-md-3 col-sm-6">
+                    <div class="book-card">
+                                <div class="book-cover-wrapper position-relative overflow-hidden rounded shadow-sm">
+                                    <img src="/assets/images/nhasachmienphi-tam-quoc-chi-tap-1-nguy-chi.jpg" alt="Bìa Sách" class="book-cover w-100" style="height: 400px; object-fit: cover;">
+                                </div>
+                                <div class="book-info mt-3 text-center">
+                                    <h6 class="book-title text-dark mb-1 line-clamp-2 fw-bold">Tam Quốc Chí</h6>
+                                    <p class="book-author text-muted small mb-2">Trần Thọ</p>
+                                    <small class="text-secondary"><i class="fas fa-eye me-1"></i> 39</small>
+                                </div>
+                            </a>
+                      </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Thư Viện Pháp Luật -->
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" 
+                      data-bs-target="#collapse8" aria-expanded="true">
+                Thư Viện Pháp Luật
+              </button>
+            </h2>
+            <div id="collapse8" class="accordion-collapse collapse show" data-bs-parent="#genresAccordion">
+              <div class="accordion-body">
+                <div class="row g-4">
+                  <div class="col-md-3 col-sm-6">
+                    <div class="book-card">
+                                <div class="book-cover-wrapper position-relative overflow-hidden rounded shadow-sm">
+                                    <img src="/assets/images/sach-huong-dan-thi-hanh-luat-dat-dai-1.webp" alt="Bìa Sách" class="book-cover w-100" style="height: 400px; object-fit: cover;">
+                                </div>
+                                <div class="book-info mt-3 text-center">
+                                    <h6 class="book-title text-dark mb-1 line-clamp-2 fw-bold">Luật Đất Đai</h6>
+                                    <p class="book-author text-muted small mb-2">Nhà nước</p>
+                                    <small class="text-secondary"><i class="fas fa-eye me-1"></i> 136</small>
+                                </div>
+                            </a>
+                      </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Tài Liệu Học Tập -->
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" 
+                      data-bs-target="#collapse9" aria-expanded="true">
+                Tài Liệu Học Tập
+              </button>
+            </h2>
+            <div id="collapse9" class="accordion-collapse collapse show" data-bs-parent="#genresAccordion">
+              <div class="accordion-body">
+                <div class="row g-4">
+                  <div class="col-md-3 col-sm-6">
+                    <div class="book-card">
+                                <div class="book-cover-wrapper position-relative overflow-hidden rounded shadow-sm">
+                                    <img src="/assets/images/giai_tich.jpg" alt="Bìa Sách" class="book-cover w-100" style="height: 400px; object-fit: cover;">
+                                </div>
+                                <div class="book-info mt-3 text-center">
+                                    <h6 class="book-title text-dark mb-1 line-clamp-2 fw-bold">Giải Tích</h6>
+                                    <p class="book-author text-muted small mb-2">Đại học Bách Khoa hà Nội</p>
+                                    <small class="text-secondary"><i class="fas fa-eye me-1"></i> 49</small>
+                                </div>
+                            </a>
+                      </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Ẩm Thực Nấu Ăn -->
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" 
+                      data-bs-target="#collapse10" aria-expanded="true">
+                Ẩm Thực Nấu Ăn
+              </button>
+            </h2>
+            <div id="collapse10" class="accordion-collapse collapse show" data-bs-parent="#genresAccordion">
+              <div class="accordion-body">
+                <div class="row g-4">
+                  <div class="col-md-3 col-sm-6">
+                    <div class="book-card">
+                                <div class="book-cover-wrapper position-relative overflow-hidden rounded shadow-sm">
+                                    <img src="/assets/images/sach-day-nau-an-chay-30.webp" alt="Bìa Sách" class="book-cover w-100" style="height: 400px; object-fit: cover;">
+                                </div>
+                                <div class="book-info mt-3 text-center">
+                                    <h6 class="book-title text-dark mb-1 line-clamp-2 fw-bold">30 Món Chay Giàu Dinh Dưỡng</h6>
+                                    <p class="book-author text-muted small mb-2">Lý Ngân Hoán</p>
+                                    <small class="text-secondary"><i class="fas fa-eye me-1"></i> 56</small>
+                                </div>
+                            </a>
+                      </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Nghiên Cứu Khoa Học -->
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" 
+                      data-bs-target="#collapse11" aria-expanded="true">
+                Nghiên Cứu Khoa Học
+              </button>
+            </h2>
+            <div id="collapse11" class="accordion-collapse collapse show" data-bs-parent="#genresAccordion">
+              <div class="accordion-body">
+                <div class="row g-4">
+                  <div class="col-md-3 col-sm-6">
+                    <div class="book-card">
+                                <div class="book-cover-wrapper position-relative overflow-hidden rounded shadow-sm">
+                                    <img src="/assets/images/360_F_231318415_WnsRP30OyQTRwAx5r2EsUIpdIFdgmHQ8.jpg" alt="Bìa Sách" class="book-cover w-100" style="height: 400px; object-fit: cover;">
+                                </div>
+                                <div class="book-info mt-3 text-center">
+                                    <h6 class="book-title text-dark mb-1 line-clamp-2 fw-bold">NKCH Về An Toàn Giao Thông</h6>
+                                    <p class="book-author text-muted small mb-2">Đình Giang</p>
+                                    <small class="text-secondary"><i class="fas fa-eye me-1"></i> 500</small>
+                                </div>
+                            </a>
+                      </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- ==================== TAB 3: SÁCH MỚI CẬP NHẬT ==================== -->
+      <div class="tab-pane fade" id="tab-new">
+        <div class="row g-4">
+          <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+            <div class="book-card position-relative">
+              <span class="badge bg-danger position-absolute top-0 start-0 m-2 z-3">MỚI</span>
+              <a href="#" class="text-decoration-none">
+                <img src="/assets/images/nguoi.webp" class="rounded shadow-sm w-100" style="height:280px;object-fit:cover;" alt="">
+                <div class="mt-3 text-center"><h6 class="fw-bold">Người Họ Tư Đều Phải Chết</h6><p class="small text-muted">Albert Tam</p></div>
+              </a>
+            </div>
+          </div>
+          <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+            <div class="book-card position-relative">
+              <span class="badge bg-danger position-absolute top-0 start-0 m-2 z-3">MỚI</span>
+              <a href="#" class="text-decoration-none">
+                <img src="/assets/images/hat-tu-than.webp" class="rounded shadow-sm w-100" style="height:280px;object-fit:cover;" alt="">
+                <div class="mt-3 text-center"><h6 class="fw-bold">Hạt Tử Thần</h6><p class="small text-muted">FranCk Thilliez</p></div>
+              </a>
+            </div>
+          </div>
+          <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+            <div class="book-card position-relative">
+              <span class="badge bg-danger position-absolute top-0 start-0 m-2 z-3">MỚI</span>
+              <a href="#" class="text-decoration-none">
+                <img src="/assets/images/thu-ban-tim.webp" class="rounded shadow-sm w-100" style="height:280px;object-fit:cover;" alt="">
+                <div class="mt-3 text-center"><h6 class="fw-bold">Thứ Bạn Tìm Đều Nằm Trong Thư Viện</h6><p class="small text-muted">Aoyama Michico</p></div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ==================== TAB 4: RECOMMENDED ==================== -->
+      <div class="tab-pane fade" id="tab-recommend">
+        <!-- Giữ nguyên code -->
+        <div class="row g-4">
+          <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+            <div class="book-card position-relative">
+              <span class="badge bg-success position-absolute top-0 end-0 m-2 z-3">NÊN ĐỌC</span>
+              <a href="#" class="text-decoration-none">
+                <img src="/assets/images/khoi-dau-cua-chung-ta.webp" class="rounded shadow-sm w-100" style="height:280px;object-fit:cover;" alt="">
+                <div class="mt-3 text-center"><h6 class="fw-bold">Khởi Đầu Của Chúng Ta</h6><p class="small text-muted">Colleen Hover</p>★★★★★</div>
+              </a>
+            </div>
+          </div>
+          <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+            <div class="book-card position-relative">
+              <span class="badge bg-success position-absolute top-0 end-0 m-2 z-3">NÊN ĐỌC</span>
+              <a href="#" class="text-decoration-none">
+                <img src="/assets/images/thanh-xuan-sao-ma-dau-don-01-e1715227086128.webp" class="rounded shadow-sm w-100" style="height:280px;object-fit:cover;" alt="">
+                <div class="mt-3 text-center"><h6 class="fw-bold">Thanh Xuân Sao Mà Đau Đớn</h6><p class="small text-muted">Rando Kim</p>★★★★★</div>
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ==================== TAB 5: SÁCH LẺ CỘNG ĐỒNG ==================== -->
+      <div class="tab-pane fade" id="tab-community">
+        <!-- Giữ nguyên -->
+        <div class="row g-4">
+          <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+            <div class="book-card">
+              <a href="#" class="text-decoration-none">
+                <img src="/assets/images/360_F_231318415_WnsRP30OyQTRwAx5r2EsUIpdIFdgmHQ8.jpg" class="rounded shadow-sm w-100" style="height:280px;object-fit:cover;" alt="">
+                <div class="mt-3 text-center">
+                  <h6 class="fw-bold">Tiểu luận Triết học Mác-Lênin</h6>
+                  <p class="small text-muted">Sinh viên ĐH Bách Khoa</p>
+                  <small class="text-info"><i class="fas fa-user"></i> Cộng đồng</small>
+                </div>
+              </a>
+            </div>
+          </div>
+          <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+            <div class="book-card">
+              <a href="#" class="text-decoration-none">
+                <img src="/assets/images/360_F_231318415_WnsRP30OyQTRwAx5r2EsUIpdIFdgmHQ8.jpg" class="rounded shadow-sm w-100" style="height:280px;object-fit:cover;" alt="">
+                <div class="mt-3 text-center">
+                  <h6 class="fw-bold">Tổng Tài Đức Đạt Bá Đạo Và Cô Thư Ký</h6>
+                  <p class="small text-muted">Đình Giang</p>
+                  <small class="text-info"><i class="fas fa-user"></i> Cộng đồng</small>
+                </div>
+              </a>
+            </div>
+          </div>
+          <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+            <div class="book-card">
+              <a href="#" class="text-decoration-none">
+                <img src="/assets/images/360_F_231318415_WnsRP30OyQTRwAx5r2EsUIpdIFdgmHQ8.jpg" class="rounded shadow-sm w-100" style="height:280px;object-fit:cover;" alt="">
+                <div class="mt-3 text-center">
+                  <h6 class="fw-bold">Đức Đạt Xuyên Không Về Quá Khứ Trả Thù Chồng</h6>
+                  <p class="small text-muted">Đình Giang</p>
+                  <small class="text-info"><i class="fas fa-user"></i> Cộng đồng</small>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== TAB 6: SẮP PHÁT HÀNH ==================== -->
+      <div class="tab-pane fade" id="tab-upcoming">
+        <!-- Giữ nguyên -->
+        <div class="row g-4">
+          <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+            <div class="book-card position-relative">
+              <span class="badge bg-warning position-absolute top-0 start-0 m-2 z-3">SẮP RA MẮT</span>
+              <a href="#" class="text-decoration-none">
+                <div class="position-relative">
+                  <img src="/assets/images/tay-nguoi-lanh-gia-01.webp" class="rounded shadow-sm w-sm w-100" style="height:280px;object-fit:cover;opacity:0.7;">
+                  <div class="position-absolute top-50 start-50 translate-middle text-white fw-bold fs-4">2026</div>
+                </div>
+                <div class="mt-3 text-center">
+                  <h6 class="fw-bold">Tay Người Lạnh Giá</h6>
+                  <p class="small text-muted">Dự kiến 03/2026</p>
+                </div>
+              </a>
+            </div>
+          </div>
+          <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+            <div class="book-card position-relative">
+              <span class="badge bg-warning position-absolute top-0 start-0 m-2 z-3">SẮP RA MẮT</span>
+              <a href="#" class="text-decoration-none">
+                <div class="position-relative">
+                  <img src="/assets/images/bien-so-tinh-yeu-03.webp" class="rounded shadow-sm w-sm w-100" style="height:280px;object-fit:cover;opacity:0.7;">
+                  <div class="position-absolute top-50 start-50 translate-middle text-white fw-bold fs-4">2026</div>
+                </div>
+                <div class="mt-3 text-center">
+                  <h6 class="fw-bold">Biến Số Tình Yêu - Tập 3</h6>
+                  <p class="small text-muted">Dự kiến 05/2026</p>
+                </div>
+              </a>
+            </div>
+          </div>
+          <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+            <div class="book-card position-relative">
+              <span class="badge bg-warning position-absolute top-0 start-0 m-2 z-3">SẮP RA MẮT</span>
+              <a href="#" class="text-decoration-none">
+                <div class="position-relative">
+                  <img src="/assets/images/doc-duong-1-2cm-01.webp" class="rounded shadow-sm w-sm w-100" style="height:280px;object-fit:cover;opacity:0.7;">
+                  <div class="position-absolute top-50 start-50 translate-middle text-white fw-bold fs-4">Dọc Đường</div>
+                </div>
+                <div class="mt-3 text-center">
+                  <h6 class="fw-bold"></h6>
+                  <p class="small text-muted">Dự kiến 04/2026</p>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div> <!-- hết tab-content -->
+
   </div>
 
+  <!-- JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="/js/app-ui.js" defer></script>
-  <script type="module" src="../js/all-books.js"></script> <!-- ĐÚNG ĐƯỜNG DẪN -->
+  <script type="module" src="../js/all-books.js"></script>
+
 </body>
 </html>

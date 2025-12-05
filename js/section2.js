@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         },
         {
-            cover: '/assets/images/sach_2_placeholder.jpg',
+            cover: '/assets/images/bup_sen_xanh.webp',
             details: {
                 vi: {
                     title: "Búp Sen Xanh",

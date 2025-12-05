@@ -76,6 +76,17 @@ async function loadBooks(page = 1) {
       </div>`;
   }
 }
+document.addEventListener("DOMContentLoaded", function () {
+    const params = new URLSearchParams(window.location.search);
+    const tab = params.get("tab");
+
+    if (tab === "category") {
+        // mở tab Thể Loại
+        const trigger = document.querySelector('#tab-category-tab');
+        bootstrap.Tab.getOrCreateInstance(trigger).show();
+    }
+});
+
 
 // Global function để onclick hoạt động
 window.loadBooks = loadBooks;

@@ -29,7 +29,7 @@ const createBookCard = (book, section = '') => {
         <a href="/pages/book.html?id=${id}&t=${Date.now()}" class="text-decoration-none">
             <div class="book-cover-wrapper position-relative overflow-hidden rounded shadow-sm">
                 <img src="${cover}" alt="${title}" class="book-cover w-100" loading="lazy" style="height: 280px; object-fit: cover;">
-                ${badgeHTML}   <!-- ĐÚNG CHỖ NÀY QUYẾT ĐỊNH HIỆN HAY KHÔNG -->
+                ${badgeHTML}   
             </div>
             <div class="book-info mt-3 text-center">
                 <h6 class="book-title text-dark mb-1 line-clamp-2 fw-bold">${title}</h6>
@@ -53,7 +53,7 @@ export const loadSection3 = async () => {
         .from('documents')
         .select('document_id, title, author_name, thumbnail_url, view_count')
         .order('view_count', { ascending: false })
-        .limit(6); // CHỈ LẤY 6 CUỐN THÔI
+        .limit(6); // CHỈ LẤY 6 CUỐN
 
     container.innerHTML = data.map(createBookCard).join('');
     
@@ -75,7 +75,7 @@ export const loadSection2 = async () => {
         .order('created_at', { ascending: false })
         .limit(12); // lấy 12 cuốn mới nhất
 
-    // Dùng lại đúng HTML đẹp lung linh như cũ của bạn
+   
     container.innerHTML = data.map(book => `
         <div class="book-card">
             <a href="/pages/book.html?id=${book.document_id}&t=${Date.now()}" class="text-decoration-none">
@@ -104,6 +104,6 @@ export const loadSection4 = async () => {
     container.innerHTML = `<div class="text-center py-5"><div class="spinner-border"></div></div>`;
     const { data } = await supabase.from('documents')
         .select('document_id, title, author_name, thumbnail_url, view_count')
-        .limit(15);
+        .limit(4);
     container.innerHTML = data.map(createBookCard).join('');
 };
