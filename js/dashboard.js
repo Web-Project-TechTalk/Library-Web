@@ -372,3 +372,55 @@ window.toggleDocumentFavorite = async function(documentId, buttonElement) {
         }
     }
 }
+// --- THÊM VÀO CUỐI FILE dashboard.js ---
+
+/**
+ * 1. Lưu lịch sử đọc (Sử dụng upsert để: thêm mới hoặc cập nhật giờ đọc nếu đã tồn tại)
+ */
+export async function addToReadingHistory(documentId) {
+    // 1. Cố gắng lấy user từ biến global
+    let user = getCurrentUser();
+
+    // 2. Nếu biến global chưa có, thử lấy trực tiếp từ Supabase Auth (dự phòng)
+    if (!user) {
+        const { data } = await supabase.auth.getUser();
+        user = data.user;
+    }
+
+    // 3. Nếu vẫn không có user -> Chưa đăng nhập -> Thoát
+    if (!user) {
+        console.log('User chưa đăng nhập, bỏ qua lưu lịch sử.');
+        return; 
+    }
+
+    console.log(`Đang lưu lịch sử cho sách: ${documentId} - User: ${user.id}`);
+
+    const { error } = await supabase
+        .from('reading_history')
+        .upsert({ 
+            user_id: user.id, 
+            document_id: documentId,
+            last_read_at: new Date().toISOString()
+        }, { onConflict: 'user_id, document_id' });
+
+    if (error) {
+        console.error('Lỗi lưu lịch sử (Supabase):', error);
+    } else {
+        console.log('Lưu lịch sử thành công.');
+    }
+}
+
+/**
+ * 2. Lấy danh sách lịch sử (Gọi hàm RPC vừa tạo ở Bước 1)
+ */
+export async function fetchReadingHistoryList(limit = 20) {
+    const { data, error } = await supabase.rpc('get_reading_history', {
+        limit_count: limit
+    });
+
+    if (error) {
+        console.error('Lỗi tải lịch sử:', error);
+        return [];
+    }
+    return data;
+}

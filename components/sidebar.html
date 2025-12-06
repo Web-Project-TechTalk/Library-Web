@@ -26,7 +26,14 @@
                     <i class="fas fa-book-reader"></i> Follow
                 </a>
                 <ul class="collapse list-unstyled" id="followSubmenu">
-                    <li><a href="#" id="sidebar-reading-history" data-lang-key="readingHistory">Reading history</a></li>
+                    <li>
+                        <a href="#sidebarHistoryList" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle" id="btn-load-sidebar-history">
+                            <i class="fas fa-history"></i> <span data-lang-key="readingHistory">Reading history</span>
+                        </a>
+                        <ul class="collapse list-unstyled ps-3" id="sidebarHistoryList">
+                            <li class="text-white-50 small fst-italic py-2 ms-2">Loading...</li>
+                        </ul>
+                    </li>
                 </ul>
             </li>
             <li>

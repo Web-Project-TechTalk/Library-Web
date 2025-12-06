@@ -6,13 +6,14 @@ import {
     incrementDownloadCount,
     toggleFavorite,
     checkFavoriteStatus,
-    getSession // Import hàm lấy session
+    getSession, 
+    addToReadingHistory 
 } from './dashboard.js';
 
 const bookId = new URLSearchParams(window.location.search).get('id');
 
 document.addEventListener('DOMContentLoaded', async () => {
-    // Gọi getSession() ngay khi vào trang để xác định người dùng
+    // 1. Lấy session ngay khi vào trang
     await getSession();
 
     if (!bookId) {
@@ -20,7 +21,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
     
-    // Sau khi đã có session, mới tải chi tiết sách
+    // 2. Tải chi tiết sách
     loadBookDetails(bookId);
 });
 
@@ -33,9 +34,8 @@ async function loadBookDetails(id) {
     const favoriteButton = document.getElementById('btn-favorite'); 
     
     try {
-        // Kiểm tra trạng thái Yêu thích
+        // --- XỬ LÝ NÚT YÊU THÍCH ---
         if (favoriteButton) {
-            // Lúc này getSession đã chạy xong, checkFavoriteStatus sẽ hoạt động đúng
             const isFav = await checkFavoriteStatus(id);
             updateFavoriteButtonUI(favoriteButton, isFav);
 
@@ -43,7 +43,7 @@ async function loadBookDetails(id) {
                 const btnIcon = favoriteButton.querySelector('i');
                 const originalClass = btnIcon.className;
                 
-                // Hiệu ứng loading nhỏ
+                // Hiệu ứng loading
                 btnIcon.className = 'fas fa-spinner fa-spin';
                 favoriteButton.disabled = true;
                 
@@ -55,13 +55,12 @@ async function loadBookDetails(id) {
                     const isAdded = (result.action === 'added');
                     updateFavoriteButtonUI(favoriteButton, isAdded);
                 } else {
-                    // Nếu lỗi (ví dụ chưa đăng nhập thật), trả lại icon cũ
                     btnIcon.className = originalClass;
                 }
             };
         }
 
-        // Tải thông tin sách từ Supabase
+        // --- TẢI DỮ LIỆU TỪ SUPABASE ---
         const { data: book, error } = await supabase
             .from('documents')
             .select(`
@@ -74,15 +73,19 @@ async function loadBookDetails(id) {
         if (error) throw error;
         if (!book) throw new Error('Không tìm thấy sách');
 
+        // Lưu lịch sử ngay khi tải trang thành công (Tùy chọn)
+        addToReadingHistory(id);        
+        
         document.title = `${book.title} - Thư Viện Số`;
         
+        // Hiển thị mô tả
         if (book.description) {
             descriptionEl.innerHTML = book.description.replace(/\n/g, '<br>');
         } else {
             descriptionEl.textContent = "Không có mô tả.";
         }
 
-        // Hero Section
+        // --- RENDER HERO SECTION ---
         const coverUrl = book.thumbnail_url || '/assets/images/default.jpg';
         
         const heroHtml = `
@@ -110,21 +113,33 @@ async function loadBookDetails(id) {
         `;
         heroWrapper.innerHTML = heroHtml;
         
-        // Xử lý file đính kèm
+        // --- XỬ LÝ FILE ĐÍNH KÈM & BUTTON ---
         if (book.attachments && book.attachments.length > 0) {
             const attachment = book.attachments[0];
+            
+            // Lấy Public URL
             const { data: urlData } = supabase.storage
-                .from('sach-files')
+                .from('sach-files') // Đảm bảo bucket này đúng tên trong Storage của bạn
                 .getPublicUrl(attachment.file_path);
             const publicUrl = urlData.publicUrl;
 
-            readButton.onclick = () => {
+            // NÚT ĐỌC
+            readButton.disabled = false;
+            readButton.onclick = async () => {
+                console.log('Bắt đầu đọc sách...');
+                // 1. Tăng view
                 incrementViewCount(book.document_id);
+                // 2. Lưu lịch sử (quan trọng)
+                await addToReadingHistory(book.document_id);
+                // 3. Mở file
                 window.open(publicUrl, '_blank');
             };
             
-            downloadButton.onclick = () => {
-                incrementDownloadCount(book.document_id);
+            // NÚT TẢI
+            downloadButton.disabled = false;
+            downloadButton.onclick = async () => {
+                await incrementDownloadCount(book.document_id);
+                
                 const a = document.createElement('a');
                 a.href = publicUrl;
                 a.download = attachment.file_name;
@@ -132,7 +147,9 @@ async function loadBookDetails(id) {
                 a.click();
                 document.body.removeChild(a);
             };
+
         } else {
+            // Nếu không có file
             readButton.disabled = true;
             readButton.innerHTML = '<i class="fas fa-ban me-2"></i> Chưa có file';
             downloadButton.disabled = true;
