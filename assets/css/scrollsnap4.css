@@ -65,19 +65,22 @@
 }
 
 /* Light / Dark theme */
-#section4.light-theme {
-    --bg-color: #fff;
-    --text-color: #222;
-    --border-color: #ccc;
-    background-color: var(--bg-color);
-    color: var(--text-color);
+body.light-theme #section4,
+body.light-theme #section4 * {
+    --bg-color: #fff !important;
+    --text-color: #222 !important;
+    --border-color: #ccc !important;
+    background-color: var(--bg-color) !important;
+    color: var(--text-color) !important;
 }
-#section4.dark-theme {
-    --bg-color: #1e1e1e;
-    --text-color: #eee;
-    --border-color: #555;
-    background-color: var(--bg-color);
-    color: var(--text-color);
+
+body.dark-theme #section4,
+body.dark-theme #section4 * {
+    --bg-color: #1e1e1e !important;
+    --text-color: #eee !important;
+    --border-color: #555 !important;
+    background-color: var(--bg-color) !important;
+    color: var(--text-color) !important;
 }
 
 /* Mobile responsive */

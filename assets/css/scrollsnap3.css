@@ -53,20 +53,23 @@
 }
 
 /* Light / Dark theme */
-#section3.light-theme {
-    --bg-color: #fff;
-    --text-color: #222;
-    --border-color: #ccc;
-    background-color: var(--bg-color);
-    color: var(--text-color);
+/* FIX NGƯỢC MÀU – THEO BODY */
+body.light-theme #section3,
+body.light-theme #section3 * {
+    --bg-color: #fff !important;
+    --text-color: #222 !important;
+    --border-color: #ccc !important;
+    background-color: var(--bg-color) !important;
+    color: var(--text-color) !important;
 }
 
-#section3.dark-theme {
-    --bg-color: #1e1e1e;
-    --text-color: #eee;
-    --border-color: #555;
-    background-color: var(--bg-color);
-    color: var(--text-color);
+body.dark-theme #section3,
+body.dark-theme #section3 * {
+    --bg-color: #1e1e1e !important;
+    --text-color: #eee !important;
+    --border-color: #555 !important;
+    background-color: var(--bg-color) !important;
+    color: var(--text-color) !important;
 }
 
 /* Book cards remain visible in dark mode */

@@ -19,7 +19,7 @@
   padding: 0.8rem !important;   /* Thu gọn padding */
 }
 .book-card .card-title {
-  font-size: 0.92rem !important;   /* Chữ tiêu đề nhỏ hơn tí */
+  font-size: 0.92rem !important;   
   line-height: 1.3;
   margin-bottom: 0.4rem !important;
 }
@@ -42,3 +42,53 @@
   font-size: 0.9rem;
   padding: 0.35rem 0.7rem;
 }
+/* DARK THEME FIX FOR ACCORDION */
+.dark-theme .accordion-item {
+  background-color: #222 !important;
+  color: #eee !important;
+  border-color: #444;
+}
+
+.dark-theme .accordion-button {
+  background-color: #222 !important;
+  color: #fff !important;
+}
+
+.dark-theme .accordion-button:not(.collapsed) {
+  background-color: #333 !important;
+  color: #fff !important;
+  box-shadow: none;
+}
+
+.dark-theme .accordion-body {
+  background-color: #1c1c1c !important;
+  color: #e9e9e9 !important;
+}
+
+.main-content {
+    margin-left: 200px !important;   
+    padding: 0 30px;
+}
+/* DARK MODE: CHỈ ĐỔI NỀN – KHÔNG ĐỔI MÀU CHỮ TÊN SÁCH & TÁC GIẢ */
+.dark-theme .book-card {
+    background-color: #d9d6d6 !important;
+    border: 1px solid #444 !important;
+}
+
+/* BẮT BUỘC GIỮ NGUYÊN MÀU CHỮ NHƯ LIGHT MODE */
+.dark-theme .book-card .card-title,
+.dark-theme .book-card .card-title a {
+    color: #2e2e2e !important;           /* đen như ban ngày */
+    font-weight: 600;
+}
+
+.dark-theme .book-card .text-muted,
+.dark-theme .book-card small.text-muted {
+    color: #6c757d !important;           /* xám như ban ngày */
+}
+
+.dark-theme .book-card .text-secondary,
+.dark-theme .book-card small.text-secondary {
+    color: #6c757d !important;
+}
+
