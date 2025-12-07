@@ -47,8 +47,8 @@ const translations = {
         recentAdd: 'Mới thêm gần đây',
         random: 'Ngẫu nhiên',
         lib: 'Thư viện',
-        guidelines: 'Quy tắc & Hướng dẫn',
-        announcement: 'Thông báo',
+        rules: 'Quy tắc',
+        instructions: 'Hướng dẫn',
         aboutUs: 'Về chúng tôi',
         contact: 'Liên hệ',
         advertise: 'Quảng cáo',
@@ -159,7 +159,7 @@ const translations = {
         // === recently-added.html ===
         recentlyAddedTitle: 'Sách mới thêm',
         latestBooksTitle: 'Danh sách Sách mới',
-        
+
         // --- CÁC KHÓA MỚI CHO TRANG RANDOM.HTML ---
         randomTitle: 'Sách Ngẫu nhiên',
         selectQtyLabel: 'Chọn số lượng sách',
@@ -174,7 +174,69 @@ const translations = {
         randomInitialHint: 'Chọn số lượng sách và nhấn **"Tìm sách Ngẫu nhiên"** để bắt đầu khám phá!',
         randomSearching: 'Đang tải sách ngẫu nhiên...',
         randomFetchBtnText: 'Tìm sách Ngẫu nhiên',
-        randomNoResults: 'Không tìm thấy sách ngẫu nhiên nào. Hãy thử lại!'
+        randomNoResults: 'Không tìm thấy sách ngẫu nhiên nào. Hãy thử lại!',
+
+        // --- instructions.html ---
+        faqTitle: 'Hướng Dẫn Sử Dụng & Câu Hỏi Thường Gặp (FAQ)',
+        faqSubtitle: 'Tìm kiếm câu trả lời cho các thắc mắc của bạn về hệ thống thư viện số.',
+
+        // MỤC 1: Đăng ký tài khoản
+        faq1Title: '🔍 1. Làm thế nào để đăng ký tài khoản của hệ thống thư viện số lib?',
+        faq1StepsTitle: 'Các bước đăng ký cơ bản:',
+        faq1Step1: 'Nhấp vào nút đăng ký/đăng ký ở góc trên cùng bên phải ở giao diện chính của hệ thống, cạnh bộ chuyển đổi ngôn ngữ.',
+        faq1Step2: 'Ở giao diện libkey sau khi đã nhấp vào nút đăng nhập/đăng ký. Nhấp vào mục đăng ký ở ngay phía dưới phía bên phải dòng libkey.',
+        faq1Step3: 'Điền thông tin vào tất các mục ở phần đăng ký rồi nhấp vào nút Tạo tài khoản phía dưới.',
+        faq1Step4: 'Hệ thống thư viện lib sẽ gửi qua cho bạn 1 email để xác thực và khởi động tài khoản. Sau khi xác thực xong, đăng nhập lại 1 lần nữa để có thể đọc sách tại hệ thống thư viện số lib.',
+
+        // MỤC 2: Sách Mới Thêm
+        faq2Title: '📕 2. Làm sao tôi biết được sách nào mới được thêm vào?',
+        faq2StepsTitle: 'Các bước xem sách mới nhất:',
+        faq2Step1: 'Truy cập vào trang cá nhân của bạn.',
+        faq2Step2: 'Chọn mục "Sách Mới Thêm" (Recently Added) ở sidebar bên trái. Tại đó, hệ thống sẽ tự động hiển thị danh sách sách được sắp xếp theo thứ tự ngày tải lên mới nhất.',
+
+        // MỤC 3: Chuyển đổi Sáng/Tối
+        faq3Title: '🎨 3. Cách chuyển đổi giữa chế độ Sáng và Tối?',
+        faq3StepsTitle: 'Các bước chuyển đổi giao diện:',
+        faq3Step1: 'Tìm biểu tượng Mặt Trời ☀️ hoặc Mặt Trăng 🌙 trên Top Bar (thanh điều hướng trên cùng) rồi nhấp chuột vào biểu tượng đó.',
+        faq3Step2: 'Giao diện sẽ chuyển đổi ngay lập tức giữa chế độ Sáng (Light) và Tối (Dark).',
+        faq3Step3: 'Hệ thống sẽ tự động lưu lựa chọn này cho các lần truy cập sau.',
+        faq3Step4: 'Trường hợp bạn đang ở trang cá nhân thì bạn có thể tìm thấy nút biểu tượng Mặt Trời ☀️ hoặc Mặt Trăng 🌙 này ở hình đại diện của bạn sau khi nhấp vào.',
+
+        // MỤC 4: Sắp xếp sách
+        faq4Title: '🔀 4. Tôi có thể sắp xếp sách theo những tiêu chí nào?',
+        faq4StepsTitle: 'Các bước thay đổi sắp xếp:',
+        faq4Step1: 'Truy cập trang Tìm kiếm Nâng cao rồi nhấp vào nút hiện bộ lọc ngay dưới thanh tìm kiếm.',
+        faq4Step2: 'Nhấn vào mục "Sắp xếp theo...".',
+        faq4Step3: 'Chọn một trong các tiêu chí sau:',
+        faq4Sort1: 'Ngày thêm (Mới nhất)',
+        faq4Sort2: 'Lượt xem (Nhiều nhất)',
+        faq4Sort3: 'Đánh giá (Cao nhất)',
+        faq4Sort4: 'Tên sách (A-Z)',
+        faq4Step4: 'Hệ thống sẽ tải lại kết quả theo thứ tự mới.',
+
+        // MỤC 5: Lọc theo Năm Phát hành và Đánh giá
+        faq5Title: '🌪️ 5. Lọc theo Năm Phát hành và Đánh giá hoạt động thế nào?',
+        faq5StepsTitleYear: 'Các bước lọc Năm Phát hành:',
+        faq5StepYear1: 'Nhấn "Hiện bộ lọc" trong trang Tìm kiếm Nâng cao.',
+        faq5StepYear2: 'Nhập năm phát hành mong muốn (ví dụ: 2023) vào ô "Năm PH".',
+        faq5StepYear3: 'Kết quả sẽ được lọc theo năm bạn nhập.',
+        faq5StepsTitleRating: 'Các bước lọc Đánh giá:',
+        faq5StepRating1: 'Mở ô chọn "Đánh giá".',
+        faq5StepRating2: 'Chọn mức sao mong muốn (ví dụ: 7 ⭐).',
+        faq5StepRating3: 'Hệ thống sẽ chỉ hiển thị các sách có điểm đánh giá bằng hoặc cao hơn mức bạn chọn.',
+
+        // MỤC 6: Thêm sách mới
+        faq6Title: '🪶 6. Tôi có thể thêm sách mới không?',
+        faq6StepsTitle: 'Các bước đóng góp thêm vào sách mới cho hệ thống thư viện số lib:',
+        faq6Step1: 'Vào trang thông tin cá nhân của bạn và chọn mục tải lên.',
+        faq6Step2: 'Điền tất cả thông tin về sách cũng như tải lên ảnh bìa, file sách của bạn rồi nhấp vào nút Tải lên Tài liệu.',
+        faq6Step3: 'Lưu ý: Nội dung file sách chỉ có thể tải lên hợp lệ với các định dạng PDF, DOC, DOCX, TXT, EPUB, MOBI.',
+        faq6Step4: 'Hệ thống thư viện số lib sẽ xem xét qua đóng góp của bạn và thông báo lại với bạn trong thời gian sớm nhất có thể.',
+
+        // MỤC 7: Yêu cầu Hỗ trợ Chung
+        faq7Title: '❓ 7. Không có bất kỳ trường hợp nào mà bạn gặp phải?',
+        faq7Description: 'Nếu bạn đang gặp phải một vấn đề không được liệt kê ở trên, hoặc cần hỗ trợ kỹ thuật chuyên sâu hơn, vui lòng gửi yêu cầu đến đội ngũ hỗ trợ của chúng tôi.',
+        faq7Button: 'Gửi Yêu cầu Hỗ trợ'
     },
     en: {
         // Topbar & Menu (Từ profile.js)
@@ -198,8 +260,8 @@ const translations = {
         recentAdd: 'Recently Added',
         random: 'Random',
         lib: 'Library',
-        guidelines: 'Guidelines',
-        announcement: 'Announcement',
+        rules: 'Rules',
+        instructions: 'Instructions',
         aboutUs: 'About us',
         contact: 'Contact',
         advertise: 'Advertise',
@@ -310,7 +372,7 @@ const translations = {
         // === recently-added.html ===
         recentlyAddedTitle: 'Recently Added Books',
         latestBooksTitle: 'New Books',
-        
+
         // --- CÁC KHÓA MỚI CHO TRANG RANDOM.HTML ---
         randomTitle: 'Random Books',
         selectQtyLabel: 'Select book quantity',
@@ -325,7 +387,69 @@ const translations = {
         randomInitialHint: 'Select the number of books and click **"Find Random Books"** to start exploring!',
         randomSearching: 'Loading random books...',
         randomFetchBtnText: 'Find Random Books',
-        randomNoResults: 'No random books found. Please try again!'
+        randomNoResults: 'No random books found. Please try again!',
+
+        // --- instructions.html ---
+        faqTitle: 'Instructions & Frequently Asked Questions (FAQ)',
+        faqSubtitle: 'Find answers to your questions about the lib digital library system.',
+
+        // MỤC 1: Đăng ký tài khoản
+        faq1Title: '🔍 1. How to register an account for the lib digital library system?',
+        faq1StepsTitle: 'Basic registration steps:',
+        faq1Step1: 'Click the login/signup button in the upper right corner of the main interface, next to the language switcher.',
+        faq1Step2: 'In the libkey interface after clicking the login/signup button, click the "Register" link below and to the right of the libkey line.',
+        faq1Step3: 'Fill in all fields in the registration form and click the "Create Account" button at the bottom.',
+        faq1Step4: 'The lib library system will send you an email to verify and activate your account. After verification, log in again to be able to read books in the lib digital library system.',
+
+        // MỤC 2: Sách Mới Thêm
+        faq2Title: '📕 2. How do I find out which books have been newly added?',
+        faq2StepsTitle: 'Steps to view the latest books:',
+        faq2Step1: 'Go to your personal profile page.',
+        faq2Step2: 'Select the "Recently Added" section on the left sidebar. There, the system will automatically display a list of books sorted by the most recent upload date.',
+
+        // MỤC 3: Chuyển đổi Sáng/Tối
+        faq3Title: '🎨 3. How to switch between Light and Dark mode?',
+        faq3StepsTitle: 'Steps to switch the interface:',
+        faq3Step1: 'Find the Sun ☀️ or Moon 🌙 icon on the Top Bar (top navigation bar) and click on it.',
+        faq3Step2: 'The interface will switch instantly between Light and Dark mode.',
+        faq3Step3: 'The system will automatically save this choice for subsequent visits.',
+        faq3Step4: 'If you are on your profile page, you can find this Sun ☀️ or Moon 🌙 button next to your profile picture after clicking on it.',
+
+        // MỤC 4: Sắp xếp sách
+        faq4Title: '🔀 4. What criteria can I use to sort books?',
+        faq4StepsTitle: 'Steps to change sorting:',
+        faq4Step1: 'Go to the Advanced Search page and click the "Show filters" button right below the search bar.',
+        faq4Step2: 'Click on the "Sort by..." section.',
+        faq4Step3: 'Select one of the following criteria:',
+        faq4Sort1: 'Date Added (Newest)',
+        faq4Sort2: 'View Count (Most Viewed)',
+        faq4Sort3: 'Rating (Highest)',
+        faq4Sort4: 'Title (A-Z)',
+        faq4Step4: 'The system will reload the results with the new sorting order.',
+
+        // MỤC 5: Lọc theo Năm Phát hành và Đánh giá
+        faq5Title: '🌪️ 5. How do filtering by Release Year and Rating work?',
+        faq5StepsTitleYear: 'Steps for filtering by Release Year:',
+        faq5StepYear1: 'Click "Show filters" on the Advanced Search page.',
+        faq5StepYear2: 'Enter the desired release year (e.g., 2023) into the "Release Year" box.',
+        faq5StepYear3: 'Results will be filtered according to the year you entered.',
+        faq5StepsTitleRating: 'Steps for filtering by Minimum Rating:',
+        faq5StepRating1: 'Open the "Rating" selection box.',
+        faq5StepRating2: 'Select the desired star level (e.g., 7 ⭐).',
+        faq5StepRating3: 'The system will only display books with a rating equal to or higher than the selected level.',
+
+        // MỤC 6: Thêm sách mới
+        faq6Title: '🪶 6. Can I add new books?',
+        faq6StepsTitle: 'Steps to contribute new books to the lib digital library system:',
+        faq6Step1: 'Go to your personal information page and select the "Upload" section.',
+        faq6Step2: 'Fill in all information about the book, upload the cover image and your book file, and click the "Upload Document" button.',
+        faq6Step3: 'Note: Book file content can only be uploaded if it is in PDF, DOC, DOCX, TXT, EPUB, or MOBI format.',
+        faq6Step4: 'The lib digital library system will review your contribution and notify you as soon as possible.',
+
+        // MỤC 7: Yêu cầu Hỗ trợ Chung
+        faq7Title: '❓ 7. Are you experiencing an unlisted issue?',
+        faq7Description: 'If you are facing an issue not listed above, or require more specialized technical support, please submit a request to our support team.',
+        faq7Button: 'Submit Support Request'
     }
 };
 
@@ -379,7 +503,7 @@ function updateLanguageUI(lang) {
             el.placeholder = langData[key];
         }
     });
-    
+
     // DỊCH TITLE (MỚI THÊM để dịch title của các nút icon)
     document.querySelectorAll('[data-lang-key-title]').forEach(el => {
         const key = el.dataset.langKeyTitle;

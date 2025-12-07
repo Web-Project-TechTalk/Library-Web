@@ -1,7 +1,7 @@
 // js/supabase-client.js
 
 // Lấy từ file .js bạn cung cấp
-import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.7/+esm'
 
 // Lấy thông tin này từ Project Settings > API trong Supabase dashboard
 const supabaseUrl = 'https://jezsstpkmfttnckgnnxo.supabase.co'; // Ví dụ: 'https://xyz.supabase.co'

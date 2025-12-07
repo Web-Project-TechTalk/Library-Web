@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-lang-key="faqTitle">Hướng Dẫn & FAQ | Hệ Thống Thư Viện</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <link rel="stylesheet" href="/assets/css/profile.css">
+    <link rel="stylesheet" href="/assets/css/dashboard.css">
+
+    <style>
+        /* Tùy chỉnh CSS cho trang Instructions */
+        .instructions-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px 20px 40px 20px;
+        }
+
+        .main-content {
+            min-height: 100vh;
+        }
+
+        /* Tùy chỉnh màu sắc Accordion (theo Dark/Light Theme) */
+        .accordion-item {
+            border-color: var(--border-color);
+            background-color: var(--card-bg-light);
+            margin-bottom: 10px;
+            border-radius: 8px !important;
+        }
+
+        .accordion-button {
+            font-weight: 500;
+            background-color: transparent !important;
+            color: var(--text-color);
+            border-radius: 8px !important;
+        }
+
+        .accordion-body {
+            color: var(--text-muted-color);
+            font-size: 0.95rem;
+        }
+
+        /* Hỗ trợ Dark Mode */
+        body.dark-theme .accordion-button {
+            color: #fff;
+        }
+
+        body.dark-theme .accordion-item {
+            border-color: #333;
+            background-color: #222;
+        }
+
+        body.dark-theme .accordion-button:not(.collapsed) {
+            color: #ccc;
+            background-color: #1a1a1a !important;
+        }
+
+        body.dark-theme .accordion-button {
+            color: #fff;
+        }
+
+        body.dark-theme .accordion-item {
+            border-color: #333;
+            background-color: #222;
+        }
+
+        body.dark-theme .accordion-button:not(.collapsed) {
+            color: #ccc;
+            background-color: #1a1a1a !important;
+        }
+
+        body.dark-theme p.text-muted {
+            color: #b0b0b0 !important;
+            /* Màu xám nhạt hơn, dễ đọc hơn trên nền tối */
+        }
+
+        body.dark-theme .accordion-body,
+        body.dark-theme .accordion-body h6,
+        body.dark-theme .accordion-body li {
+            /* Đảm bảo màu văn bản bên trong là sáng */
+            color: #ccc !important;
+        }
+
+        /* Đảm bảo các biểu tượng Font Awesome cũng hiển thị đúng màu */
+        body.dark-theme .accordion-body i {
+            color: inherit;
+            /* Kế thừa màu từ thẻ cha */
+        }
+
+        /* Đảm bảo màu link bên trong list (nếu có) cũng thay đổi */
+        body.dark-theme .accordion-body a {
+            color: #4da6ff;
+            /* Màu xanh sáng cho link */
+        }
+    </style>
+</head>
+
+<body class="hero-page">
+
+    <div id="topbar-placeholder"></div>
+    <div id="sidebar-placeholder"></div>
+
+    <div class="main-content">
+        <div style="height: 90px;"></div>
+
+        <div class="instructions-container">
+            <h2 class="fw-bold mb-4 text-center" data-lang-key="faqTitle">Hướng Dẫn Sử Dụng & Câu Hỏi Thường Gặp (FAQ)
+            </h2>
+            <p class="text-center text-muted mb-5" data-lang-key="faqSubtitle">Tìm kiếm câu trả lời cho các thắc mắc của
+                bạn về hệ thống thư viện số.</p>
+
+            <div class="accordion" id="faqAccordion">
+
+                <div class="accordion-item shadow-sm">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne"
+                            data-lang-key="faq1Title">
+                            <i class="fas me-3 text-primary"></i>🔍 1. Làm thế nào để đăng ký tài khoản của hệ
+                            thống thư viện số lib?
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                        data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            <h6 class="fw-bold" data-lang-key="faq1StepsTitle">Các bước đăng ký cơ bản:</h6>
+                            <ol>
+                                <li data-lang-key="faq1Step1">Nhấp vào nút đăng ký/đăng ký ở góc trên cùng bên phải ở
+                                    giao diện chính của hệ thống, cạnh bộ chuyển đổi ngôn ngữ.</li>
+                                <li data-lang-key="faq1Step2">Ở giao diện libkey sau khi đã nhấp vào nút đăng nhập/đăng
+                                    ký. Nhấp vào mục đăng ký ở ngay phía dưới phía bên phải dòng libkey.</li>
+                                <li data-lang-key="faq1Step3">Điền thông tin vào tất các mục ở phần đăng ký rồi nhấp vào
+                                    nút Tạo tài khoản phía dưới.</li>
+                                <li data-lang-key="faq1Step4">Hệ thống thư viện lib sẽ gửi qua cho bạn 1 email để xác
+                                    thực và khởi động tài khoản. Sau khi xác thực xong, đăng nhập lại 1 lần nữa để có
+                                    thể đọc sách tại hệ thống thư viện số lib.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item shadow-sm">
+                    <h2 class="accordion-header" id="headingTwo">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"
+                            data-lang-key="faq2Title">
+                            <i class="fas me-3 text-success"></i>📕 2. Làm sao tôi biết được sách nào mới
+                            được thêm vào?
+                        </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                        data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            <h6 class="fw-bold" data-lang-key="faq2StepsTitle">Các bước xem sách mới nhất:</h6>
+                            <ol>
+                                <li data-lang-key="faq2Step1">Truy cập vào trang cá nhân của bạn.</li>
+                                <li data-lang-key="faq2Step2">Chọn mục "Sách Mới Thêm" (Recently Added) ở sidebar bên
+                                    trái. Tại đó, hệ thống sẽ tự động hiển thị danh sách sách được sắp xếp theo thứ tự
+                                    ngày tải lên mới nhất.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item shadow-sm">
+                    <h2 class="accordion-header" id="headingThree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree"
+                            data-lang-key="faq3Title">
+                            <i class="fas fa-palette me-3 text-warning"></i>🎨 3. Cách chuyển đổi giữa chế độ Sáng và
+                            Tối?
+                        </button>
+                    </h2>
+                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                        data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            <h6 class="fw-bold" data-lang-key="faq3StepsTitle">Các bước chuyển đổi giao diện:</h6>
+                            <ol>
+                                <li data-lang-key="faq3Step1">Tìm biểu tượng Mặt Trời ☀️ hoặc Mặt Trăng 🌙 trên Top Bar
+                                    (thanh điều hướng trên cùng) rồi nhấp chuột vào biểu tượng đó.</li>
+                                <li data-lang-key="faq3Step2">Giao diện sẽ chuyển đổi ngay lập tức giữa chế độ Sáng
+                                    (Light) và Tối (Dark).</li>
+                                <li data-lang-key="faq3Step3">Hệ thống sẽ tự động lưu lựa chọn này cho các lần truy cập
+                                    sau.</li>
+                                <li data-lang-key="faq3Step4">Trường hợp bạn đang ở trang cá nhân thì bạn có thể tìm
+                                    thấy nút biểu tượng Mặt Trời ☀️ hoặc Mặt Trăng 🌙 này ở hình đại diện của bạn sau
+                                    khi nhấp vào.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item shadow-sm">
+                    <h2 class="accordion-header" id="headingFour">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour"
+                            data-lang-key="faq4Title">
+                            <i class="fas me-3 text-info"></i>🔀 4. Tôi có thể sắp xếp sách theo những tiêu chí
+                            nào?
+                        </button>
+                    </h2>
+                    <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
+                        data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            <h6 class="fw-bold" data-lang-key="faq4StepsTitle">Các bước thay đổi sắp xếp:</h6>
+                            <ol>
+                                <li data-lang-key="faq4Step1">Truy cập trang Tìm kiếm Nâng cao rồi nhấp vào nút hiện bộ
+                                    lọc ngay dưới thanh tìm kiếm.</li>
+                                <li data-lang-key="faq4Step2">Nhấn vào mục "Sắp xếp theo...".</li>
+                                <li data-lang-key="faq4Step3">Chọn một trong các tiêu chí sau:
+                                    <ul>
+                                        <li data-lang-key="faq4Sort1">Ngày thêm (Mới nhất)</li>
+                                        <li data-lang-key="faq4Sort2">Lượt xem (Nhiều nhất)</li>
+                                        <li data-lang-key="faq4Sort3">Đánh giá (Cao nhất)</li>
+                                        <li data-lang-key="faq4Sort4">Tên sách (A-Z)</li>
+                                    </ul>
+                                </li>
+                                <li data-lang-key="faq4Step4">Hệ thống sẽ tải lại kết quả theo thứ tự mới.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item shadow-sm">
+                    <h2 class="accordion-header" id="headingFive">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive"
+                            data-lang-key="faq5Title">
+                            <i class="fas me-3 text-danger"></i>🌪️ 5. Lọc theo Năm Phát hành và Đánh giá hoạt
+                            động thế nào?
+                        </button>
+                    </h2>
+                    <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive"
+                        data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            <h6 class="fw-bold" data-lang-key="faq5StepsTitleYear">Các bước lọc Năm Phát hành:</h6>
+                            <ol>
+                                <li data-lang-key="faq5StepYear1">Nhấn "Hiện bộ lọc" trong trang Tìm kiếm Nâng cao.</li>
+                                <li data-lang-key="faq5StepYear2">Nhập năm phát hành mong muốn (ví dụ: 2023) vào ô "Năm
+                                    PH".</li>
+                                <li data-lang-key="faq5StepYear3">Kết quả sẽ được lọc theo năm bạn nhập.</li>
+                            </ol>
+                            <h6 class="fw-bold mt-3" data-lang-key="faq5StepsTitleRating">Các bước lọc Đánh giá tối
+                                thiểu:</h6>
+                            <ol start="4">
+                                <li data-lang-key="faq5StepRating1">Mở ô chọn "Đánh giá tối thiểu".</li>
+                                <li data-lang-key="faq5StepRating2">Chọn mức sao mong muốn (ví dụ: 7 sao trở lên).</li>
+                                <li data-lang-key="faq5StepRating3">Hệ thống sẽ chỉ hiển thị các sách có điểm đánh giá
+                                    bằng hoặc cao hơn mức bạn chọn.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item shadow-sm">
+                    <h2 class="accordion-header" id="headingSix">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix"
+                            data-lang-key="faq6Title">
+                            <i class="fas me-3 text-secondary"></i>🪶 6. Tôi có thể thêm sách mới không?
+                        </button>
+                    </h2>
+                    <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix"
+                        data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            <h6 class="fw-bold" data-lang-key="faq6StepsTitle">Các bước đóng góp thêm vào sách mới cho
+                                hệ thống thư viện số lib:</h6>
+                            <ol>
+                                <li data-lang-key="faq6Step1">Vào trang thông tin cá nhân của bạn và chọn mục tải lên.
+                                </li>
+                                <li data-lang-key="faq6Step2">Điền tất cả thông tin về sách cũng như tải lên ảnh bìa,
+                                    file sách của bạn rồi nhấp vào nút Tải lên Tài liệu.</li>
+                                <li data-lang-key="faq6Step3">Lưu ý: Nội dung file sách chỉ có thể tải lên hợp lệ với
+                                    các định dạng PDF, DOC, DOCX, TXT, EPUB, MOBI.</li>
+                                <li data-lang-key="faq6Step4">Hệ thống thư viện số lib sẽ xem xét qua đóng góp của bạn
+                                    và thông báo lại với bạn trong thời gian sớm nhất có thể.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item shadow-sm">
+                    <h2 class="accordion-header" id="headingSeven">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven"
+                            data-lang-key="faq7Title">
+                            <i class="fas me-3 text-secondary"></i>❓ 7. Không có bất kỳ trường hợp nào mà bạn gặp phải?
+                        </button>
+                    </h2>
+                    <div id="collapseSeven" class="accordion-collapse collapse" aria-labelledby="headingSeven"
+                        data-bs-parent="#faqAccordion">
+                        <div class="accordion-body text-center">
+                            <p data-lang-key="faq7Description">Nếu bạn đang gặp phải một vấn đề không được liệt kê ở
+                                trên, hoặc cần hỗ trợ kỹ thuật chuyên sâu hơn, vui lòng gửi yêu cầu đến đội ngũ hỗ trợ
+                                của chúng tôi.</p>
+
+                            <a href="#" class="btn btn-primary mt-3" data-lang-key="faq7Button">Gửi Yêu cầu Hỗ trợ</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/app-ui.js" defer></script>
+</body>
+
+</html>
