@@ -70,9 +70,9 @@ async function loadBooks(page = 1) {
     console.error(err);
     container.innerHTML = `
       <div class="col-12 text-danger text-center p-5">
-        <h5>Đéo load được dữ liệu</h5>
+        <h5>Không load được dữ liệu</h5>
         <p>${err.message}</p>
-        <small>Check lại RLS bảng documents đi thằng lồn</small>
+        <small>Vui lòng kiểm tra lại dữ liệu mạng</small>
       </div>`;
   }
 }
