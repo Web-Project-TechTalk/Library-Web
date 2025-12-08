@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-lang-key="rulesPageTitle">Quy Tắc & Nội Quy - TechTalk</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <link rel="stylesheet" href="/assets/css/profile.css">
+    <link rel="stylesheet" href="/assets/css/dashboard.css">
+
+    <style>
+        .rules-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px 20px 40px 20px;
+        }
+
+        .main-content {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .accordion-item {
+            border-color: var(--border-color);
+            background-color: var(--card-bg-light);
+            margin-bottom: 10px;
+            border-radius: 8px !important;
+        }
+
+        .accordion-button {
+            font-weight: 600;
+            background-color: transparent !important;
+            color: var(--text-color);
+            border-radius: 8px !important;
+        }
+
+        .accordion-body {
+            color: var(--text-muted-color);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        body.dark-theme .accordion-button { color: #fff; }
+        body.dark-theme .accordion-item { border-color: #333; background-color: #222; }
+        body.dark-theme .accordion-button:not(.collapsed) { color: #ccc; background-color: #1a1a1a !important; }
+        body.dark-theme .accordion-body { color: #ccc !important; }
+        
+        .site-footer {
+            margin-top: auto;
+            padding: 20px 0;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-muted-color);
+        }
+        body.dark-theme .site-footer {
+            border-top: 1px solid #333;
+            color: #888;
+        }
+    </style>
+</head>
+
+<body class="hero-page">
+
+    <div id="topbar-placeholder"></div>
+    <div id="sidebar-placeholder"></div>
+
+    <div class="main-content">
+        <div style="height: 90px;"></div>
+
+        <div class="rules-container">
+            <h2 class="fw-bold mb-4 text-center" data-lang-key="rulesMainTitle">Nội Quy Sử Dụng Thư Viện</h2>
+            <p class="text-center text-muted mb-5" data-lang-key="rulesSubtitle">
+                Để đảm bảo môi trường học tập lành mạnh và chia sẻ tri thức hiệu quả, vui lòng tuân thủ các quy tắc sau.
+            </p>
+
+            <div class="accordion" id="rulesAccordion">
+
+                <div class="accordion-item shadow-sm">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseOne" aria-expanded="true">
+                            <i class="fas fa-user-check me-3 text-primary"></i> <span data-lang-key="rule1Title">1. Tài khoản & Bảo mật</span>
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#rulesAccordion">
+                        <div class="accordion-body" data-lang-key="rule1Content">
+                            Người dùng chịu trách nhiệm bảo mật thông tin tài khoản của mình. Không chia sẻ mật khẩu cho người khác.
+                            Vui lòng sử dụng thông tin đăng ký chính xác để phục vụ việc khôi phục tài khoản khi cần thiết.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item shadow-sm">
+                    <h2 class="accordion-header" id="headingTwo">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseTwo">
+                            <i class="fas fa-copyright me-3 text-danger"></i> <span data-lang-key="rule2Title">2. Bản quyền & Nội dung</span>
+                        </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#rulesAccordion">
+                        <div class="accordion-body" data-lang-key="rule2Content">
+                            Chỉ tải lên các tài liệu mà bạn có quyền chia sẻ hoặc tài liệu miễn phí/cộng đồng. 
+                            Nghiêm cấm tải lên các nội dung đồi trụy, phản động, vi phạm pháp luật hoặc vi phạm bản quyền nghiêm trọng.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item shadow-sm">
+                    <h2 class="accordion-header" id="headingThree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseThree">
+                            <i class="fas fa-comments me-3 text-success"></i> <span data-lang-key="rule3Title">3. Ứng xử cộng đồng</span>
+                        </button>
+                    </h2>
+                    <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#rulesAccordion">
+                        <div class="accordion-body" data-lang-key="rule3Content">
+                            Giữ thái độ lịch sự, tôn trọng khi bình luận và đánh giá sách. 
+                            Không spam, quảng cáo trái phép hoặc sử dụng ngôn từ kích động, thù địch trong phần bình luận.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item shadow-sm">
+                    <h2 class="accordion-header" id="headingFour">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseFour">
+                            <i class="fas fa-gavel me-3 text-warning"></i> <span data-lang-key="rule4Title">4. Xử lý vi phạm</span>
+                        </button>
+                    </h2>
+                    <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#rulesAccordion">
+                        <div class="accordion-body" data-lang-key="rule4Content">
+                            Tech Team có quyền khóa tài khoản vĩnh viễn hoặc tạm thời nếu phát hiện vi phạm. 
+                            Các tài liệu vi phạm sẽ bị gỡ bỏ mà không cần báo trước.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <footer class="site-footer">
+            <div class="container">
+                <p class="mb-0" data-lang-key="footerCopyright">
+                    Copyright © 2025 TechTalk. Dự án được phân phối dưới giấy phép GPL-3.0.
+                </p>
+            </div>
+        </footer>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/app-ui.js" defer></script>
+</body>
+</html>

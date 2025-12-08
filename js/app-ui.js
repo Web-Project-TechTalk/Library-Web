@@ -236,7 +236,24 @@ const translations = {
         // MỤC 7: Yêu cầu Hỗ trợ Chung
         faq7Title: '❓ 7. Không có bất kỳ trường hợp nào mà bạn gặp phải?',
         faq7Description: 'Nếu bạn đang gặp phải một vấn đề không được liệt kê ở trên, hoặc cần hỗ trợ kỹ thuật chuyên sâu hơn, vui lòng gửi yêu cầu đến đội ngũ hỗ trợ của chúng tôi.',
-        faq7Button: 'Gửi Yêu cầu Hỗ trợ'
+        faq7Button: 'Gửi Yêu cầu Hỗ trợ',
+        rulesPageTitle: 'Quy Tắc & Nội Quy - TechTalk',
+        rulesMainTitle: 'Nội Quy Sử Dụng Thư Viện',
+        rulesSubtitle: 'Để đảm bảo môi trường học tập lành mạnh và chia sẻ tri thức hiệu quả, vui lòng tuân thủ các quy tắc sau.',
+        
+        rule1Title: '1. Tài khoản & Bảo mật',
+        rule1Content: 'Người dùng chịu trách nhiệm bảo mật thông tin tài khoản của mình. Không chia sẻ mật khẩu cho người khác. Vui lòng sử dụng thông tin đăng ký chính xác.',
+        
+        rule2Title: '2. Bản quyền & Nội dung',
+        rule2Content: 'Chỉ tải lên các tài liệu mà bạn có quyền chia sẻ. Nghiêm cấm tải lên nội dung đồi trụy, phản động hoặc vi phạm bản quyền nghiêm trọng.',
+        
+        rule3Title: '3. Ứng xử cộng đồng',
+        rule3Content: 'Giữ thái độ lịch sự, tôn trọng khi bình luận. Không spam, quảng cáo hoặc sử dụng ngôn từ kích động.',
+        
+        rule4Title: '4. Xử lý vi phạm',
+        rule4Content: 'BQT có quyền khóa tài khoản nếu phát hiện vi phạm. Tài liệu vi phạm sẽ bị gỡ bỏ không cần báo trước.',
+        
+        footerCopyright: 'Copyright © 2025 TechTalk. Dự án được phân phối dưới giấy phép GPL-3.0.'
     },
     en: {
         // Topbar & Menu (Từ profile.js)
@@ -449,7 +466,24 @@ const translations = {
         // MỤC 7: Yêu cầu Hỗ trợ Chung
         faq7Title: '❓ 7. Are you experiencing an unlisted issue?',
         faq7Description: 'If you are facing an issue not listed above, or require more specialized technical support, please submit a request to our support team.',
-        faq7Button: 'Submit Support Request'
+        faq7Button: 'Submit Support Request',
+        rulesPageTitle: 'Rules & Regulations - TechTalk',
+        rulesMainTitle: 'Library Usage Rules',
+        rulesSubtitle: 'To ensure a healthy learning environment and effective knowledge sharing, please adhere to the following rules.',
+        
+        rule1Title: '1. Account & Security',
+        rule1Content: 'Users are responsible for securing their account information. Do not share passwords. Please use accurate registration details.',
+        
+        rule2Title: '2. Copyright & Content',
+        rule2Content: 'Only upload documents you have the right to share. Uploading pornographic, reactionary, or copyright-infringing content is strictly prohibited.',
+        
+        rule3Title: '3. Community Conduct',
+        rule3Content: 'Be polite and respectful when commenting. No spamming, unauthorized advertising, or hate speech.',
+        
+        rule4Title: '4. Violation Handling',
+        rule4Content: 'Admins reserve the right to ban accounts for violations. Infringing documents will be removed without notice.',
+        
+        footerCopyright: 'Copyright © 2025 TechTalk. Project distributed under GPL-3.0 license.'    
     }
 };
 

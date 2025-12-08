@@ -1,7 +1,6 @@
 
-/* Chúng ta cần định nghĩa màu nền (dưới dạng RGB)
-  để tạo hiệu ứng gradient mờ dần về màu nền.
-*/
+ /* định nghĩa màu nền  để tạo hiệu ứng gradient mờ dần về màu nền. */
+
 :root {
     --bg-primary-rgb: 255, 255, 255; /* Nền sáng */
     --text-primary-rgb: 33, 37, 41; /* Chữ sáng */
@@ -12,21 +11,15 @@ body.dark-theme {
     --text-primary-rgb: 248, 249, 250; /* Chữ tối */
 }
 
-/* --- Popular New Titles (PNT) --- */
-
-/* Container chính của slide
-  Chúng ta dùng overflow: hidden để bo góc
-  và position: relative để chứa các lớp con
+/* Container chính của slide overflow hidden để bo góc và position: relative để chứa các lớp con
 */
 .pnt-slide-wrapper {
     position: relative;
     overflow: hidden;
     background-color: var(--bg-tertiary);
-    /* Bỏ: display: flex; */
-    /* Bỏ: flex-direction: column; */
 }
 
-/* 1. Lớp Nền Mờ (Blurred Background)
+/* Lớp Nền Mờ 
   - Nằm ở dưới cùng (z-index: 1)
   - Bị làm mờ và tối đi
   - "transform: scale(1.1)" để viền mờ không bị lộ
@@ -43,7 +36,7 @@ body.dark-theme {
     z-index: 1;
 }
 
-/* 2. Lớp Gradient (Mờ dần từ trên xuống)
+/* Lớp Gradient 
   - Nằm trên lớp nền mờ (z-index: 2)
   - Dùng màu nền (rgb) đã định nghĩa ở :root
   - Mờ dần từ 30% ở trên, 70% ở giữa, và 100% ở dưới
@@ -63,7 +56,7 @@ body.dark-theme {
     z-index: 2;
 }
 
-/* 3. Lớp Nội dung (Chữ và Bìa)
+/* Lớp Nội dung (Chữ và Bìa)
   - Nằm trên cùng (z-index: 3)
   - Dùng flexbox để chia 2 cột
 */
@@ -229,8 +222,6 @@ body.dark-theme {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
-/* ... (.pnt-info, .pnt-title, ... giữ nguyên) ... */
-
 .pnt-controls {
     position: absolute; /* "Ghim" các nút */
     
@@ -337,4 +328,31 @@ body.hero-page .pnt-controls {
 .sidebar ul.collapse li.active-orange a {
     background: #FFA07A !important; /* Màu cam nhạt hơn */
     color: #000000 !important;
+}
+/* CSS cho Sidebar History Item */
+
+.sidebar-history-item {
+    color: var(--text-color, #333) !important; /* Dùng biến màu của theme hoặc màu đen */
+    transition: background 0.3s;
+    border-radius: 4px;
+    padding: 4px;
+}
+
+.sidebar-history-item:hover {
+    background-color: rgba(0,0,0,0.05);
+    text-decoration: none;
+}
+
+/* Dark Mode: Màu chữ trắng */
+body.dark-theme .sidebar-history-item {
+    color: #e0e0e0 !important;
+}
+
+body.dark-theme .sidebar-history-item:hover {
+    background-color: rgba(255,255,255,0.1);
+}
+
+/* Đảm bảo text-muted hiển thị rõ trên nền tối */
+body.dark-theme .text-muted {
+    color: #a0a0a0 !important;
 }
