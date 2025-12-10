@@ -199,13 +199,6 @@ body.dark-theme {
     z-index: 3; /* Nằm trên gradient (2) */
     display: flex;
     gap: 24px;
-    
-    /* Tính toán padding-top:
-      76px (từ .pnt-main-title) 
-      + 40px (chiều cao h4 ~) 
-      + 20px (padding-bottom của h4) 
-      = ~136px
-    */
     padding: 136px 30px 60px 30px; /* T, R/L, B (Tăng B lên 60px để né nút) */
 }
 
@@ -240,13 +233,12 @@ body.dark-theme {
 */
 body.hero-page .main-content {
     padding-top: 0;
+    padding-left: 0;
 }
 
-/*
-  Làm cho topbar trong suốt VÀ
-  thêm một lớp bóng mờ (gradient) phía trên
-  để các icon/chữ trắng dễ đọc hơn.
-*/
+
+
+
 body.hero-page .navbar {
     background: linear-gradient(
         to bottom, 
@@ -256,12 +248,7 @@ body.hero-page .navbar {
     border-bottom: none !important;
 }
 
-/*
-  Vì .main-content (chứa background) đã dính sát top (padding: 0),
-  chúng ta cần đảm bảo nội dung BÊN TRONG nó
-  (tiêu đề, nút) bị đẩy xuống 
-  để không bị icon topbar đè lên.
-*/
+
 body.hero-page .pnt-main-title {
     /* 56px (chiều cao topbar) + 20px (khoảng hở) = 76px */
     padding-top: 76px;

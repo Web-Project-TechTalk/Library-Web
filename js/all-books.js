@@ -90,6 +90,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Global function để onclick hoạt động
 window.loadBooks = loadBooks;
+document.addEventListener('DOMContentLoaded', () => {
+    const toggleBtn = document.getElementById('sidebarToggleBtn');
+    const closeBtn  = document.getElementById('sidebarCloseBtn');
 
+    toggleBtn?.addEventListener('click', () => {
+        document.body.classList.toggle('sidebar-closed');
+    });
+    closeBtn?.addEventListener('click', () => {
+        document.body.classList.add('sidebar-closed');
+    });
+
+    // Mobile: vào trang là tự tắt sidebar
+    if (window.innerWidth < 992) {
+        document.body.classList.add('sidebar-closed');
+    }
+});
 // Load lần đầu
 document.addEventListener('DOMContentLoaded', () => loadBooks(1));

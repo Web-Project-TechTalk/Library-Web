@@ -43,8 +43,6 @@ async function loadRecentlyAddedBooks() {
             `, { count: 'exact' });
 
         // 1. KHÔNG CẦN LỌC THEO TỪ KHÓA
-
-        // 2. Sắp xếp theo ngày thêm mới nhất
         query = query.order(currentSortKey, { ascending: currentSortAscending });
 
         // 3. Phân trang
@@ -115,7 +113,7 @@ function renderBooks(books) {
     }).join('');
 }
 
-// --- Hàm phân trang (Giữ nguyên từ advance-search.js) ---
+// --- Hàm phân trang  ---
 function renderPagination(totalCount) {
     const totalPages = Math.ceil(totalCount / BOOKS_PER_PAGE);
 

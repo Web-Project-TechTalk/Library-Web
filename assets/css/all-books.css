@@ -65,17 +65,30 @@
   color: #e9e9e9 !important;
 }
 
-.main-content {
-    margin-left: 200px !important;   
-    padding: 0 30px;
+
+@media (min-width: 992px) {
+    body.all-books-page .main-content {
+    padding-left: 50px !important;
 }
-/* DARK MODE: CHỈ ĐỔI NỀN – KHÔNG ĐỔI MÀU CHỮ TÊN SÁCH & TÁC GIẢ */
+    
+    /* KHI TẮT SIDEBAR → TỰ KÉO VỀ FULL */
+    body.sidebar-closed .main-content {
+        padding-left: 50px !important;
+    }
+}
+
+@media (max-width: 991px) {
+    body.all-books-page .main-content {
+        padding-left: 20px !important;
+    }
+}
+/* DARK MODE */
 .dark-theme .book-card {
     background-color: #d9d6d6 !important;
     border: 1px solid #444 !important;
 }
 
-/* BẮT BUỘC GIỮ NGUYÊN MÀU CHỮ NHƯ LIGHT MODE */
+
 .dark-theme .book-card .card-title,
 .dark-theme .book-card .card-title a {
     color: #2e2e2e !important;           /* đen như ban ngày */
