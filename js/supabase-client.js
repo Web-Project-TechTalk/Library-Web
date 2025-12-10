@@ -1,11 +1,10 @@
-// js/supabase-client.js
+// 1. Đổi sang dùng esm.sh để tải thư viện ổn định hơn (Sửa lỗi crash AuthClient)
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
-// Lấy từ file .js bạn cung cấp
-import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.7/+esm'
+// 2. Điền lại đúng thông tin từ Dashboard
+const supabaseUrl = 'https://jezsstpkmfttnckgnnxo.supabase.co';
 
-// Lấy thông tin này từ Project Settings > API trong Supabase dashboard
-const supabaseUrl = 'https://jezsstpkmfttnckgnnxo.supabase.co'; // Ví dụ: 'https://xyz.supabase.co'
-const supabaseAnonKey = 'sb_publishable_YalHSNPW2pLu14Ld6XWG-A_Zx61FX3u'; // Key an toàn (công khai)
+const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImplenNzdHBrbWZ0dG5ja2dubnhvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE0MDQ5NTYsImV4cCI6MjA3Njk4MDk1Nn0.vbDpPg4iZj5O68uDPU2ABWsKd15qD9n0P9MTfN-_ziI'; 
 
-// Xuất client để các file khác có thể import
+// Xuất client
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);

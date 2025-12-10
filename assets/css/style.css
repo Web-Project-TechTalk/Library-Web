@@ -52,7 +52,16 @@ header {
 
 /* --- Section Styling --- */
 .section {
-    text-align: center;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+}
+#section1 {
+    /* Sử dụng Flexbox để căn giữa dọc thay vì để fullpage tự tính */
+    display: flex !important; 
+    flex-direction: column;
+    justify-content: center; /* Căn giữa theo chiều dọc */
+    align-items: center;     /* Căn giữa theo chiều ngang */
 }
 #section2 { background-color: #f2e6d8; }
 #section3 { background-color: #d8e6f2; }
@@ -145,7 +154,12 @@ h1, h2 {
     background-size: cover;
     background-position: center;
     transition: filter 0.3s ease;
-    max-height: 270px;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    max-height: 300px;
+    display: flex;
+    align-items: center;
 }
 
 .hero-section::before {
@@ -154,6 +168,31 @@ h1, h2 {
     top: 0; left: 0; right: 0; bottom: 0;
     z-index: -1;
     transition: background-color 0.3s ease;
+}
+
+/* 1. Tiêu đề (H1) */
+.hero-section h1 {
+    font-size: 2.5rem; /* Mặc định cho mobile (khoảng 40px) */
+    line-height: 1.1;  /* Thu hẹp khoảng cách dòng để tiết kiệm diện tích dọc */
+    margin-bottom: 0.5rem; /* Giảm khoảng cách dưới */
+}
+
+/* 2. Đoạn mô tả (thẻ p class lead) */
+.hero-section .lead {
+    font-size: 1.2rem; /* To hơn mặc định một chút */
+    font-weight: 500;  /* Làm chữ đậm hơn để dễ đọc */
+    margin-bottom: 1rem;
+}
+
+/* --- Dành riêng cho màn hình máy tính (Desktop) --- */
+@media (min-width: 992px) {
+    .hero-section h1 {
+        font-size: 3.5rem; /* Chữ cực to trên PC (khoảng 56px) */
+    }
+    
+    .hero-section .lead {
+        font-size: 1.5rem; /* Mô tả to hơn (khoảng 24px) */
+    }
 }
 
 
@@ -191,12 +230,23 @@ h1, h2 {
     z-index: 2;
 }
 
+#all-books-hero-btn {
+    font-size: 1.1rem;      /* Cỡ chữ to hơn */
+    text-transform: uppercase; /* Viết hoa toàn bộ cho mạnh mẽ */
+    letter-spacing: 1px;    /* Giãn chữ ra một chút */
+}
+
 /* --- Tùy chỉnh hover cho nút Xem Tất Cả Sách --- */
 
 /* Hiệu ứng đảo màu khi di chuột vào nút */
 #all-books-hero-btn:hover {
     background-color: var(--primary-color);
     color: var(--secondary-color);
+}
+
+.hero-section .form-control-lg:focus {
+    box-shadow: none;       /* Bỏ bóng xanh mặc định */
+    border-color: var(--primary-color);
 }
 
 /* Ghi đè cho theme tối để đảm bảo nút có chữ trắng */
@@ -224,7 +274,7 @@ h1, h2 {
     display: flex;
     gap: 1.5rem;
     padding: 1rem 0;
-    overflow-x: auto;
+    overflow-x: hidden;
     cursor: grab; /* THÊM VÀO: Đổi con trỏ chuột thành hình bàn tay */
     /* XÓA BỎ scroll-behavior: smooth; */
     
@@ -347,19 +397,40 @@ h1, h2 {
     transform: translateY(0);
 }
 
+#section1 {
+    position: relative; /* Để các con absolute neo theo nó */
+}
+
+#section1 .book-carousel-wrapper {
+    margin-top: 2rem; /* Tạo khoảng cách an toàn với Hero Banner */
+    margin-bottom: 2rem;
+    width: 100%;
+}
+
 /* --- Styling cho khu vực Khám phá (Đã sửa lỗi animation) --- */
 #explore-section {
-    max-height: 0;          /* Mặc định không chiếm chiều cao */
-    overflow: hidden;       /* Ẩn nội dung bên trong */
+    position: absolute; /* Tuyệt đối: Không chiếm chỗ trong layout */
+    bottom: 80px;       /* Cách đáy 1 khoảng để nằm trên câu Quote */
+    left: 0;
+    right: 0;
+    z-index: 10;
+    
+    /* Ẩn mặc định */
     opacity: 0;
+    visibility: hidden; 
     transform: translateY(20px);
-    /* Thêm max-height vào transition */
-    transition: max-height 0.5s ease-in-out, opacity 0.5s ease, transform 0.5s ease;
+    
+    /* Chỉ transition opacity và vị trí, KHÔNG transition height */
+    transition: opacity 0.5s ease, transform 0.5s ease, visibility 0.5s;
+    
+    /* Loại bỏ max-height và overflow cũ */
+    max-height: unset;
+    overflow: visible;
 }
 
 #explore-section.visible {
-    max-height: 200px;      /* Chiều cao đủ lớn để chứa nội dung */
     opacity: 1;
+    visibility: visible;
     transform: translateY(0);
 }
 
@@ -445,4 +516,45 @@ h1, h2 {
 .scroll-btn:hover {
     background-color: var(--primary-hover-color);
     transform: scale(1.1);
+}
+
+/* --- TÙY CHỈNH RIÊNG CHO MOBILE (Dưới 768px) --- */
+@media (max-width: 768px) {
+    
+    /* 1. Giới hạn chiều rộng thanh tìm kiếm để không bè ra hết màn hình */
+    .hero-section .input-group {
+        max-width: 320px !important; /* Chỉ rộng tối đa 320px */
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* 2. Thu nhỏ Ô NHẬP LIỆU */
+    .hero-section .input-group .form-control {
+        font-size: 14px !important;   /* Ghi đè class fs-5 */
+        padding: 8px 12px !important; /* Ghi đè padding to */
+        height: 40px !important;      /* Ép chiều cao cố định (chuẩn mobile) */
+    }
+
+    /* 3. Thu nhỏ NÚT TÌM KIẾM (Kính lúp) */
+    .hero-section .input-group .btn {
+        font-size: 14px !important;
+        padding: 0 16px !important;   /* Padding 2 bên vừa phải */
+        height: 40px !important;      /* Bằng chiều cao ô nhập liệu */
+        line-height: 40px !important; /* Căn giữa chữ theo chiều dọc */
+        display: flex;                /* Để căn icon và chữ dễ hơn */
+        align-items: center;
+        gap: 5px;
+    }
+    
+    /* Thu nhỏ icon kính lúp */
+    .hero-section .input-group .btn i {
+        font-size: 12px !important;
+    }
+
+    /* 4. Xử lý nút TẤT CẢ SÁCH (giữ nguyên như trước) */
+    #all-books-hero-btn {
+        font-size: 14px !important;
+        padding: 8px 20px !important;
+        width: auto !important;
+    }
 }

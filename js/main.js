@@ -90,16 +90,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    // ====================================================================
-    // LOGIC CHÍNH CỦA BẠN (ĐÃ GIỮ NGUYÊN)
-    // ====================================================================
     new fullpage('#fullpage', {
-        licenseKey: 'YOUR_KEY_HERE',
+        licenseKey: "b's'ToV&k3",
         autoScrolling: true,
         scrollHorizontally: true,
         navigation: true,
         navigationPosition: 'right',
         anchors: ['home', 'news', 'featured', 'collections', 'about'],
+        scrollingSpeed: 800,
+        verticalCentered: true,
+        css3: true,
 
         afterLoad: function (origin, destination, direction) {
             const lastSectionIndex = document.querySelectorAll('.section').length - 1;
@@ -323,6 +323,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 isDown = false;
                 carouselWrapper.classList.remove('active');
                 scrollAmount = carousel.scrollLeft;
+            });
+
+            carouselWrapper.addEventListener('touchstart', (e) => {
+                isDown = true;
+                isPaused = true; // Tạm dừng auto scroll khi chạm tay vào
+                carouselWrapper.classList.add('active');
+                // Mobile dùng e.touches[0] để lấy toạ độ ngón tay đầu tiên
+                startX = e.touches[0].pageX - carousel.offsetLeft;
+                scrollLeft = carousel.scrollLeft;
+            }, { passive: true }); // passive: true giúp hiệu năng tốt hơn
+
+            carouselWrapper.addEventListener('touchmove', (e) => {
+                if (!isDown) return;
+                // Không dùng e.preventDefault() ở đây để tránh chặn việc cuộn dọc trang web của fullPage
+                const x = e.touches[0].pageX - carousel.offsetLeft;
+                const walk = (x - startX) * 2; 
+                carousel.scrollLeft = scrollLeft - walk;
+            }, { passive: true });
+
+            carouselWrapper.addEventListener('touchend', () => {
+                isDown = false;
+                isPaused = false; // Nhấc tay ra thì cho chạy auto lại
+                carouselWrapper.classList.remove('active');
+                scrollAmount = carousel.scrollLeft; // Cập nhật vị trí mới cho auto scroll
             });
 
             // --- LOGIC HIỂN THỊ NÚT KHÁM PHÁ (ĐÃ THÊM LẠI) ---
